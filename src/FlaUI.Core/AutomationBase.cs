@@ -10,7 +10,7 @@ using FlaUI.Core.Overlay;
 namespace FlaUI.Core
 {
     /// <summary>
-    /// Base class for the native automation object.
+    /// Base class for the native automation object .
     /// </summary>
     public abstract class AutomationBase : IDisposable
     {
