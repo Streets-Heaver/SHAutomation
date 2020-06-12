@@ -1,0 +1,35 @@
+﻿using SHAutomation.Core;
+using SHAutomation.Core.Identifiers;
+using SHAutomation.Core.Patterns;
+using SHAutomation.UIA3.Identifiers;
+using UIA = Interop.UIAutomationClient;
+
+namespace SHAutomation.UIA3.Patterns
+{
+    public class DropTargetPattern : DropTargetPatternBase<UIA.IUIAutomationDropTargetPattern>
+    {
+        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_DropTargetPatternId, "DropTarget", AutomationObjectIds.IsDropTargetPatternAvailableProperty);
+        public static readonly PropertyId DropTargetEffectProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_DropTargetDropTargetEffectPropertyId, "DropTargetEffect");
+        public static readonly PropertyId DropTargetEffectsProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_DropTargetDropTargetEffectsPropertyId, "DropTargetEffects");
+        public static readonly EventId DragEnterEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_DropTarget_DragEnterEventId, "DragEnter");
+        public static readonly EventId DragLeaveEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_DropTarget_DragLeaveEventId, "DragLeave");
+        public static readonly EventId DragCompleteEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_Drag_DragCompleteEventId, "DragComplete");
+
+        public DropTargetPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationDropTargetPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
+        {
+        }
+    }
+
+    public class DropTargetPatternPropertyIds : IDropTargetPatternPropertyIds
+    {
+        public PropertyId DropTargetEffect => DropTargetPattern.DropTargetEffectProperty;
+        public PropertyId DropTargetEffects => DropTargetPattern.DropTargetEffectsProperty;
+    }
+
+    public class DropTargetPatternEventIds : IDropTargetPatternEventIds
+    {
+        public EventId DragEnterEvent => DropTargetPattern.DragEnterEvent;
+        public EventId DragLeaveEvent => DropTargetPattern.DragLeaveEvent;
+        public EventId DragCompleteEvent => DropTargetPattern.DragCompleteEvent;
+    }
+}

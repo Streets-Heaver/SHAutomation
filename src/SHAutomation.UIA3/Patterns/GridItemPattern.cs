@@ -1,0 +1,32 @@
+﻿using SHAutomation.Core;
+using SHAutomation.Core.Identifiers;
+using SHAutomation.Core.Patterns;
+using SHAutomation.UIA3.Converters;
+using SHAutomation.UIA3.Identifiers;
+using UIA = Interop.UIAutomationClient;
+
+namespace SHAutomation.UIA3.Patterns
+{
+    public class GridItemPattern : GridItemPatternBase<UIA.IUIAutomationGridItemPattern>
+    {
+        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_GridItemPatternId, "GridItem", AutomationObjectIds.IsGridItemPatternAvailableProperty);
+        public static readonly PropertyId ColumnProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_GridItemColumnPropertyId, "Column");
+        public static readonly PropertyId ColumnSpanProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_GridItemColumnSpanPropertyId, "ColumnSpan");
+        public static readonly PropertyId ContainingGridProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_GridItemContainingGridPropertyId, "ContainingGrid").SetConverter(SHAutomationElementConverter.NativeToManaged);
+        public static readonly PropertyId RowProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_GridItemRowPropertyId, "Row");
+        public static readonly PropertyId RowSpanProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_GridItemRowSpanPropertyId, "RowSpan");
+
+        public GridItemPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationGridItemPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
+        {
+        }
+    }
+
+    public class GridItemPatternPropertyIds : IGridItemPatternPropertyIds
+    {
+        public PropertyId Column => GridItemPattern.ColumnProperty;
+        public PropertyId ColumnSpan => GridItemPattern.ColumnSpanProperty;
+        public PropertyId ContainingGrid => GridItemPattern.ContainingGridProperty;
+        public PropertyId Row => GridItemPattern.RowProperty;
+        public PropertyId RowSpan => GridItemPattern.RowSpanProperty;
+    }
+}

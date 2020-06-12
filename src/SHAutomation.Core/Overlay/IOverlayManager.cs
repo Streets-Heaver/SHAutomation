@@ -1,0 +1,28 @@
+﻿using System;
+using System.Drawing;
+
+namespace SHAutomation.Core.Overlay
+{
+    public interface IOverlayManager : IDisposable
+    {
+        /// <summary>
+        /// Border size of the overlay
+        /// </summary>
+        int Size { get; set; }
+
+        /// <summary>
+        /// Margin of the overlay (use negative to move it inside)
+        /// </summary>
+        int Margin { get; set; }
+
+        /// <summary>
+        /// Shows the overlay for a given duration asynchronously.
+        /// </summary>
+        void Show(Rectangle rectangle, Color color, int durationInMs, string displayText = null);
+
+        /// <summary>
+        /// Shows the overlay for a given duration and blocks further execution until it is hidden again.
+        /// </summary>
+        void ShowBlocking(Rectangle rectangle, Color color, int durationInMs, string displayText = null);
+    }
+}
