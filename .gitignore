@@ -14,6 +14,8 @@ log.txt
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+shautomation.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

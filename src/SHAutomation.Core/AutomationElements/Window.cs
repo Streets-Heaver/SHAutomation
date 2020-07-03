@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using SHAutomation.Core.Caching;
 using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;
 using SHAutomation.Core.Exceptions;
@@ -12,13 +13,22 @@ namespace SHAutomation.Core.AutomationElements
     /// <summary>
     /// Class to interact with a window element.
     /// </summary>
-    public class Window :SHAutomationElement
+    public partial class Window : SHAutomationElement
     {
         /// <summary>
         /// Creates a <see cref="Window"/> element.
         /// </summary>
         public Window(FrameworkAutomationElementBase frameworkAutomationElement) : base(frameworkAutomationElement)
         {
+            CacheService = new CacheService();
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Window"/> element.
+        /// </summary>
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement, string pathToConfigFile) : base(frameworkAutomationElement)
+        {
+            CacheService = new CacheService(pathToConfigFile);
         }
 
         /// <summary>

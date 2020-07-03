@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHAutomation.Core", "SHAuto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHAutomation.UIA3", "SHAutomation.UIA3\SHAutomation.UIA3.csproj", "{31F978A2-5BAB-4612-BC54-5648FDF18E11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHAutomation.Tests", "..\test\SHAutomation.Tests\SHAutomation.Tests.csproj", "{EBEF6B09-2CA3-4EB9-923D-03AF94462042}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{31F978A2-5BAB-4612-BC54-5648FDF18E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31F978A2-5BAB-4612-BC54-5648FDF18E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31F978A2-5BAB-4612-BC54-5648FDF18E11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBEF6B09-2CA3-4EB9-923D-03AF94462042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBEF6B09-2CA3-4EB9-923D-03AF94462042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBEF6B09-2CA3-4EB9-923D-03AF94462042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBEF6B09-2CA3-4EB9-923D-03AF94462042}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
