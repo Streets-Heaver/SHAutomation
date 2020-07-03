@@ -36,10 +36,37 @@ namespace SHAutomation.Tests
         }
 
         [TestMethod]
-        public void XPathIsNotCachedWhenMatchesOriginalValue_SaveXPathCache_BeTrue()
+        public void XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue()
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
+            var window = new Window(frameworkAutomationElementMock.Object);
+
+            window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache("XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue");
+            window.GetXPathCache("XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue");
+
+            window.XPathList.Should().Contain((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+        }
+
+        [TestMethod]
+        public void XPathIsRetrievedFromAppData_GetXPathCache_BeTrue()
+        {
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+
+            var window = new Window(frameworkAutomationElementMock.Object);
+
+            window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache("XPathIsRetrievedFromAppData_GetXPathCache_BeTrue");
+            window.GetXPathCache("XPathIsRetrievedFromAppData_GetXPathCache_BeTrue");
+
+            window.XPathList.Should().Contain((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+        }
+
+        [TestMethod]
+        public void XPathIsNotCachedWhenMatchesOriginalValue_SaveXPathCache_BeTrue()
+        {
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
@@ -161,7 +188,7 @@ namespace SHAutomation.Tests
         {
 
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService();
+            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
             string output = cache.GenerateCacheKey("XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
             output.Should().Be("XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
@@ -175,7 +202,7 @@ namespace SHAutomation.Tests
         {
 
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService();
+            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", string.Empty);
             string output = cache.GenerateCacheKey( "XPathKeyReturnedAsNormalTestWhenNoBranchVariable_GenerateCacheKey_BeTrue");
             output.Should().Be("XPathKeyReturnedAsNormalTestWhenNoBranchVariable_GenerateCacheKey_BeTrue");
@@ -186,7 +213,7 @@ namespace SHAutomation.Tests
         {
             Environment.SetEnvironmentVariable("BranchMatchRegex", @"\d\.\d\d");
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService();
+            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.24");
             string output = cache.GenerateCacheKey("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue");
             output.Should().Be("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue_8.24");

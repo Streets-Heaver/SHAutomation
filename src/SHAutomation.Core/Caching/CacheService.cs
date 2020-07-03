@@ -49,18 +49,6 @@ namespace SHAutomation.Core.Caching
                 _branchNameRegex = @"\d\.\d\d"; //config.BranchMatchRegex.Replace(@"\\", @"\");
 
             }
-            else if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RedisEndPoint")) &&
-                !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RedisPort")))
-            {
-                _usingRedis = true;
-                Redis.EndPoint = Environment.GetEnvironmentVariable("RedisEndPoint");
-                Redis.Password = Environment.GetEnvironmentVariable("RedisPassword");
-
-                Redis.Port = int.Parse(Environment.GetEnvironmentVariable("RedisPort"));
-
-                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RedisUseSSL")))
-                    Redis.UseSSL = bool.Parse(Environment.GetEnvironmentVariable("RedisUseSSL"));
-            }
         }
 
         public void SetCacheValue(string key, string value)
@@ -140,7 +128,7 @@ namespace SHAutomation.Core.Caching
         public string GenerateCacheKey(string testName)
         {
             var branchName = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var regex = !string.IsNullOrEmpty(_branchNameRegex) ? _branchNameRegex : Environment.GetEnvironmentVariable("BranchMatchRegex"); //@"\d\.\d\d"
+            var regex = !string.IsNullOrEmpty(_branchNameRegex) ? _branchNameRegex : null; //@"\d\.\d\d"
 
             if (string.IsNullOrEmpty(branchName))
                 return testName;
