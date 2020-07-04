@@ -86,7 +86,7 @@ namespace SHAutomation.Core.AutomationElements
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var condition_string = condition.ToString();
             bool canUseXpath = !(condition_string.Contains("OR") || condition_string.Contains("NOT"));
-            return canUseXpath ? GetXpathFromPropertyConditions(GetPropertyConditions(condition), timeout) : null;
+            return canUseXpath ? GetXPathFromPropertyConditions(GetPropertyConditions(condition), timeout) : null;
         }
 
 
@@ -119,7 +119,7 @@ namespace SHAutomation.Core.AutomationElements
             return GetPropertyConditions(condition);
         }
 
-        private SHAutomationElement GetXpathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, int xPathTimeout = 10000)
+        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, int xPathTimeout = 10000)
         {
             if (propertyList.Any())
             {
@@ -197,7 +197,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (!_xPathValues.Any())
             {
-                _xPathValues.Add(SHAutomation.Core.Debug.GetXPathToElement(element));
+                _xPathValues.Add(SHAutomation.Core.Debug.GetXPathToElement(element, this));
                 _hasXPathValue = false;
             }
             else
@@ -212,7 +212,7 @@ namespace SHAutomation.Core.AutomationElements
                     var items = str.Split('/').ToList();
                     // "" and Window
                     var lastItem = items.Last();
-                    items.RemoveRange(0, 2);
+                    items.RemoveRange(0, 1);
 
                     lastItem = lastItem.Split('[')[0];
 

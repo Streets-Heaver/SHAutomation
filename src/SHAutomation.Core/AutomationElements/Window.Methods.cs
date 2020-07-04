@@ -31,7 +31,7 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     propertyConditions = GetPropertyConditions(condition);
                 }
-                control = GetXpathFromPropertyConditions(propertyConditions) ?? FindFirstDescendant(conditionFunc, timeout: timeout);
+                control = GetXPathFromPropertyConditions(propertyConditions) ?? FindFirstDescendant(conditionFunc, timeout: timeout);
 
             }
             else

@@ -12,12 +12,14 @@ namespace SHAutomation.Core
     /// </summary>
     public static class Debug
     {
+        private static SHAutomationElement _callingRoot;
         /// <summary>
         /// Gets the XPath to the element until the desktop or the given root element.
         /// Warning: This is quite a heavy operation
         /// </summary>
         public static string GetXPathToElement(SHAutomationElement element,SHAutomationElement rootElement = null)
         {
+            _callingRoot = rootElement;
             var treeWalker = element.Automation.TreeWalkerFactory.GetControlViewWalker();
             return GetXPathToElement(element, treeWalker, rootElement);
         }
@@ -25,7 +27,7 @@ namespace SHAutomation.Core
         private static string GetXPathToElement(SHAutomationElement element, ITreeWalker treeWalker,SHAutomationElement rootElement = null)
         {
             var parent = treeWalker.GetParent(element);
-            if (parent == null || (rootElement != null && parent.Equals(rootElement)))
+            if (parent == null || (rootElement != null && parent.Equals(_callingRoot.Parent)))
             {
                 return string.Empty;
             }
