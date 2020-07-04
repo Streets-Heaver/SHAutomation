@@ -110,7 +110,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// The processId of the element in string format.
         /// </summary>
-        public string ProcessIdString => Properties.ProcessId.Value.ToString();
+        public string ProcessIdstring => Properties.ProcessId.Value.ToString();
 
         /// <summary>
         /// The automation id of the element.
@@ -506,7 +506,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public new string ToString()
         {
-            return String.Format("AutomationId:{0}, Name:{1}, ControlType:{2}, FrameworkId:{3}",
+            return string.Format("AutomationId:{0}, Name:{1}, ControlType:{2}, FrameworkId:{3}",
                 Properties.AutomationId.ValueOrDefault, Properties.Name.ValueOrDefault,
                 Properties.LocalizedControlType.ValueOrDefault, Properties.FrameworkId.ValueOrDefault);
         }

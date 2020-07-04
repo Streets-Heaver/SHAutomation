@@ -15,7 +15,7 @@ namespace SHAutomation.Core.Exceptions
         }
 
         public PropertyNotCachedException(PropertyId property)
-            : base(String.Format(DefaultMessageWithData, property))
+            : base(string.Format(DefaultMessageWithData, property))
         {
             Property = property;
         }
@@ -27,7 +27,7 @@ namespace SHAutomation.Core.Exceptions
         }
 
         public PropertyNotCachedException(PropertyId property, Exception innerException)
-            : base(String.Format(DefaultMessageWithData, property), innerException)
+            : base(string.Format(DefaultMessageWithData, property), innerException)
         {
             Property = property;
         }

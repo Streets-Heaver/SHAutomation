@@ -228,7 +228,7 @@ namespace SHAutomation.Core.Capturing
 
         private void OnProcessDataReceived(object s, DataReceivedEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(e.Data))
+            if (!string.IsNullOrWhiteSpace(e.Data))
             {
                 //Logger.Default.Info(e.Data);
             }

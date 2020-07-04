@@ -30,7 +30,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             get
             {
-                var header = FindFirstChild(cf => cf.ByName(LocalizedStrings.DataGridViewHeader).Or(cf.ByControlType(ControlType.Header)));
+                var header = FindFirstChild(cf => cf.ByName(Localizedstrings.DataGridViewHeader).Or(cf.ByControlType(ControlType.Header)));
                 return header == null ? null : new DataGridViewHeader(header.FrameworkAutomationElement);
             }
         }
@@ -43,7 +43,7 @@ namespace SHAutomation.Core.AutomationElements
             get
             {
                 var rows = FindAllChildren(cf => cf.ByControlType(ControlType.Custom).Or(cf.ByControlType(ControlType.DataItem))
-                    .And(cf.ByName(LocalizedStrings.DataGridViewHeader).Not()));
+                    .And(cf.ByName(Localizedstrings.DataGridViewHeader).Not()));
                 // Remove the last row if we have the "add" row
                 if (HasAddRow)
                 {
@@ -78,11 +78,11 @@ namespace SHAutomation.Core.AutomationElements
                 var convertedHeaderItems = headerItems.Select(x => new DataGridViewHeaderItem(x.FrameworkAutomationElement))
                     .ToList();
                 // Remove the top-left header item if it exists (can be the first or last item)
-                if (convertedHeaderItems.Last().Text == LocalizedStrings.DataGridViewHeaderItemTopLeft)
+                if (convertedHeaderItems.Last().Text == Localizedstrings.DataGridViewHeaderItemTopLeft)
                 {
                     convertedHeaderItems = convertedHeaderItems.Take(convertedHeaderItems.Count - 1).ToList();
                 }
-                else if (convertedHeaderItems.First().Text == LocalizedStrings.DataGridViewHeaderItemTopLeft)
+                else if (convertedHeaderItems.First().Text == Localizedstrings.DataGridViewHeaderItemTopLeft)
                 {
                     convertedHeaderItems = convertedHeaderItems.Skip(1).ToList();
                 }

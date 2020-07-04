@@ -14,9 +14,9 @@ namespace SHAutomation.Core.EventHandlers
         }
 
         protected void HandleNotificationEvent(SHAutomationElement sender, NotificationKind notificationKind,
-            NotificationProcessing notificationProcessing, string displayString, string activityId)
+            NotificationProcessing notificationProcessing, string displaystring, string activityId)
         {
-            _callAction(sender, notificationKind, notificationProcessing, displayString, activityId);
+            _callAction(sender, notificationKind, notificationProcessing, displaystring, activityId);
         }
 
         /// <inheritdoc />

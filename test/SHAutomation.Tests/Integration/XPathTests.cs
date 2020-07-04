@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SHAutomation.Tests
+namespace SHAutomation.Core.Tests.Integration
 {
     [TestClass]
     public class XPathTests

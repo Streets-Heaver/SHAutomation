@@ -30,7 +30,7 @@ namespace SHAutomation.Core.AutomationElements
         string Name { get; }
         FrameworkAutomationElementBase.IFrameworkPatterns Patterns { get; }
         int ProcessId { get; }
-        string ProcessIdString { get; }
+        string ProcessIdstring { get; }
         FrameworkAutomationElementBase.IProperties Properties { get; }
 
         Bitmap Capture();

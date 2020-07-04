@@ -37,7 +37,7 @@ namespace SHAutomation.Core.Capturing
         /// - mem.v.free.perc: The virtual free memory in percent.
         /// - mem.v.used.perc: The virtual used memory in percent.
         /// </summary>
-        public string OverlayStringFormat { get; set; } = "{dt:yyyy-MM-dd HH:mm:ss.fff} / {name} / CPU: {cpu} / RAM: {mem.p.used}/{mem.p.tot} ({mem.p.used.perc})";
+        public string OverlaystringFormat { get; set; } = "{dt:yyyy-MM-dd HH:mm:ss.fff} / {name} / CPU: {cpu} / RAM: {mem.p.used}/{mem.p.tot} ({mem.p.used.perc})";
 
         /// <summary>
         /// The position of the overlay.
@@ -63,11 +63,11 @@ namespace SHAutomation.Core.Capturing
         public override void Draw(Graphics g)
         {
             const int textOffsetToBg = 2;
-            var overlayString = FormatOverlayString(OverlayStringFormat);
+            var overlaystring = FormatOverlaystring(OverlaystringFormat);
             var font = new Font("Consolas", 10f);
             var bgBrush = new SolidBrush(OverlayBackgroundColor);
             var fontBrush = new SolidBrush(OverlayTextColor);
-            var textSize = g.MeasureString(overlayString, font);
+            var textSize = g.MeasureString(overlaystring, font);
             // Calculate background size and position
             var bgHeight = textSize.Height + 2 * textOffsetToBg;
             var bgWidth = CaptureImage.OriginalBounds.Width;
@@ -87,35 +87,35 @@ namespace SHAutomation.Core.Capturing
             // Draw the background
             g.FillRectangle(bgBrush, bgPosX, bgPosY, bgWidth, bgHeight);
             // Draw the text
-            g.DrawString(overlayString, font, fontBrush, textPosX, textPosY);
+            g.DrawString(overlaystring, font, fontBrush, textPosX, textPosY);
         }
 
-        private string FormatOverlayString(string overlayString)
+        private string FormatOverlaystring(string overlaystring)
         {
             SystemInfo.RefreshAll();
             // Replace the simple values
-            overlayString = overlayString
+            overlaystring = overlaystring
                 .Replace("{name}", $"{Environment.MachineName}")
                 .Replace("{cpu}", $"{SystemInfo.CpuUsage,5:##.00}%")
-                .Replace("{mem.p.tot}", $"{StringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryTotal, 2),7}")
-                .Replace("{mem.p.free}", $"{StringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryFree, 2),7}")
-                .Replace("{mem.p.used}", $"{StringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryUsed, 2),7}")
+                .Replace("{mem.p.tot}", $"{stringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryTotal, 2),7}")
+                .Replace("{mem.p.free}", $"{stringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryFree, 2),7}")
+                .Replace("{mem.p.used}", $"{stringFormatter.SizeSuffix(SystemInfo.PhysicalMemoryUsed, 2),7}")
                 .Replace("{mem.p.free.perc}", $"{SystemInfo.PhysicalMemoryFreePercent,5:##.00}%")
                 .Replace("{mem.p.used.perc}", $"{SystemInfo.PhysicalMemoryUsedPercent,5:##.00}%")
-                .Replace("{mem.v.tot}", $"{StringFormatter.SizeSuffix(SystemInfo.VirtualMemoryTotal, 2),7}")
-                .Replace("{mem.v.free}", $"{StringFormatter.SizeSuffix(SystemInfo.VirtualMemoryFree, 2),7}")
-                .Replace("{mem.v.used}", $"{StringFormatter.SizeSuffix(SystemInfo.VirtualMemoryUsed, 2),7}")
+                .Replace("{mem.v.tot}", $"{stringFormatter.SizeSuffix(SystemInfo.VirtualMemoryTotal, 2),7}")
+                .Replace("{mem.v.free}", $"{stringFormatter.SizeSuffix(SystemInfo.VirtualMemoryFree, 2),7}")
+                .Replace("{mem.v.used}", $"{stringFormatter.SizeSuffix(SystemInfo.VirtualMemoryUsed, 2),7}")
                 .Replace("{mem.v.free.perc}", $"{SystemInfo.VirtualMemoryFreePercent,5:##.00}%")
                 .Replace("{mem.v.used.perc}", $"{SystemInfo.VirtualMemoryUsedPercent,5:##.00}%");
 
             // Replace the date/time
             var now = DateTime.Now;
-            overlayString = Regex.Replace(overlayString, @"\{dt:?(.*?)\}", m => now.ToString(m.Groups[1].Value));
+            overlaystring = Regex.Replace(overlaystring, @"\{dt:?(.*?)\}", m => now.ToString(m.Groups[1].Value));
 
             // Replace the custom timespan
-            overlayString = Regex.Replace(overlayString, @"\{rt:?(.*?)\}", m => RecordTimeSpan.ToString(m.Groups[1].Value));
+            overlaystring = Regex.Replace(overlaystring, @"\{rt:?(.*?)\}", m => RecordTimeSpan.ToString(m.Groups[1].Value));
 
-            return overlayString;
+            return overlaystring;
         }
 
         private bool IsPositionTop()

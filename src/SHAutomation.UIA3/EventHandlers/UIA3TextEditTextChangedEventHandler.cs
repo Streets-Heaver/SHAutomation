@@ -16,11 +16,11 @@ namespace SHAutomation.UIA3.EventHandlers
         {
         }
 
-        public void HandleTextEditTextChangedEvent(UIA.IUIAutomationElement sender, UIA.TextEditChangeType textEditChangeType, string[] eventStrings)
+        public void HandleTextEditTextChangedEvent(UIA.IUIAutomationElement sender, UIA.TextEditChangeType textEditChangeType, string[] eventstrings)
         {
             var frameworkElement = new UIA3FrameworkAutomationElement((UIA3Automation)Automation, sender);
             var senderElement = new SHAutomationElement(frameworkElement);
-            HandleTextEditTextChangedEvent(senderElement, (TextEditChangeType)textEditChangeType, eventStrings);
+            HandleTextEditTextChangedEvent(senderElement, (TextEditChangeType)textEditChangeType, eventstrings);
         }
 
     }

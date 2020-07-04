@@ -16,9 +16,9 @@ namespace SHAutomation.Core.EventHandlers
             _callAction = callAction;
         }
 
-        protected void HandleTextEditTextChangedEvent(SHAutomationElement sender, TextEditChangeType textEditChangeType, string[] eventStrings)
+        protected void HandleTextEditTextChangedEvent(SHAutomationElement sender, TextEditChangeType textEditChangeType, string[] eventstrings)
         {
-            _callAction(sender, textEditChangeType, eventStrings);
+            _callAction(sender, textEditChangeType, eventstrings);
         }
 
         /// <inheritdoc />

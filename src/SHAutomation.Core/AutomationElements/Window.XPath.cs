@@ -125,17 +125,17 @@ namespace SHAutomation.Core.AutomationElements
             {
                 if (propertyList.Count == 1)
                 {
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
+                    GetXPathValueFromCache(stringExtensions.ConvertstringValueToValidXPath(propertyList.First().Value.Value.ToString()), stringExtensions.ConvertstringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
                 }
                 else
                 {
                     List<string> propList = new List<string>();
                     foreach ((PropertyCondition Value, bool Ignore) p in propertyList)
                     {
-                        propList.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name.ToString()));
+                        propList.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name.ToString()));
 
                     }
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
+                    GetXPathValueFromCache(stringExtensions.ConvertstringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
                 }
                 return _xPathValues.Any() ? FindFirstByXPath(_xPathValues, xPathTimeout) : null;
             }
@@ -164,13 +164,13 @@ namespace SHAutomation.Core.AutomationElements
                     {
                         if (p.Ignore)
                         {
-                            properties.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name));
-                            values.Add(StringExtensions.ConvertStringValueToValidXPath(control.GetType().GetProperty(p.Value.Property.Name).GetValue(control, null).ToString()));
+                            properties.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name));
+                            values.Add(stringExtensions.ConvertstringValueToValidXPath(control.GetType().GetProperty(p.Value.Property.Name).GetValue(control, null).ToString()));
                         }
                         else
                         {
-                            properties.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name));
-                            values.Add(StringExtensions.ConvertStringValueToValidXPath(p.Value.Value.ToString()));
+                            properties.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name));
+                            values.Add(stringExtensions.ConvertstringValueToValidXPath(p.Value.Value.ToString()));
                         }
                     }
                     GenerateXPathAndCache(string.Join("`", values.ToArray()), string.Join("`", properties.ToArray()), control);

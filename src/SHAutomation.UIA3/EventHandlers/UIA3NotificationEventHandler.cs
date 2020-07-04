@@ -14,11 +14,11 @@ namespace SHAutomation.UIA3.EventHandlers
         }
 
         public void HandleNotificationEvent(UIA.IUIAutomationElement sender, UIA.NotificationKind notificationKind,
-            UIA.NotificationProcessing notificationProcessing, string displayString, string activityId)
+            UIA.NotificationProcessing notificationProcessing, string displaystring, string activityId)
         {
             var frameworkElement = new UIA3FrameworkAutomationElement((UIA3Automation)Automation, sender);
             var senderElement = new SHAutomationElement(frameworkElement);
-            HandleNotificationEvent(senderElement, (NotificationKind)notificationKind, (NotificationProcessing)notificationProcessing, displayString, activityId);
+            HandleNotificationEvent(senderElement, (NotificationKind)notificationKind, (NotificationProcessing)notificationProcessing, displaystring, activityId);
         }
     }
 }

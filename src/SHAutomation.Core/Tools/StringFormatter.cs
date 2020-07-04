@@ -2,7 +2,7 @@
 
 namespace SHAutomation.Core.Tools
 {
-    public static class StringFormatter
+    public static class stringFormatter
     {
         private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
         /// <summary>

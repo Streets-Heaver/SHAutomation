@@ -27,7 +27,7 @@ namespace SHAutomation.Core
             var parent = treeWalker.GetParent(element);
             if (parent == null || (rootElement != null && parent.Equals(rootElement)))
             {
-                return String.Empty;
+                return string.Empty;
             }
             // Get the index
             var allChildren = parent.FindAllChildren(cf => cf.ByControlType(element.Properties.ControlType));
@@ -80,14 +80,14 @@ namespace SHAutomation.Core
                 {
                     // Re-find the root element with caching activated
                     sHAutomationElement = sHAutomationElement.FindFirst(TreeScope.Element, TrueCondition.Default);
-                    Details(stringBuilder, sHAutomationElement, String.Empty);
+                    Details(stringBuilder, sHAutomationElement, string.Empty);
                 }
                 return stringBuilder.ToString();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Failed to dump info: " + ex);
-                return String.Empty;
+                return string.Empty;
             }
         }
 

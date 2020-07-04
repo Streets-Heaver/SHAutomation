@@ -121,7 +121,7 @@ namespace SHAutomation.Core.Tools
         /// </summary>
         public static RetryResult<string> WhileEmpty(Func<string> checkMethod, TimeSpan? timeout = null, TimeSpan? interval = null, bool throwOnTimeout = false, bool ignoreException = false)
         {
-            return While(checkMethod, String.IsNullOrEmpty, timeout: timeout, interval: interval, throwOnTimeout: throwOnTimeout, ignoreException: ignoreException);
+            return While(checkMethod, string.IsNullOrEmpty, timeout: timeout, interval: interval, throwOnTimeout: throwOnTimeout, ignoreException: ignoreException);
         }
 
         /// <summary>

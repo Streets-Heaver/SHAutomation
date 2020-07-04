@@ -175,7 +175,7 @@ namespace SHAutomation.Core
 
         public static Application Launch(ProcessStartInfo processStartInfo)
         {
-            if (String.IsNullOrEmpty(processStartInfo.WorkingDirectory))
+            if (string.IsNullOrEmpty(processStartInfo.WorkingDirectory))
             {
                 processStartInfo.WorkingDirectory = ".";
             }

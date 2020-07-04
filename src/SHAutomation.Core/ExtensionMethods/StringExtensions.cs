@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SHAutomation.Core.ExtensionMethods
 {
-    public static class StringExtensions
+    public static class stringExtensions
     {
         /// <summary>
         /// Changes first letter of each string (spaced) to upper case
@@ -91,20 +91,20 @@ namespace SHAutomation.Core.ExtensionMethods
         {
             string strRegex = @"(?<=[a-z])([A-Z])|(?<=[A-Z])([A-Z][a-z])";
             Regex myRegex = new Regex(strRegex, RegexOptions.None);
-            string strTargetString = value;
+            string strTargetstring = value;
             string strReplace = @" $1$2";
 
-            return myRegex.Replace(strTargetString, strReplace).Split(' ');
+            return myRegex.Replace(strTargetstring, strReplace).Split(' ');
         }
 
         public static string SpaceAtCamelCase(string value)
         {
             string strRegex = @"(?<=[a-z])([A-Z])|(?<=[A-Z])([A-Z][a-z])";
             Regex myRegex = new Regex(strRegex, RegexOptions.None);
-            string strTargetString = value;
+            string strTargetstring = value;
             string strReplace = @" $1$2";
 
-            return myRegex.Replace(strTargetString, strReplace);
+            return myRegex.Replace(strTargetstring, strReplace);
         }
         public static string[] SplitAtSpace(string value)
         {
@@ -114,7 +114,7 @@ namespace SHAutomation.Core.ExtensionMethods
         {
             return value.Split(' ')[indexToReturn];
         }
-        public static string ConvertStringValueToValidXPath(string value)
+        public static string ConvertstringValueToValidXPath(string value)
         {
             return value.Replace("'", "&quot;");
         }
@@ -122,7 +122,7 @@ namespace SHAutomation.Core.ExtensionMethods
         {
             return Regex.Replace(value, @"[^\d]", "");
         }
-        public static string ConvertStringPropertyToValidXPath(string value)
+        public static string ConvertstringPropertyToValidXPath(string value)
         {
             if (value == "Text")
             {

@@ -74,7 +74,7 @@ namespace SHAutomation.Core.AutomationElements
             get
             {
                 var mainWindow = GetMainWindow();
-                var popup = mainWindow.FindFirstChild(cf => cf.ByControlType(ControlType.Window).And(cf.ByText(String.Empty).And(cf.ByClassName("Popup"))));
+                var popup = mainWindow.FindFirstChild(cf => cf.ByControlType(ControlType.Window).And(cf.ByText(string.Empty).And(cf.ByClassName("Popup"))));
                 return popup?.AsWindow();
             }
         }

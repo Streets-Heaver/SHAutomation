@@ -3,9 +3,9 @@
     /// <summary>
     /// Static class which provides localized texts of some control texts.
     /// </summary>
-    public static class LocalizedStrings
+    public static class Localizedstrings
     {
-        static LocalizedStrings()
+        static Localizedstrings()
         {
             switch (OperatingSystem.CurrentCulture.TwoLetterISOLanguageName)
             {

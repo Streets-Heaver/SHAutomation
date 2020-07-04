@@ -76,8 +76,8 @@ namespace SHAutomation.Core.AutomationElements
         {
             Focus();
             var valuePattern = Patterns.Value.PatternOrDefault;
-            valuePattern?.SetValue(String.Empty);
-            if (String.IsNullOrEmpty(value)) return;
+            valuePattern?.SetValue(string.Empty);
+            if (string.IsNullOrEmpty(value)) return;
 
             var lines = value.Replace("\r\n", "\n").Split('\n');
             Keyboard.Type(lines[0]);

@@ -17,7 +17,7 @@ namespace SHAutomation.Core.Exceptions
         }
 
         public NotSupportedException(Exception innerException)
-            : base(String.Empty, innerException)
+            : base(string.Empty, innerException)
         {
         }
 

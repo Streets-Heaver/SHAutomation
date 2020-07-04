@@ -65,13 +65,13 @@ namespace SHAutomation.Core
         public override XmlNameTable NameTable => throw new NotImplementedException();
 
         /// <inheritdoc />
-        public override string NamespaceURI => String.Empty;
+        public override string NamespaceURI => string.Empty;
 
         /// <inheritdoc />
-        public override string Prefix => String.Empty;
+        public override string Prefix => string.Empty;
 
         /// <inheritdoc />
-        public override string BaseURI => String.Empty;
+        public override string BaseURI => string.Empty;
 
         /// <inheritdoc />
         public override bool IsEmptyElement => false;
@@ -119,14 +119,14 @@ namespace SHAutomation.Core
         {
             if (IsInAttribute)
             {
-                return String.Empty;
+                return string.Empty;
             }
             var attributeIndex = GetAttributeIndexFromName(localName);
             if (attributeIndex != NoAttributeValue)
             {
                 return GetAttributeValue(attributeIndex);
             }
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <inheritdoc />

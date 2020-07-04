@@ -35,10 +35,10 @@ namespace SHAutomation.Core.AutomationElements
             get
             {
                 var value = Properties.Name.ValueOrDefault;
-                if (String.IsNullOrEmpty(value) || value.Contains("System.Windows.Controls.TreeViewItem"))
+                if (string.IsNullOrEmpty(value) || value.Contains("System.Windows.Controls.TreeViewItem"))
                 {
                     var textElement = FindFirstChild(cf => cf.ByControlType(ControlType.Text));
-                    return textElement == null ? String.Empty : textElement.Properties.Name.ValueOrDefault;
+                    return textElement == null ? string.Empty : textElement.Properties.Name.ValueOrDefault;
                 }
                 return value;
             }
