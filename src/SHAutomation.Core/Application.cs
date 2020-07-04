@@ -26,11 +26,6 @@ namespace SHAutomation.Core
         private bool _disposed;
 
         /// <summary>
-        /// Flag to indicate, if the application is a windows store app.
-        /// </summary>
-        public bool IsStoreApp { get; }
-
-        /// <summary>
         /// The proces Id of the application.
         /// </summary>
         public int ProcessId => _process.Id;
@@ -61,8 +56,8 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="processId">The process id.</param>
         /// <param name="isStoreApp">Flag to define if it's a store app or not.</param>
-        public Application(int processId, bool isStoreApp = false)
-            : this(FindProcess(processId), isStoreApp)
+        public Application(int processId)
+            : this(FindProcess(processId))
         {
         }
 
@@ -71,10 +66,10 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="process">The process.</param>
         /// <param name="isStoreApp">Flag to define if it's a store app or not.</param>
-        public Application(Process process, bool isStoreApp = false)
+        public Application(Process process)
         {
             _process = process ?? throw new ArgumentNullException(nameof(process));
-            IsStoreApp = isStoreApp;
+         
         }
 
         /// <summary>
@@ -88,10 +83,6 @@ namespace SHAutomation.Core
                 return true;
             }
             _process.CloseMainWindow();
-            if (IsStoreApp)
-            {
-                return true;
-            }
             _process.WaitForExit(5000);
             if (!_process.HasExited)
             {
@@ -199,7 +190,7 @@ namespace SHAutomation.Core
         public static Application LaunchStoreApp(string appUserModelId, string arguments = null)
         {
             var process = WindowsStoreAppLauncher.Launch(appUserModelId, arguments);
-            return new Application(process, true);
+            return new Application(process);
         }
 
         /// <summary>

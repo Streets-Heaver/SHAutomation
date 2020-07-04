@@ -27,5 +27,17 @@ namespace SHAutomation.Core.Tests.UI
 
             window.SaveXPathCache(TestContext.TestName);
         }
+
+        [TestMethod]
+        public void ElementFoundUsingAutomationId_Find_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.Find("num3Button");
+            num3Button.Should().NotBeNull();
+
+        }
     }
 }
