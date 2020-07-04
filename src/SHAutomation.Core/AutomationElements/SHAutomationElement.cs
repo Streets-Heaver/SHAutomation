@@ -11,6 +11,7 @@ using SHAutomation.Core.Input;
 using SHAutomation.Core.WindowsAPI;
 using SHAutomation.Core.StaticClasses;
 using System.Globalization;
+using SHAutomation.Core.Enums;
 
 namespace SHAutomation.Core.AutomationElements
 {
@@ -168,40 +169,30 @@ namespace SHAutomation.Core.AutomationElements
        // public string HelpText => Properties.HelpText.Value;
         #endregion Convenience properties
 
-        /// <summary>
-        /// Performs a left click on the element.
-        /// </summary>
-        /// <param name="moveMouse">Flag to indicate, if the mouse should move slowly (true) or instantly (false).</param>
-        public void Click(bool moveMouse = false)
+   
+        public void HoverOver(MouseAction? buttonToPress = null, int mouseSpeed = 5)
         {
-            PerformMouseAction(moveMouse, Mouse.LeftClick);
-        }
-
-        /// <summary>
-        /// Performs a double left click on the element.
-        /// </summary>
-        /// <param name="moveMouse">Flag to indicate, if the mouse should move slowly (true) or instantly (false).</param>
-        public void DoubleClick(bool moveMouse = false)
-        {
-            PerformMouseAction(moveMouse, Mouse.LeftDoubleClick);
-        }
-
-        /// <summary>
-        /// Performs a right click on the element.
-        /// </summary>
-        /// <param name="moveMouse">Flag to indicate, if the mouse should move slowly (true) or instantly (false).</param>
-        public void RightClick(bool moveMouse = false)
-        {
-            PerformMouseAction(moveMouse, Mouse.RightClick);
-        }
-
-        /// <summary>
-        /// Performs a double right click on the element.
-        /// </summary>
-        /// <param name="moveMouse">Flag to indicate, if the mouse should move slowly (true) or instantly (false).</param>
-        public void RightDoubleClick(bool moveMouse = false)
-        {
-            PerformMouseAction(moveMouse, Mouse.RightDoubleClick);
+            SHSpinWait.SpinUntil(() => SupportsBoundingRectangle, 5000);
+            if (SupportsBoundingRectangle)
+            {
+                SHSpinWait.SpinUntil(() => !BoundingRectangle.IsEmpty, 10000);
+                if (!BoundingRectangle.IsEmpty)
+                {
+                    MouseHelpers.MouseMoveTo(Centre(), mouseSpeed);
+                    if (buttonToPress.HasValue)
+                    {
+                        MouseHelpers.MouseClick(buttonToPress.Value);
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("HoverOver bounding rectangle failed to load or is not supported (You may need an onscreen check)");
+                }
+            }
+            else
+            {
+                throw new ElementNotFoundException("HoverOver bounding rectangle is not supported");
+            }
         }
 
         public void TryFocus()

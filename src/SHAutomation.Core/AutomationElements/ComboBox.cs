@@ -216,7 +216,7 @@ namespace SHAutomation.Core.AutomationElements
                 if (IsEditable)
                 {
                     // WinForms editable combo box only closes on click and not on invoke
-                    openButton.Click();
+                    openButton.HoverOver(Enums.MouseAction.LeftClick);
                 }
                 else
                 {

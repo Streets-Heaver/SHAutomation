@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SHAutomation.Core.Enums;
 using SHAutomation.UIA3;
 using System;
 using System.Collections.Generic;

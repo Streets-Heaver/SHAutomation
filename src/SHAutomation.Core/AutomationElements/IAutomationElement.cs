@@ -35,8 +35,6 @@ namespace SHAutomation.Core.AutomationElements
 
         Bitmap Capture();
         void CaptureToFile(string filePath);
-        void Click(bool moveMouse = false);
-        void DoubleClick(bool moveMouse = false);
         bool Equals(SHAutomationElement other);
         bool Equals(object obj);
         void Focus();
@@ -55,8 +53,7 @@ namespace SHAutomation.Core.AutomationElements
         PropertyChangedEventHandlerBase RegisterPropertyChangedEvent(TreeScope treeScope, Action<SHAutomationElement, PropertyId, object> action, params PropertyId[] properties);
         StructureChangedEventHandlerBase RegisterStructureChangedEvent(TreeScope treeScope, Action<SHAutomationElement, StructureChangeType, int[]> action);
         TextEditTextChangedEventHandlerBase RegisterTextEditTextChangedEventHandler(TreeScope treeScope, TextEditChangeType textEditChangeType, Action<SHAutomationElement, TextEditChangeType, string[]> action);
-        void RightClick(bool moveMouse = false);
-        void RightDoubleClick(bool moveMouse = false);
+     
         void SetForeground();
         string ToString();
         void TryFocus();

@@ -3,13 +3,15 @@ using System.Drawing;
 using System.Globalization;
 using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;
+using SHAutomation.Core.Enums;
 using SHAutomation.Core.Identifiers;
 
 namespace SHAutomation.Core.AutomationElements
 {
     public interface ISHAutomationElement : IAutomationElement
     {
-      
+
+        void HoverOver(MouseAction? buttonToPress = null, int mouseSpeed = 5);
         Point? ClickablePoint { get; }
        
         bool IsOnscreen { get; }
