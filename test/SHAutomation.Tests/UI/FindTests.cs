@@ -14,7 +14,7 @@ namespace SHAutomation.Core.Tests.UI
     public class FindTests : UITestBase
     {
         [TestMethod]
-        public void ElementFoundUsingAutomationIdAndCache_Find_BeTrue()
+        public void ElementFoundUsingAutomationIdAndCache_Find_NotBeNull()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
@@ -29,7 +29,7 @@ namespace SHAutomation.Core.Tests.UI
         }
 
         [TestMethod]
-        public void ElementFoundUsingAutomationId_Find_BeTrue()
+        public void ElementFoundUsingAutomationId_Find_NotBeNull()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
