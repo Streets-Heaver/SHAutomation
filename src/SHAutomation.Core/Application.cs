@@ -130,6 +130,7 @@ namespace SHAutomation.Core
 
         protected virtual void Dispose(bool disposing)
         {
+            Close();
             if (_disposed)
             {
                 return;
@@ -233,7 +234,7 @@ namespace SHAutomation.Core
         /// <param name="automation">The automation object to use.</param>
         /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
         /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
-        public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null)
+        public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
         {
             WaitWhileMainHandleIsMissing(waitTimeout);
             var mainWindowHandle = MainWindowHandle;
@@ -241,7 +242,7 @@ namespace SHAutomation.Core
             {
                 return null;
             }
-            var mainWindow = automation.FromHandle(mainWindowHandle).AsWindow();
+            var mainWindow = automation.FromHandle(mainWindowHandle).AsWindow(pathToConfigFile);
             if (mainWindow != null)
             {
                 mainWindow.IsMainWindow = true;

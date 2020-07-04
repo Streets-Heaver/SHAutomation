@@ -304,11 +304,11 @@ namespace SHAutomation.Core.AutomationElements
             SHAutomationElement validXpath = null;
             if (spinWaitTimeout.HasValue)
             {
-                SHSpinWait.SpinUntil(() => FoundXpathInList(xpath, out validXpath), spinWaitTimeout.Value);
+                SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout.Value);
             }
             else
             {
-                FoundXpathInList(xpath, out validXpath);
+                FoundXPathInList(xpath, out validXpath);
             }
             if (validXpath == null)
             {
@@ -320,7 +320,7 @@ namespace SHAutomation.Core.AutomationElements
             return validXpath?.FrameworkAutomationElement != null ? validXpath : null;
         }
 
-        private bool FoundXpathInList(List<string> xpath, out SHAutomationElement xPathObject)
+        private bool FoundXPathInList(List<string> xpath, out SHAutomationElement xPathObject)
         {
             xPathObject = null;
             bool found = false;

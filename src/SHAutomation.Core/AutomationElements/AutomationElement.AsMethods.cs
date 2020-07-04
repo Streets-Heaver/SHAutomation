@@ -224,9 +224,9 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Converts the element to a <see cref="Window"/>.
         /// </summary>
-        public static Window AsWindow(this IAutomationElement self)
+        public static Window AsWindow(this IAutomationElement self, string pathToConfigFile = null)
         {
-            return self == null ? null : new Window(self.FrameworkAutomationElement);
+            return self == null ? null : new Window(self.FrameworkAutomationElement, pathToConfigFile);
         }
 
         /// <summary>
