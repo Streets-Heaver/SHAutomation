@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Definitions;
-
+using SHAutomation.Core.Logging;
 using SHAutomation.Core.Tools;
 
 namespace SHAutomation.Core
@@ -69,7 +69,7 @@ namespace SHAutomation.Core
         public Application(Process process)
         {
             _process = process ?? throw new ArgumentNullException(nameof(process));
-         
+
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace SHAutomation.Core
                 processStartInfo.WorkingDirectory = ".";
             }
 
-      
+
 
             Process process;
             try
@@ -224,8 +224,42 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="automation">The automation object to use.</param>
         /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
+        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
+        /// <param name="pathToLogConfig">Path to Log4Net config file for logging to an elastic search instance</param>
         /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
         public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
+        {
+            return GetMainWindow(automation, waitTimeout, pathToConfigFile, null, null);
+        }
+
+        /// <summary>
+        /// Gets the main window of the application's process.
+        /// </summary>
+        /// <param name="automation">The automation object to use.</param>
+        /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
+        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
+        /// <param name="pathToLogConfig">Path to Log4Net config file for logging to an elastic search instance</param>
+        /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
+        public Window GetMainWindow(AutomationBase automation, string pathToLog4NetConfig, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
+        {
+            return GetMainWindow(automation, waitTimeout, pathToConfigFile, pathToLog4NetConfig, null);
+        }
+
+        /// <summary>
+        /// Gets the main window of the application's process.
+        /// </summary>
+        /// <param name="automation">The automation object to use.</param>
+        /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
+        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
+        /// <param name="loggingService">A custom implementation of ILogging service</param>
+        /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
+        public Window GetMainWindow(AutomationBase automation, ILoggingService loggingService, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
+        {
+            return GetMainWindow(automation, waitTimeout, pathToConfigFile, null, loggingService);
+        }
+
+
+        private Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout, string pathToConfigFile, string pathToLogConfig, ILoggingService loggingService)
         {
             WaitWhileMainHandleIsMissing(waitTimeout);
             var mainWindowHandle = MainWindowHandle;
@@ -233,7 +267,12 @@ namespace SHAutomation.Core
             {
                 return null;
             }
-            var mainWindow = automation.FromHandle(mainWindowHandle).AsWindow(pathToConfigFile);
+
+            var mainWindow = automation.FromHandle(mainWindowHandle)
+                .AsWindow(loggingService != null ? loggingService : (!string.IsNullOrEmpty(pathToConfigFile) ?
+                new LoggingService(Name + " tests", false, Enums.LoggingLevel.High, pathToLogConfig) :
+                new LoggingService()), pathToConfigFile);
+           
             if (mainWindow != null)
             {
                 mainWindow.IsMainWindow = true;

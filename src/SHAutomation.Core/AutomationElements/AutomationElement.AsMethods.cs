@@ -1,5 +1,6 @@
 ﻿using System;
 using SHAutomation.Core.AutomationElements.Scrolling;
+using SHAutomation.Core.Logging;
 
 namespace SHAutomation.Core.AutomationElements
 {
@@ -226,7 +227,15 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public static Window AsWindow(this IAutomationElement self, string pathToConfigFile = null)
         {
-            return self == null ? null : new Window(self.FrameworkAutomationElement, pathToConfigFile);
+            return AsWindow(self, null, pathToConfigFile);
+        }
+
+        /// <summary>
+        /// Converts the element to a <see cref="Window"/>.
+        /// </summary>
+        public static Window AsWindow(this IAutomationElement self, ILoggingService loggingService, string pathToConfigFile = null)
+        {
+            return self == null ? null : new Window(self.FrameworkAutomationElement, loggingService, pathToConfigFile);
         }
 
         /// <summary>

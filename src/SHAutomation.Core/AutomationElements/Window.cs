@@ -6,6 +6,7 @@ using SHAutomation.Core.Caching;
 using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;
 using SHAutomation.Core.Exceptions;
+using SHAutomation.Core.Logging;
 using SHAutomation.Core.WindowsAPI;
 
 namespace SHAutomation.Core.AutomationElements
@@ -15,12 +16,25 @@ namespace SHAutomation.Core.AutomationElements
     /// </summary>
     public partial class Window : SHAutomationElement
     {
+        private ILoggingService _loggingService;
+
         /// <summary>
         /// Creates a <see cref="Window"/> element.
         /// </summary>
         public Window(FrameworkAutomationElementBase frameworkAutomationElement) : base(frameworkAutomationElement)
         {
             CacheService = new CacheService();
+            InitLoggingService(null);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Window"/> element.
+        /// </summary>
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService) : base(frameworkAutomationElement)
+        {
+            CacheService = new CacheService();
+            InitLoggingService(loggingService);
+
         }
 
         /// <summary>
@@ -29,7 +43,30 @@ namespace SHAutomation.Core.AutomationElements
         public Window(FrameworkAutomationElementBase frameworkAutomationElement, string pathToConfigFile) : base(frameworkAutomationElement)
         {
             CacheService = new CacheService(pathToConfigFile);
+            InitLoggingService(null);
+
         }
+
+        /// <summary>
+        /// Creates a <see cref="Window"/> element.
+        /// </summary>
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService, string pathToConfigFile) : base(frameworkAutomationElement)
+        {
+            CacheService = new CacheService(pathToConfigFile);
+            InitLoggingService(loggingService);
+
+
+        }
+
+        private void InitLoggingService(ILoggingService loggingService)
+        {
+            if (loggingService == null)
+                _loggingService = new LoggingService();
+            else
+                _loggingService = loggingService;
+        }
+
+
 
         /// <summary>
         /// Gets the title of the window.

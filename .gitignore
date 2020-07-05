@@ -15,6 +15,7 @@ log.txt
 *.userprefs
 
 shautomation.json
+log4net.config
 
 # Build results
 [Dd]ebug/
