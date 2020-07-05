@@ -197,7 +197,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (!_xPathValues.Any())
             {
-                _xPathValues.Add(SHAutomation.Core.Debug.GetXPathToElement(element, this));
+                _xPathValues.Add(SHAutomation.Core.XPathHelper.GetXPathToElement(element, this));
                 _hasXPathValue = false;
             }
             else

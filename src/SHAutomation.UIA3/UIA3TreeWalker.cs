@@ -33,45 +33,44 @@ namespace SHAutomation.UIA3
         /// <inheritdoc />
         public SHAutomationElement GetParent(SHAutomationElement element)
         {
-            var parent = CacheRequest.Current == null ?
-                NativeTreeWalker.GetParentElement(SHAutomationElementConverter.ToNative(element)) :
-                NativeTreeWalker.GetParentElementBuildCache(SHAutomationElementConverter.ToNative(element), CacheRequest.Current.ToNative(Automation));
+            var parent =
+                NativeTreeWalker.GetParentElement(SHAutomationElementConverter.ToNative(element));
             return Automation.WrapNativeElement(parent);
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetFirstChild(SHAutomationElement element)
         {
-            var child = CacheRequest.Current == null ?
-                NativeTreeWalker.GetFirstChildElement(SHAutomationElementConverter.ToNative(element)) :
-                NativeTreeWalker.GetFirstChildElementBuildCache(SHAutomationElementConverter.ToNative(element), CacheRequest.Current.ToNative(Automation));
+            var child =
+                NativeTreeWalker.GetFirstChildElement(SHAutomationElementConverter.ToNative(element));
+             
             return Automation.WrapNativeElement(child);
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetLastChild(SHAutomationElement element)
         {
-            var child = CacheRequest.Current == null ?
-                NativeTreeWalker.GetLastChildElement(SHAutomationElementConverter.ToNative(element)) :
-                NativeTreeWalker.GetLastChildElementBuildCache(SHAutomationElementConverter.ToNative(element), CacheRequest.Current.ToNative(Automation));
+            var child =
+                NativeTreeWalker.GetLastChildElement(SHAutomationElementConverter.ToNative(element));
+              
             return Automation.WrapNativeElement(child);
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetNextSibling(SHAutomationElement element)
         {
-            var child = CacheRequest.Current == null ?
-                NativeTreeWalker.GetNextSiblingElement(SHAutomationElementConverter.ToNative(element)) :
-                NativeTreeWalker.GetNextSiblingElementBuildCache(SHAutomationElementConverter.ToNative(element), CacheRequest.Current.ToNative(Automation));
+            var child =
+                NativeTreeWalker.GetNextSiblingElement(SHAutomationElementConverter.ToNative(element));
+              
             return Automation.WrapNativeElement(child);
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetPreviousSibling(SHAutomationElement element)
         {
-            var child = CacheRequest.Current == null ?
-                NativeTreeWalker.GetPreviousSiblingElement(SHAutomationElementConverter.ToNative(element)) :
-                NativeTreeWalker.GetPreviousSiblingElementBuildCache(SHAutomationElementConverter.ToNative(element), CacheRequest.Current.ToNative(Automation));
+            var child =
+                NativeTreeWalker.GetPreviousSiblingElement(SHAutomationElementConverter.ToNative(element));
+               
             return Automation.WrapNativeElement(child);
         }
     }

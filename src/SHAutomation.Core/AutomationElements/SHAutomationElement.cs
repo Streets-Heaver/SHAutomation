@@ -59,16 +59,6 @@ namespace SHAutomation.Core.AutomationElements
         public FrameworkAutomationElementBase.IProperties Properties => FrameworkAutomationElement.Properties;
 
         /// <summary>
-        /// Gets the cached children for this element.
-        /// </summary>
-        public SHAutomationElement[] CachedChildren => FrameworkAutomationElement.GetCachedChildren();
-
-        /// <summary>
-        /// Gets the cached parent for this element.
-        /// </summary>
-        public SHAutomationElement CachedParent => FrameworkAutomationElement.GetCachedParent();
-
-        /// <summary>
         /// A flag that indicates if the element is still available. Can be false if the element is already unloaded from the ui.
         /// </summary>
         public bool IsAvailable

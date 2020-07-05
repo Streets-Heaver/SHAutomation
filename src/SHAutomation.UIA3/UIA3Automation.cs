@@ -95,9 +95,7 @@ namespace SHAutomation.UIA3
         {
             return Com.Call(() =>
             {
-                var desktop = CacheRequest.IsCachingActive
-                    ? NativeAutomation.GetRootElementBuildCache(CacheRequest.Current.ToNative(this))
-                    : NativeAutomation.GetRootElement();
+                var desktop =  NativeAutomation.GetRootElement();
                 return WrapNativeElement(desktop);
             });
         }
@@ -110,9 +108,7 @@ namespace SHAutomation.UIA3
                 return Com.Call(() =>
                 {
                     var nativePoint = point.ToTagPoint();
-                    var nativeElement = CacheRequest.IsCachingActive
-                        ? NativeAutomation.ElementFromPointBuildCache(nativePoint, CacheRequest.Current.ToNative(this))
-                        : NativeAutomation.ElementFromPoint(nativePoint);
+                    var nativeElement = NativeAutomation.ElementFromPoint(nativePoint);
                     return WrapNativeElement(nativeElement);
                 });
             }
@@ -131,9 +127,7 @@ namespace SHAutomation.UIA3
         {
             return Com.Call(() =>
             {
-                var nativeElement = CacheRequest.IsCachingActive
-                    ? NativeAutomation.ElementFromHandleBuildCache(hwnd, CacheRequest.Current.ToNative(this))
-                    : NativeAutomation.ElementFromHandle(hwnd);
+                var nativeElement = NativeAutomation.ElementFromHandle(hwnd);
                 return WrapNativeElement(nativeElement);
             });
         }
@@ -143,9 +137,7 @@ namespace SHAutomation.UIA3
         {
             return Com.Call(() =>
             {
-                var nativeElement = CacheRequest.IsCachingActive
-                    ? NativeAutomation.GetFocusedElementBuildCache(CacheRequest.Current.ToNative(this))
-                    : NativeAutomation.GetFocusedElement();
+                var nativeElement = NativeAutomation.GetFocusedElement();
                 return WrapNativeElement(nativeElement);
             });
         }

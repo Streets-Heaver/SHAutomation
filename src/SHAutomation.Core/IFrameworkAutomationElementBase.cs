@@ -77,8 +77,7 @@ namespace SHAutomation.Core
       SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
       SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
       SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
-      SHAutomationElement[] GetCachedChildren();
-      SHAutomationElement GetCachedParent();
+
         Point GetClickablePoint();
         object GetCurrentMetadataValue(PropertyId targetId, int metadataId);
         T GetNativePattern<T>(PatternId pattern);
@@ -86,7 +85,7 @@ namespace SHAutomation.Core
         T GetPropertyValue<T>(PropertyId property);
         PatternId[] GetSupportedPatterns();
         PropertyId[] GetSupportedProperties();
-      SHAutomationElement GetUpdatedCache();
+     
         AutomationEventHandlerBase RegisterAutomationEvent(EventId @event, TreeScope treeScope, Action<SHAutomationElement, EventId> action);
         NotificationEventHandlerBase RegisterNotificationEvent(TreeScope treeScope, Action<SHAutomationElement, NotificationKind, NotificationProcessing, string, string> action);
         PropertyChangedEventHandlerBase RegisterPropertyChangedEvent(TreeScope treeScope, Action<SHAutomationElement, PropertyId, object> action, PropertyId[] properties);

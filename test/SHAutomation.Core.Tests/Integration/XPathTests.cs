@@ -5,6 +5,7 @@ using SHAutomation.Core;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Caching;
 using SHAutomation.Core.StaticClasses;
+using SHAutomation.Core.Tests.Common;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Text;
 namespace SHAutomation.Core.Tests.Integration
 {
     [TestClass]
-    public class XPathTests
+    public class XPathTests : TestBase
     {
         [TestMethod]
         public void XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue()
@@ -25,13 +26,13 @@ namespace SHAutomation.Core.Tests.Integration
 
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue");
+            db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
-            db.KeyExists("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue").Should().BeTrue();
-            db.StringGet("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue").Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
+            db.KeyExists(TestContext.TestName).Should().BeTrue();
+            db.StringGet(TestContext.TestName).Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
 
         }
 
@@ -43,8 +44,8 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue");
-            window.GetXPathCache("XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
+            window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Should().Contain((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
         }
@@ -57,8 +58,8 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathIsRetrievedFromAppData_GetXPathCache_BeTrue");
-            window.GetXPathCache("XPathIsRetrievedFromAppData_GetXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
+            window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Should().Contain((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
         }
@@ -76,9 +77,9 @@ namespace SHAutomation.Core.Tests.Integration
 
             window.CacheService = cacheServiceMock.Object;
 
-            window.GetXPathCache("XPathIsOnlySavedWhenDifferentFromOriginalValue_SaveXPathCache_BeTrue");
+            window.GetXPathCache(TestContext.TestName);
 
-            window.SaveXPathCache("XPathIsOnlySavedWhenDifferentFromOriginalValue_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
             cacheServiceMock.Verify(x => x.SetCacheValue(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 
@@ -99,13 +100,13 @@ namespace SHAutomation.Core.Tests.Integration
 
             IDatabase db = Redis.Connection.GetDatabase();
 
-            db.KeyDelete("XPathIsOnlySavedWhenDifferentFromOriginalValue_SaveXPathCache_BeTrue");
+            db.KeyDelete(TestContext.TestName);
 
-            window.GetXPathCache("XPathIsOnlySavedWhenDifferentFromOriginalValue_SaveXPathCache_BeTrue");
+            window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
 
-            window.SaveXPathCache("XPathIsOnlySavedWhenDifferentFromOriginalValue_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
             cacheServiceMock.Verify(x => x.SetCacheValue(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
@@ -119,11 +120,11 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("XPathNotSavedToRedisWhenNoXpath_SaveXPathCache_BeTrue");
+            db.KeyDelete(TestContext.TestName);
 
-            window.SaveXPathCache("XPathNotSavedToRedisWhenNoXpath_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
-            db.KeyExists("XPathNotSavedToRedisWhenNoXpath_SaveXPathCache_BeTrue").Should().BeFalse();
+            db.KeyExists(TestContext.TestName).Should().BeFalse();
 
         }
 
@@ -135,19 +136,19 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("XPathRedisValueIsOverwrittenAndSavedCorrectly_SaveXPathCache_BeTrue");
+            db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathRedisValueIsOverwrittenAndSavedCorrectly_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
             db.StringGet("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue").Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
 
             window.XPathList.Clear();
             window.XPathList.Add((identifier: "Test2", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathRedisValueIsOverwrittenAndSavedCorrectly_SaveXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
 
-            db.StringGet("XPathRedisValueIsOverwrittenAndSavedCorrectly_SaveXPathCache_BeTrue").Should().Be("[{\"Item1\":\"Test2\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
+            db.StringGet(TestContext.TestName).Should().Be("[{\"Item1\":\"Test2\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
 
 
         }
@@ -160,12 +161,12 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("XPathValueRetrievedFromCacheWhenExists_GetXPathCache_BeTrue");
+            db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("XPathValueRetrievedFromCacheWhenExists_GetXPathCache_BeTrue");
+            window.SaveXPathCache(TestContext.TestName);
 
-            window.GetXPathCache("XPathValueRetrievedFromCacheWhenExists_GetXPathCache_BeTrue");
+            window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Should().BeEquivalentTo((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
 
@@ -178,7 +179,7 @@ namespace SHAutomation.Core.Tests.Integration
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
-            window.GetXPathCache("XPathIsEmptyCollectionWhenNoCacheHit_GetXPathCache_BeTrue");
+            window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Should().BeEmpty();
 
@@ -190,11 +191,11 @@ namespace SHAutomation.Core.Tests.Integration
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
             var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
-            string output = cache.GenerateCacheKey("XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
-            output.Should().Be("XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
+            string output = cache.GenerateCacheKey(TestContext.TestName);
+            output.Should().Be(TestContext.TestName);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "Task124123");
-            output = cache.GenerateCacheKey( "XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
-            output.Should().Be("XPathSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GetXPathCache_BeTrue");
+            output = cache.GenerateCacheKey(TestContext.TestName);
+            output.Should().Be(TestContext.TestName);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", currentVariable);
         }
         [TestMethod]
@@ -204,8 +205,8 @@ namespace SHAutomation.Core.Tests.Integration
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
             var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", string.Empty);
-            string output = cache.GenerateCacheKey( "XPathKeyReturnedAsNormalTestWhenNoBranchVariable_GenerateCacheKey_BeTrue");
-            output.Should().Be("XPathKeyReturnedAsNormalTestWhenNoBranchVariable_GenerateCacheKey_BeTrue");
+            string output = cache.GenerateCacheKey(TestContext.TestName);
+            output.Should().Be(TestContext.TestName);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", currentVariable);
         }
         [TestMethod]
@@ -215,11 +216,11 @@ namespace SHAutomation.Core.Tests.Integration
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
             var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.24");
-            string output = cache.GenerateCacheKey("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue");
-            output.Should().Be("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue_8.24");
+            string output = cache.GenerateCacheKey(TestContext.TestName);
+            output.Should().Be(TestContext.TestName + "_8.24");
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.25");
-            output = cache.GenerateCacheKey("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue");
-            output.Should().Be("XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue_8.25");
+            output = cache.GenerateCacheKey(TestContext.TestName);
+            output.Should().Be(TestContext.TestName + "_8.25");
             Environment.SetEnvironmentVariable("Build_SourceBranchName", currentVariable);
         }
 
@@ -233,13 +234,13 @@ namespace SHAutomation.Core.Tests.Integration
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.25");
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("SavesXPathWithIterationName_SaveXPathCache_BeTrue");
-            db.KeyDelete("SavesXPathWithIterationName_SaveXPathCache_BeTrue_8.25");
+            db.KeyDelete(TestContext.TestName);
+            db.KeyDelete(TestContext.TestName + "_8.25");
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
-            window.SaveXPathCache("SavesXPathWithIterationName_SaveXPathCache_BeTrue");
-            db.KeyExists("SavesXPathWithIterationName_SaveXPathCache_BeTrue").Should().BeFalse();
-            db.KeyExists("SavesXPathWithIterationName_SaveXPathCache_BeTrue_8.25").Should().BeTrue();
+            window.SaveXPathCache(TestContext.TestName);
+            db.KeyExists(TestContext.TestName).Should().BeFalse();
+            db.KeyExists(TestContext.TestName + "_8.25").Should().BeTrue();
 
         }
         [TestMethod]
@@ -251,13 +252,13 @@ namespace SHAutomation.Core.Tests.Integration
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
 
             IDatabase db = Redis.Connection.GetDatabase();
-            db.KeyDelete("SavesXPathWithoutIterationName_SaveXPathCache_BeTrue");
-            db.KeyDelete("SavesXPathWithoutIterationName_SaveXPathCache_BeTrue_8.25");
+            db.KeyDelete(TestContext.TestName);
+            db.KeyDelete(TestContext.TestName + "_8.25");
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
             window.SaveXPathCache("SavesXPathWithoutIterationName_SaveXPathCache_BeTrue");
-            db.KeyExists("SavesXPathWithoutIterationName_SaveXPathCache_BeTrue").Should().BeTrue();
-            db.KeyExists("SavesXPathWithoutIterationName_SaveXPathCache_BeTrue_8.25").Should().BeFalse();
+            db.KeyExists(TestContext.TestName).Should().BeTrue();
+            db.KeyExists(TestContext.TestName + "_8.25").Should().BeFalse();
 
         }
     }

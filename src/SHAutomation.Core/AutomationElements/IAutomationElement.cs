@@ -16,8 +16,6 @@ namespace SHAutomation.Core.AutomationElements
         string AutomationId { get; }
         AutomationType AutomationType { get; }
         Rectangle BoundingRectangle { get; }
-        SHAutomationElement[] CachedChildren { get; }
-        SHAutomationElement CachedParent { get; }
         string ClassName { get; }
         ConditionFactory ConditionFactory { get; }
         ControlType ControlType { get; }

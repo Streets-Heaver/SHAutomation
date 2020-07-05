@@ -62,29 +62,14 @@ namespace SHAutomation.Core
             {
                 throw new NotSupportedByFrameworkException();
             }
-            var isCacheActive = CacheRequest.IsCachingActive;
-            try
+
+            var value = InternalGetPropertyValue(property.Id, false);
+            if (value == Automation.NotSupportedValue)
             {
-                var value = InternalGetPropertyValue(property.Id, isCacheActive, false);
-                if (value == Automation.NotSupportedValue)
-                {
-                    throw new PropertyNotSupportedException(property);
-                }
-                return property.Convert<T>(Automation, value);
+                throw new PropertyNotSupportedException(property);
             }
-            catch (Exception ex)
-            {
-                if (isCacheActive)
-                {
-                    var cacheRequest = CacheRequest.Current;
-                    if (!cacheRequest.Properties.Contains(property))
-                    {
-                        throw new PropertyNotCachedException(property, ex);
-                    }
-                }
-                // Should actually never come here
-                throw;
-            }
+            return property.Convert<T>(Automation, value);
+
         }
 
         /// <summary>
@@ -111,10 +96,9 @@ namespace SHAutomation.Core
             {
                 throw new NotSupportedByFrameworkException();
             }
-            var isCacheActive = CacheRequest.IsCachingActive;
             try
             {
-                var internalValue = InternalGetPropertyValue(property.Id, isCacheActive, false);
+                var internalValue = InternalGetPropertyValue(property.Id, false);
                 if (internalValue == Automation.NotSupportedValue)
                 {
                     value = default(T);
@@ -125,14 +109,7 @@ namespace SHAutomation.Core
             }
             catch (Exception ex)
             {
-                if (isCacheActive)
-                {
-                    var cacheRequest = CacheRequest.Current;
-                    if (!cacheRequest.Properties.Contains(property))
-                    {
-                        throw new PropertyNotCachedException(property, ex);
-                    }
-                }
+
                 if (!(ex is COMException))
                 {
                     throw;
@@ -154,10 +131,9 @@ namespace SHAutomation.Core
             {
                 throw new NotSupportedByFrameworkException();
             }
-            var isCacheActive = CacheRequest.IsCachingActive;
             try
             {
-                var nativePattern = InternalGetPattern(pattern.Id, isCacheActive);
+                var nativePattern = InternalGetPattern(pattern.Id);
                 if (nativePattern == null)
                 {
                     throw new InvalidOperationException("Native pattern is null");
@@ -166,14 +142,7 @@ namespace SHAutomation.Core
             }
             catch (Exception ex)
             {
-                if (isCacheActive)
-                {
-                    var cacheRequest = CacheRequest.Current;
-                    if (!cacheRequest.Patterns.Contains(pattern))
-                    {
-                        throw new PatternNotCachedException(pattern, ex);
-                    }
-                }
+
                 throw new PatternNotSupportedException(pattern, ex);
             }
         }
@@ -224,7 +193,7 @@ namespace SHAutomation.Core
         /// <param name="cached">Flag to indicate if the cached or current value should be fetched.</param>
         /// <param name="useDefaultIfNotSupported"> Flag to indicate, if the default value should be used if the property is not supported.</param>
         /// <returns>The value / default value of the property or <see cref="AutomationBase.NotSupportedValue" />.</returns>
-        protected abstract object InternalGetPropertyValue(int propertyId, bool cached, bool useDefaultIfNotSupported);
+        protected abstract object InternalGetPropertyValue(int propertyId, bool useDefaultIfNotSupported);
 
         /// <summary>
         /// Gets the desired pattern.
@@ -232,7 +201,7 @@ namespace SHAutomation.Core
         /// <param name="patternId">The id of the pattern to get.</param>
         /// <param name="cached">Flag to indicate if the cached or current pattern should be fetched.</param>
         /// <returns>The pattern or null if it was not found / cached.</returns>
-        protected abstract object InternalGetPattern(int patternId, bool cached);
+        protected abstract object InternalGetPattern(int patternId);
 
         /// <summary>
         /// Finds all elements in the given scope with the given condition.
@@ -258,7 +227,7 @@ namespace SHAutomation.Core
         /// <param name="traversalOptions">Value specifying the tree navigation order.</param>
         /// <param name="root">An element with which to begin the search.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public abstract SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
+        public abstract SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root);
 
         /// <summary>
         /// Finds the first matching element in the specified order.
@@ -268,7 +237,7 @@ namespace SHAutomation.Core
         /// <param name="traversalOptions">Value specifying the tree navigation order.</param>
         /// <param name="root">An element with which to begin the search.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public abstract SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
+        public abstract SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root);
 
         /// <summary>
         /// Finds the element with the given index with the given condition.
@@ -345,9 +314,6 @@ namespace SHAutomation.Core
 
         public abstract PatternId[] GetSupportedPatterns();
         public abstract PropertyId[] GetSupportedProperties();
-        public abstract SHAutomationElement GetUpdatedCache();
-        public abstract SHAutomationElement[] GetCachedChildren();
-        public abstract SHAutomationElement GetCachedParent();
         public abstract object GetCurrentMetadataValue(PropertyId targetId, int metadataId);
     }
 }

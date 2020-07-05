@@ -84,38 +84,32 @@ namespace SHAutomation.UIA3
             return eventHandler;
         }
 
-        protected override object InternalGetPropertyValue(int propertyId, bool cached, bool useDefaultIfNotSupported)
+        protected override object InternalGetPropertyValue(int propertyId,  bool useDefaultIfNotSupported)
         {
             var ignoreDefaultValue = useDefaultIfNotSupported ? 0 : 1;
-            var returnValue = cached ?
-                NativeElement.GetCachedPropertyValueEx(propertyId, ignoreDefaultValue) :
+            var returnValue = 
                 NativeElement.GetCurrentPropertyValueEx(propertyId, ignoreDefaultValue);
             return returnValue;
         }
 
-        protected override object InternalGetPattern(int patternId, bool cached)
+        protected override object InternalGetPattern(int patternId)
         {
-            var returnedValue = cached
-                ? NativeElement.GetCachedPattern(patternId)
-                : NativeElement.GetCurrentPattern(patternId);
+            var returnedValue = 
+                 NativeElement.GetCurrentPattern(patternId);
             return returnedValue;
         }
 
         /// <inheritdoc />
         public override SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition)
         {
-            var nativeFoundElements = CacheRequest.IsCachingActive
-                ? NativeElement.FindAllBuildCache((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), CacheRequest.Current.ToNative(Automation))
-                : NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
+            var nativeFoundElements = NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             return SHAutomationElementConverter.NativeArrayToManaged(Automation, nativeFoundElements);
         }
 
         /// <inheritdoc />
         public override SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition)
         {
-            var nativeFoundElement = CacheRequest.IsCachingActive
-                ? NativeElement.FindFirstBuildCache((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), CacheRequest.Current.ToNative(Automation))
-                : NativeElement.FindFirst((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
+            var nativeFoundElement = NativeElement.FindFirst((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             return SHAutomationElementConverter.NativeToManaged(Automation, nativeFoundElement);
         }
 
@@ -123,9 +117,7 @@ namespace SHAutomation.UIA3
         public override SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition,
             TreeTraversalOptions traversalOptions,SHAutomationElement root)
         {
-            var nativeFoundElements = CacheRequest.IsCachingActive
-                ? NativeElement7.FindAllWithOptionsBuildCache((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), CacheRequest.Current.ToNative(Automation), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root))
-                : NativeElement7.FindAllWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
+            var nativeFoundElements =  NativeElement7.FindAllWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
             return SHAutomationElementConverter.NativeArrayToManaged(Automation, nativeFoundElements);
         }
 
@@ -133,18 +125,14 @@ namespace SHAutomation.UIA3
         public override SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition,
             TreeTraversalOptions traversalOptions,SHAutomationElement root)
         {
-            var nativeFoundElement = CacheRequest.IsCachingActive
-                ? NativeElement7.FindFirstWithOptionsBuildCache((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), CacheRequest.Current.ToNative(Automation), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root))
-                : NativeElement7.FindFirstWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
+            var nativeFoundElement = NativeElement7.FindFirstWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
             return SHAutomationElementConverter.NativeToManaged(Automation, nativeFoundElement);
         }
 
         /// <inheritdoc />
         public override SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition)
         {
-            var nativeFoundElements = CacheRequest.IsCachingActive
-                ? NativeElement.FindAllBuildCache((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), CacheRequest.Current.ToNative(Automation))
-                : NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
+            var nativeFoundElements =  NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             var nativeElement = nativeFoundElements.GetElement(index);
             return nativeElement == null ? null :SHAutomationElementConverter.NativeToManaged(Automation, nativeElement);
         }
@@ -263,28 +251,7 @@ namespace SHAutomation.UIA3
             return rawIds.Select(id => PropertyId.Find(Automation.AutomationType, id)).ToArray();
         }
 
-        public override SHAutomationElement GetUpdatedCache()
-        {
-            if (CacheRequest.Current != null)
-            {
-                var updatedElement = NativeElement.BuildUpdatedCache(CacheRequest.Current.ToNative(Automation));
-                return SHAutomationElementConverter.NativeToManaged(Automation, updatedElement);
-            }
-            return null;
-        }
-
-        public override SHAutomationElement[] GetCachedChildren()
-        {
-            var cachedChildren = NativeElement.GetCachedChildren();
-            return SHAutomationElementConverter.NativeArrayToManaged(Automation, cachedChildren);
-        }
-
-        public override SHAutomationElement GetCachedParent()
-        {
-            var cachedParent = NativeElement.GetCachedParent();
-            return SHAutomationElementConverter.NativeToManaged(Automation, cachedParent);
-        }
-
+       
         public override object GetCurrentMetadataValue(PropertyId targetId, int metadataId)
         {
             return NativeElement7.GetCurrentMetadataValue(targetId.Id, metadataId);
