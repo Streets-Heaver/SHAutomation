@@ -36,6 +36,8 @@
   <PropertyGroup>
     <InteropHintPath>..\libs\Interop</InteropHintPath>
     <InteropHintPath Condition="'$(EnableSigning)'=='true'">$(InteropHintPath)\Signed</InteropHintPath>
+    <RepositoryUrl>https://github.com/Streets-Heaver/SHAutomation</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -67,7 +69,7 @@
 
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
     <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
     </ItemGroup>
   </Target>
   
