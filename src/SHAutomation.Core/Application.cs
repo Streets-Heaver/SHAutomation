@@ -16,6 +16,10 @@ namespace SHAutomation.Core
     public class Application : IDisposable
     {
         /// <summary>
+        /// Implementation of logging service
+        /// </summary>
+        private readonly ILoggingService _loggingService;
+        /// <summary>
         /// The process of this application.
         /// </summary>
         private readonly Process _process;
@@ -51,13 +55,25 @@ namespace SHAutomation.Core
         /// </summary>
         public int ExitCode => _process.ExitCode;
 
+
         /// <summary>
         /// Creates an application object with the given process id.
         /// </summary>
         /// <param name="processId">The process id.</param>
-        /// <param name="isStoreApp">Flag to define if it's a store app or not.</param>
         public Application(int processId)
-            : this(FindProcess(processId))
+            : this(FindProcess(processId), new LoggingService())
+        {
+        }
+
+
+
+        /// <summary>
+        /// Creates an application object with the given process id.
+        /// </summary>
+        /// <param name="processId">The process id.</param>
+        /// <param name="loggingService">Implementation of logging service</param>
+        public Application(int processId, ILoggingService loggingService)
+            : this(FindProcess(processId), loggingService)
         {
         }
 
@@ -65,12 +81,23 @@ namespace SHAutomation.Core
         /// Creates an application object with the given process.
         /// </summary>
         /// <param name="process">The process.</param>
-        /// <param name="isStoreApp">Flag to define if it's a store app or not.</param>
-        public Application(Process process)
+        public Application(Process process) : this(process, new LoggingService())
         {
-            _process = process ?? throw new ArgumentNullException(nameof(process));
 
         }
+
+        /// <summary>
+        /// Creates an application object with the given process.
+        /// </summary>
+        /// <param name="process">The process.</param>
+        /// <param name="loggingService">Implementation of logging service</param>
+        public Application(Process process, ILoggingService loggingService)
+        {
+            _process = process ?? throw new ArgumentNullException(nameof(process));
+            _loggingService = loggingService;
+
+        }
+
 
         /// <summary>
         /// Closes the application. Force-closes it after a small timeout.
@@ -78,11 +105,24 @@ namespace SHAutomation.Core
         /// <returns>Returns true if the application was closed normally and false if it was force-closed.</returns>
         public bool Close()
         {
+            return Close(null);
+        }
+        /// <summary>
+        /// Closes the application. Force-closes it after a small timeout.
+        /// </summary>
+        /// <param name="postCloseAction">Allows you to pass an action to invoke after the close button has been pressed e.g. interacting with a 'Are you sure you want to close?' dialog.</param>
+        /// <returns>Returns true if the application was closed normally and false if it was force-closed.</returns>
+        public bool Close(Action postCloseAction)
+        {
             if (_disposed || _process.HasExited)
             {
                 return true;
             }
             _process.CloseMainWindow();
+
+            if (postCloseAction != null)
+                postCloseAction.Invoke();
+
             _process.WaitForExit(5000);
             if (!_process.HasExited)
             {
@@ -133,6 +173,16 @@ namespace SHAutomation.Core
             _disposed = true;
         }
 
+        public static Application Attach(int processId, ILoggingService loggingService)
+        {
+            return Attach(FindProcess(processId), loggingService);
+        }
+
+        public static Application Attach(Process process, ILoggingService loggingService)
+        {
+            return new Application(process, loggingService);
+        }
+
         public static Application Attach(int processId)
         {
             return Attach(FindProcess(processId));
@@ -145,34 +195,52 @@ namespace SHAutomation.Core
 
         public static Application Attach(string executable, int index = 0)
         {
+            return Attach(executable, new LoggingService(), index);
+        }
+
+        public static Application Attach(string executable, ILoggingService loggingService, int index = 0)
+        {
             var processes = FindProcess(executable);
             if (processes.Length > index)
             {
-                return Attach(processes[index]);
+                return Attach(processes[index], loggingService);
             }
             throw new Exception("Unable to find process with name: " + executable);
         }
 
         public static Application AttachOrLaunch(ProcessStartInfo processStartInfo)
         {
+            return AttachOrLaunch(processStartInfo, new LoggingService());
+        }
+
+        public static Application AttachOrLaunch(ProcessStartInfo processStartInfo, ILoggingService loggingService)
+        {
             var processes = FindProcess(processStartInfo.FileName);
-            return processes.Length == 0 ? Launch(processStartInfo) : Attach(processes[0]);
+            return processes.Length == 0 ? Launch(processStartInfo, loggingService) : Attach(processes[0], loggingService);
         }
 
         public static Application Launch(string executable)
         {
+            return Launch(executable, new LoggingService());
+        }
+
+        public static Application Launch(string executable, ILoggingService loggingService)
+        {
             var processStartInfo = new ProcessStartInfo(executable);
-            return Launch(processStartInfo);
+            return Launch(processStartInfo, loggingService);
         }
 
         public static Application Launch(ProcessStartInfo processStartInfo)
+        {
+            return Launch(processStartInfo, new LoggingService());
+        }
+
+        public static Application Launch(ProcessStartInfo processStartInfo, ILoggingService loggingService)
         {
             if (string.IsNullOrEmpty(processStartInfo.WorkingDirectory))
             {
                 processStartInfo.WorkingDirectory = ".";
             }
-
-
 
             Process process;
             try
@@ -184,13 +252,18 @@ namespace SHAutomation.Core
                 throw ex;
             }
 
-            return new Application(process);
+            return new Application(process, loggingService);
         }
 
         public static Application LaunchStoreApp(string appUserModelId, string arguments = null)
         {
+            return LaunchStoreApp(appUserModelId, new LoggingService(), arguments);
+        }
+
+        public static Application LaunchStoreApp(string appUserModelId, ILoggingService loggingService, string arguments = null)
+        {
             var process = WindowsStoreAppLauncher.Launch(appUserModelId, arguments);
-            return new Application(process);
+            return new Application(process, loggingService);
         }
 
         /// <summary>
@@ -224,42 +297,13 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="automation">The automation object to use.</param>
         /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
-        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
-        /// <param name="pathToLogConfig">Path to Log4Net config file for logging to an elastic search instance</param>
-        /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
-        public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
+        public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null)
         {
-            return GetMainWindow(automation, waitTimeout, pathToConfigFile, null, null);
+            return GetMainWindow(automation, waitTimeout, null);
         }
 
-        /// <summary>
-        /// Gets the main window of the application's process.
-        /// </summary>
-        /// <param name="automation">The automation object to use.</param>
-        /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
-        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
-        /// <param name="pathToLogConfig">Path to Log4Net config file for logging to an elastic search instance</param>
-        /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
-        public Window GetMainWindow(AutomationBase automation, string pathToLog4NetConfig, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
-        {
-            return GetMainWindow(automation, waitTimeout, pathToConfigFile, pathToLog4NetConfig, null);
-        }
-
-        /// <summary>
-        /// Gets the main window of the application's process.
-        /// </summary>
-        /// <param name="automation">The automation object to use.</param>
-        /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
-        /// <param name="pathToConfigFile">Path to SHAutomation config file for configuring Redis</param>
-        /// <param name="loggingService">A custom implementation of ILogging service</param>
-        /// <returns>The main window object as <see cref="Window" /> or null if no main window was found within the timeout.</returns>
-        public Window GetMainWindow(AutomationBase automation, ILoggingService loggingService, TimeSpan? waitTimeout = null, string pathToConfigFile = null)
-        {
-            return GetMainWindow(automation, waitTimeout, pathToConfigFile, null, loggingService);
-        }
-
-
-        private Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout, string pathToConfigFile, string pathToLogConfig, ILoggingService loggingService)
+        
+        private Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout, string pathToConfigFile)
         {
             WaitWhileMainHandleIsMissing(waitTimeout);
             var mainWindowHandle = MainWindowHandle;
@@ -269,9 +313,7 @@ namespace SHAutomation.Core
             }
 
             var mainWindow = automation.FromHandle(mainWindowHandle)
-                .AsWindow(loggingService != null ? loggingService : (!string.IsNullOrEmpty(pathToConfigFile) ?
-                new LoggingService(Name + " tests", false, Enums.LoggingLevel.High, pathToLogConfig) :
-                new LoggingService()), pathToConfigFile);
+                .AsWindow(_loggingService, pathToConfigFile);
            
             if (mainWindow != null)
             {

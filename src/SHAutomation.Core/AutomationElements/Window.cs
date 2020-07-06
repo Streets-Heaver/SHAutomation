@@ -16,35 +16,30 @@ namespace SHAutomation.Core.AutomationElements
     /// </summary>
     public partial class Window : SHAutomationElement
     {
-        private ILoggingService _loggingService;
+        private readonly ILoggingService _loggingService;
 
         /// <summary>
         /// Creates a <see cref="Window"/> element.
         /// </summary>
-        public Window(FrameworkAutomationElementBase frameworkAutomationElement) : base(frameworkAutomationElement)
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement) : this(frameworkAutomationElement, null, string.Empty)
         {
-            CacheService = new CacheService();
-            InitLoggingService(null);
+         
         }
 
         /// <summary>
         /// Creates a <see cref="Window"/> element.
         /// </summary>
-        public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService) : base(frameworkAutomationElement)
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService) : this(frameworkAutomationElement, loggingService, string.Empty)
         {
-            CacheService = new CacheService();
-            InitLoggingService(loggingService);
+           
 
         }
 
         /// <summary>
         /// Creates a <see cref="Window"/> element.
         /// </summary>
-        public Window(FrameworkAutomationElementBase frameworkAutomationElement, string pathToConfigFile) : base(frameworkAutomationElement)
+        public Window(FrameworkAutomationElementBase frameworkAutomationElement, string pathToConfigFile) : this(frameworkAutomationElement, null, pathToConfigFile)
         {
-            CacheService = new CacheService(pathToConfigFile);
-            InitLoggingService(null);
-
         }
 
         /// <summary>
@@ -53,20 +48,14 @@ namespace SHAutomation.Core.AutomationElements
         public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService, string pathToConfigFile) : base(frameworkAutomationElement)
         {
             CacheService = new CacheService(pathToConfigFile);
-            InitLoggingService(loggingService);
 
-
-        }
-
-        private void InitLoggingService(ILoggingService loggingService)
-        {
             if (loggingService == null)
                 _loggingService = new LoggingService();
             else
                 _loggingService = loggingService;
+
+
         }
-
-
 
         /// <summary>
         /// Gets the title of the window.
