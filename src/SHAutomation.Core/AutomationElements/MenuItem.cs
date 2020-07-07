@@ -43,7 +43,7 @@ namespace SHAutomation.Core.AutomationElements
                 if (IsWin32Menu)
                 {
                     // Click the item to load the child items
-                    HoverOver(Enums.MouseAction.LeftClick);
+                    Click(Enums.MouseAction.LeftClick);
                     // In Win32, the nested menu items are below a menu control which is below the application window
                     // So search the app window first
                     var appWindow = FrameworkAutomationElement.Automation.GetDesktop().FindFirstChild(cf => cf.ByControlType(ControlType.Window).And(cf.ByProcessId(Properties.ProcessId)));

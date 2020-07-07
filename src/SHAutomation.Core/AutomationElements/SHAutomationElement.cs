@@ -156,11 +156,17 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// The help text of this element.
         /// </summary>
-       // public string HelpText => Properties.HelpText.Value;
+        // public string HelpText => Properties.HelpText.Value;
         #endregion Convenience properties
 
-   
-        public void HoverOver(MouseAction? buttonToPress = null, int mouseSpeed = 5)
+
+        public void Click(MouseAction buttonToPress, int mouseSpeed = 5)
+        {
+            HoverOver(mouseSpeed);
+            MouseHelpers.MouseClick(buttonToPress);
+        }
+
+        public void HoverOver(int mouseSpeed = 5)
         {
             SHSpinWait.SpinUntil(() => SupportsBoundingRectangle, 5000);
             if (SupportsBoundingRectangle)
@@ -169,10 +175,6 @@ namespace SHAutomation.Core.AutomationElements
                 if (!BoundingRectangle.IsEmpty)
                 {
                     MouseHelpers.MouseMoveTo(Centre(), mouseSpeed);
-                    if (buttonToPress.HasValue)
-                    {
-                        MouseHelpers.MouseClick(buttonToPress.Value);
-                    }
                 }
                 else
                 {
@@ -540,7 +542,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             FrameworkAutomationElement.SetFocus();
         }
-   
+
         #region Properties
         public ISHAutomationElement Parent => Automation?.TreeWalkerFactory?.GetRawViewWalker()?.GetParent(this)?.FrameworkAutomationElement != null ? Automation.TreeWalkerFactory.GetRawViewWalker().GetParent(this) : null;
 

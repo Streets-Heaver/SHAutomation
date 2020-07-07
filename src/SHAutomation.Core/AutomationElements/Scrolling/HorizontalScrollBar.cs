@@ -120,7 +120,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
         /// </summary>
         public virtual void ScrollLeft()
         {
-            SmallDecrementButton.HoverOver(Enums.MouseAction.LeftClick);
+            SmallDecrementButton.Click(Enums.MouseAction.LeftClick);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
         /// </summary>
         public virtual void ScrollRight()
         {
-            SmallIncrementButton.HoverOver(Enums.MouseAction.LeftClick);
+            SmallIncrementButton.Click(Enums.MouseAction.LeftClick);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
         /// </summary>
         public virtual void ScrollLeftLarge()
         {
-            LargeDecrementButton.HoverOver(Enums.MouseAction.LeftClick);
+            LargeDecrementButton.Click(Enums.MouseAction.LeftClick);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
         /// </summary>
         public virtual void ScrollRightLarge()
         {
-            LargeIncrementButton.HoverOver(Enums.MouseAction.LeftClick);
+            LargeIncrementButton.Click(Enums.MouseAction.LeftClick);
         }
     }
 }

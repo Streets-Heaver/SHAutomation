@@ -11,7 +11,8 @@ namespace SHAutomation.Core.AutomationElements
     public interface ISHAutomationElement : IAutomationElement
     {
 
-        void HoverOver(MouseAction? buttonToPress = null, int mouseSpeed = 5);
+        void HoverOver(int mouseSpeed = 5);
+        void Click(MouseAction buttonToPress, int mouseSpeed = 5);
         Point? ClickablePoint { get; }
        
         bool IsOnscreen { get; }
