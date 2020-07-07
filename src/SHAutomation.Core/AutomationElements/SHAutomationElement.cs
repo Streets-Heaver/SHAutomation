@@ -160,6 +160,10 @@ namespace SHAutomation.Core.AutomationElements
         #endregion Convenience properties
 
 
+        public void Click(int mouseSpeed = 5)
+        {
+            Click(MouseAction.LeftClick, mouseSpeed);
+        }
         public void Click(MouseAction buttonToPress, int mouseSpeed = 5)
         {
             HoverOver(mouseSpeed);

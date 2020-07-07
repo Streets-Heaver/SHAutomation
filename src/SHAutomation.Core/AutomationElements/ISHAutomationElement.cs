@@ -13,10 +13,11 @@ namespace SHAutomation.Core.AutomationElements
 
         void HoverOver(int mouseSpeed = 5);
         void Click(MouseAction buttonToPress, int mouseSpeed = 5);
+        void Click(int mouseSpeed = 5);
         Point? ClickablePoint { get; }
-       
+
         bool IsOnscreen { get; }
-     
+
         bool SupportsAutomationId { get; }
         bool SupportsBoundingRectangle { get; }
         bool SupportsClassName { get; }
@@ -48,8 +49,8 @@ namespace SHAutomation.Core.AutomationElements
         ISHAutomationElement[] FindAllDescendantsNameContains(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement[] FindAllDescendantsNameEndsWith(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement[] FindAllDescendantsNameStartsWith(string name, int timeout = 20000, bool waitUntilExists = true);
-        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
-        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true);
+        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root);
+        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
         ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirstChild();
@@ -70,7 +71,7 @@ namespace SHAutomation.Core.AutomationElements
         ISHAutomationElement FindFirstDescendantNameContains(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirstDescendantNameEndsWith(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirstDescendantNameStartsWith(string name, int timeout = 20000, bool waitUntilExists = true);
-        void WaitUntilPropertyEquals(PropertyId property,SHAutomationElement expected, int timeout = 10000);
+        void WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, bool expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, ControlType expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, CultureInfo expected, int timeout = 10000);
