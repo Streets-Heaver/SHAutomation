@@ -84,5 +84,7 @@ namespace SHAutomation.Core.AutomationElements
         void WaitUntilPropertyEquals(PropertyId property, Rectangle expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, string expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, VisualEffects expected, int timeout = 10000);
+
+        ISHAutomationElement FindFirstByXPath(string xPath);
     }
 }
