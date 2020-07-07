@@ -14,7 +14,7 @@ namespace SHAutomation.Core.AutomationElements
     /// <summary>
     /// Class to interact with a window element.
     /// </summary>
-    public partial class Window : SHAutomationElement
+    public partial class Window : SHAutomationElement, IWindow
     {
         private readonly ILoggingService _loggingService;
 
@@ -23,7 +23,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public Window(FrameworkAutomationElementBase frameworkAutomationElement) : this(frameworkAutomationElement, null, string.Empty)
         {
-         
+
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService) : this(frameworkAutomationElement, loggingService, string.Empty)
         {
-           
+
 
         }
 
