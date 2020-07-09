@@ -22,7 +22,7 @@ namespace SHAutomation.Core
         /// <summary>
         /// The process of this application.
         /// </summary>
-        private readonly Process _process;
+        private Process _process;
 
         /// <summary>
         /// Flag to indicate if Dispose has already been called.
@@ -287,7 +287,9 @@ namespace SHAutomation.Core
             var waitTime = waitTimeout ?? TimeSpan.FromMilliseconds(-1);
             return Retry.WhileTrue(() =>
             {
-                _process.Refresh();
+                int processId = _process.Id;
+                _process.Dispose();
+                _process = FindProcess(processId);
                 return _process.MainWindowHandle == IntPtr.Zero;
             }, waitTime, TimeSpan.FromMilliseconds(50)).Result;
         }

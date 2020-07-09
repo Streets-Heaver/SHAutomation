@@ -12,6 +12,9 @@ namespace SHAutomation.Core.Capturing
     /// </summary>
     public static class CaptureUtilities
     {
+        [DllImport("Gdi32")]
+        public static extern bool DeleteObject(IntPtr ho);
+
         /// <summary>
         /// Calculates a scale factor according to the bounds and capture settings.
         /// </summary>
@@ -118,6 +121,8 @@ namespace SHAutomation.Core.Capturing
         {
             var cursorInfo = new CURSORINFO();
             cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
+            Bitmap result;
+
             if (!User32.GetCursorInfo(out cursorInfo))
             {
                 return null;
@@ -176,8 +181,15 @@ namespace SHAutomation.Core.Capturing
             }
 
             // Just return the icon converted to a bitmap
-            var icon = Icon.FromHandle(hicon);
-            return icon.ToBitmap();
+            using (Icon icon = Icon.FromHandle(hicon))
+            {
+                result = icon.ToBitmap();
+            }
+
+            User32.DestroyIcon(hicon);
+            DeleteObject(iconInfo.hbmMask);
+            DeleteObject(iconInfo.hbmColor);
+            return result;
         }
     }
 }
