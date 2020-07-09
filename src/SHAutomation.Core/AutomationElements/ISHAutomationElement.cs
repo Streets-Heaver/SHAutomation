@@ -85,6 +85,20 @@ namespace SHAutomation.Core.AutomationElements
         void WaitUntilPropertyEquals(PropertyId property, string expected, int timeout = 10000);
         void WaitUntilPropertyEquals(PropertyId property, VisualEffects expected, int timeout = 10000);
 
+        void WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, bool current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, ControlType current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, CultureInfo current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, double current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, int current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, int[] current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, IntPtr current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, LiveSetting current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, OrientationType current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, Rectangle current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, string current, int timeout = 10000);
+        void WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current, int timeout = 10000);
+
         ISHAutomationElement FindFirstByXPath(string xPath);
     }
 }
