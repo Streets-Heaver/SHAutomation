@@ -477,13 +477,13 @@ namespace SHAutomation.Core.AutomationElements
         }
 
         /// <inheritdoc />
-        public new bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             return Equals(obj as SHAutomationElement);
         }
 
         /// <inheritdoc />
-        public new int GetHashCode()
+        public override int GetHashCode()
         {
             return FrameworkAutomationElement?.GetHashCode() ?? 0;
         }
@@ -491,7 +491,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Overrides the string representation of the element with something useful.
         /// </summary>
-        public new string ToString()
+        public override string ToString()
         {
             return string.Format("AutomationId:{0}, Name:{1}, ControlType:{2}, FrameworkId:{3}",
                 Properties.AutomationId.ValueOrDefault, Properties.Name.ValueOrDefault,

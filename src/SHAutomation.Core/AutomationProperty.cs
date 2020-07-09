@@ -105,7 +105,7 @@ namespace SHAutomation.Core
 
         public override string ToString()
         {
-            return this.ValueOrDefault?.ToString() ?? "null";
+            return ValueOrDefault?.ToString() ?? "null";
         }
     }
 }
