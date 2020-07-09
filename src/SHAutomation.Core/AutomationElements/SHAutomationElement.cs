@@ -980,6 +980,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             object value = null;
             SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as Rectangle? != current, timeout);
+
         }
         public void WaitUntilPropertyNotEquals(PropertyId property, int current, int timeout = 10000)
         {
