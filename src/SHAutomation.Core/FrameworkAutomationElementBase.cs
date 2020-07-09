@@ -96,27 +96,16 @@ namespace SHAutomation.Core
             {
                 throw new NotSupportedByFrameworkException();
             }
-            try
-            {
-                var internalValue = InternalGetPropertyValue(property.Id, false);
-                if (internalValue == Automation.NotSupportedValue)
-                {
-                    value = default(T);
-                    return false;
-                }
-                value = property.Convert<T>(Automation, internalValue);
-                return true;
-            }
-            catch (Exception ex)
-            {
 
-                if (!(ex is COMException))
-                {
-                    throw;
-                }
-                value = default(T);
+            var internalValue = InternalGetPropertyValue(property.Id, false);
+            if (internalValue == Automation.NotSupportedValue)
+            {
+                value = default;
                 return false;
             }
+            value = property.Convert<T>(Automation, internalValue);
+            return true;
+
         }
 
         /// <summary>
