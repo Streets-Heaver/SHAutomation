@@ -11,7 +11,7 @@ namespace SHAutomation.Core.Tests.UI
 {
     [TestClass]
 
-    public class FindTests : UITestBase
+    public class FindMethodTests : UITestBase
     {
         [TestMethod]
         public void ElementFoundUsingAutomationIdAndCache_Find_NotBeNull()
@@ -26,6 +26,18 @@ namespace SHAutomation.Core.Tests.UI
             num3Button.Should().NotBeNull();
 
             window.SaveXPathCache(TestContext.TestName);
+        }
+
+        [TestMethod]
+        public void ElementFoundUsingFindAllByXPath_FindAllByXPath_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
+            num3Button.Should().NotBeNull();
+
         }
 
         [TestMethod]
