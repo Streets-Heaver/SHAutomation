@@ -132,7 +132,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds all items which match the given xpath.
         /// </summary>
-        public SHAutomationElement[] FindAllByXPathBase(string xPath)
+        private SHAutomationElement[] FindAllByXPathBase(string xPath)
         {
             try
             {

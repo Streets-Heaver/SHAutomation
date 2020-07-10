@@ -28,8 +28,8 @@ namespace SHAutomation.Core.AutomationElements
         SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 10000);
         void Move(int x, int y);
         void SaveXPathCache(string testName);
-        void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc);
-        void SaveXPathFromControl(SHAutomationElement control, List<(PropertyCondition Value, bool Ignore)> propertyList);
+        void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc, bool regenerateXPath);
+        void SaveXPathFromControl(SHAutomationElement control, List<(PropertyCondition Value, bool Ignore)> propertyList, bool regenerateXPath);
         void SetTransparency(byte alpha);
     }
 }

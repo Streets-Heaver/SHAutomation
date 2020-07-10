@@ -22,6 +22,7 @@ namespace SHAutomation.Core.AutomationElements
         public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, int offscreenTimeout = 10000, ISHAutomationElement parent = null)
         {
             ISHAutomationElement control = null;
+            bool regenerateXPath = false;
 
             Diagnostics.Time(() =>
             {
@@ -36,7 +37,14 @@ namespace SHAutomation.Core.AutomationElements
                     {
                         propertyConditions = GetPropertyConditions(condition);
                     }
-                    control = GetXPathFromPropertyConditions(propertyConditions) ?? FindFirstDescendant(conditionFunc, timeout: timeout);
+
+                    control = GetXPathFromPropertyConditions(propertyConditions);
+
+                    if (control == null)
+                    {
+                        regenerateXPath = true;
+                        control = FindFirstDescendant(conditionFunc, timeout: timeout);
+                    }
 
                 }
                 else
@@ -64,7 +72,7 @@ namespace SHAutomation.Core.AutomationElements
                     _loggingService.Info("Find OnScreen is not supported", LoggingLevel.High);
 
 
-                SaveXPathFromControl((SHAutomationElement)control, propertyConditions);
+                SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
             }, _loggingService);
 
             return control;
@@ -74,6 +82,8 @@ namespace SHAutomation.Core.AutomationElements
         public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, int timeout = 500, int offscreenTimeout = 500, ISHAutomationElement parent = null, bool xpathOnly = false)
         {
             bool exists = true;
+            bool regenerateXPath = false;
+
             Diagnostics.Time(() =>
             {
                 ISHAutomationElement control = null;
@@ -83,8 +93,10 @@ namespace SHAutomation.Core.AutomationElements
                     control = GetXPathElementFromCondition(conditionFunc, timeout);
                     if (control == null && !xpathOnly)
                     {
+                        regenerateXPath = true;
                         control = FindFirstDescendant(conditionFunc, timeout: timeout);
                     }
+                    
                 }
                 else
                 {
@@ -96,20 +108,17 @@ namespace SHAutomation.Core.AutomationElements
                 }
 
                 if (control == null)
-                    exists =  false;
+                    exists = false;
                 else if (checkOnScreen)
                 {
                     control.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"), false, offscreenTimeout);
-                    if (parent == null)
-                    {
-                        SaveXPathFromControl((SHAutomationElement)control, conditionFunc);
-                    }
+                   
                     exists = control.IsOnscreen;
                 }
+
                 if (parent == null)
-                {
-                    SaveXPathFromControl((SHAutomationElement)control, conditionFunc);
-                }
+                    SaveXPathFromControl((SHAutomationElement)control, conditionFunc, regenerateXPath);
+
             }, _loggingService);
 
             return exists;

@@ -27,6 +27,7 @@ namespace SHAutomation.Core
             var parent = treeWalker.GetParent(element);
             if (parent == null || (rootElement != null && parent.Equals(_callingRoot.Parent)))
             {
+                _callingRoot = null;
                 return string.Empty;
             }
             // Get the index

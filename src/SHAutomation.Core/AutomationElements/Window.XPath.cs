@@ -168,11 +168,11 @@ namespace SHAutomation.Core.AutomationElements
             else
                 return null;
         }
-        public void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc)
+        public void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc, bool regenerateXPath)
         {
-            SaveXPathFromControl(control, GetPropertyConditions(conditionFunc));
+            SaveXPathFromControl(control, GetPropertyConditions(conditionFunc), regenerateXPath);
         }
-        public void SaveXPathFromControl(SHAutomationElement control, List<(PropertyCondition Value, bool Ignore)> propertyList)
+        public void SaveXPathFromControl(SHAutomationElement control, List<(PropertyCondition Value, bool Ignore)> propertyList, bool regenerateXPath)
         {
             if (control?.FrameworkAutomationElement != null && propertyList.Any())
             {
@@ -199,7 +199,7 @@ namespace SHAutomation.Core.AutomationElements
                             values.Add(StringExtensions.ConvertStringValueToValidXPath(p.Value.Value.ToString()));
                         }
                     }
-                    GenerateXPathAndCache(string.Join("`", values.ToArray()), string.Join("`", properties.ToArray()), control);
+                    GenerateXPathAndCache(string.Join("`", values.ToArray()), string.Join("`", properties.ToArray()), control, regenerateXPath);
                 }
                 else
                 {
@@ -208,26 +208,25 @@ namespace SHAutomation.Core.AutomationElements
                     if (firstProp.Ignore)
                     {
                         value = control.GetType().GetProperty(firstProp.Value.Property.Name).GetValue(control, null).ToString();
-                        GenerateXPathAndCache(value, firstProp.Value.Property.Name, control);
                     }
-                    else
-                    {
-                        GenerateXPathAndCache(value, firstProp.Value.Property.Name, control);
-                    }
+
+                    GenerateXPathAndCache(value, firstProp.Value.Property.Name, control, regenerateXPath);
+
+
                 }
             }
         }
 
-        private void GenerateXPathAndCache(string identifier, string property, SHAutomationElement element)
+        private void GenerateXPathAndCache(string identifier, string property, SHAutomationElement element, bool regenerateXPath)
         {
 
             try
             {
                 Diagnostics.Time(() =>
                 {
-                    if (!_xPathValues.Any())
+                    if (!_xPathValues.Any() || regenerateXPath)
                     {
-                        _xPathValues.Add(SHAutomation.Core.XPathHelper.GetXPathToElement(element, this));
+                        _xPathValues.Add(XPathHelper.GetXPathToElement(element, this));
                         _hasXPathValue = false;
                     }
                     else

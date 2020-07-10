@@ -10,6 +10,9 @@ namespace SHAutomation.Core.StaticClasses
 {
     public static class ElementHighlighter
     {
+        /// <summary>
+        /// Will highlight the current element. WARNING: Turning this on massively decreases performance. Make sure you turn if off when you are finished with it.
+        /// </summary>
         public static bool UseElementHighlighter = false;
         public static Color HighlightColour = Color.PaleVioletRed;
         public static void HighlightElement(SHAutomationElement sHAutomationElement)
