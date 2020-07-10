@@ -24,56 +24,54 @@ namespace SHAutomation.Core.AutomationElements
             ISHAutomationElement control = null;
             bool regenerateXPath = false;
 
-            Diagnostics.Time(() =>
+            var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
+            var conditionString = condition.ToString();
+            _loggingService.Info(string.Format("Find called {0}", conditionString));
+            bool canUseXpath = !(conditionString.Contains("OR") || conditionString.Contains("NOT"));
+            List<(PropertyCondition Value, bool Ignore)> propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
+            if (parent == null)
             {
-                var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-                var condition_string = condition.ToString();
-                _loggingService.Info(string.Format("Find called {0}", condition_string));
-                bool canUseXpath = !(condition_string.Contains("OR") || condition_string.Contains("NOT"));
-                List<(PropertyCondition Value, bool Ignore)> propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
-                if (parent == null)
+                if (canUseXpath)
                 {
-                    if (canUseXpath)
-                    {
-                        propertyConditions = GetPropertyConditions(condition);
-                    }
-
-                    control = GetXPathFromPropertyConditions(propertyConditions);
-
-                    if (control == null)
-                    {
-                        regenerateXPath = true;
-                        control = FindFirstDescendant(conditionFunc, timeout: timeout);
-                    }
-
+                    propertyConditions = GetPropertyConditions(condition);
                 }
-                else
-                {
-                    control = parent.FindFirstDescendant(conditionFunc);
-                }
+
+                control = GetXPathFromPropertyConditions(propertyConditions);
 
                 if (control == null)
                 {
-                    _loggingService.Error(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
-
-                    throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
+                    regenerateXPath = true;
+                    control = FindFirstDescendant(conditionFunc, timeout: timeout);
                 }
 
-                _loggingService.Info("Find found control", LoggingLevel.High);
+            }
+            else
+            {
+                control = parent.FindFirstDescendant(conditionFunc);
+            }
 
-                SHSpinWait.SpinUntil(() => control.SupportsOnscreen, 500);
-                if (control.SupportsOnscreen)
-                {
-                    SHSpinWait.SpinUntil(() => control.IsOnscreen, offscreenTimeout);
-                    _loggingService.Info("Find OnScreen: " + control.IsOnscreen);
+            if (control == null)
+            {
+                _loggingService.Error(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
 
-                }
-                else
-                    _loggingService.Info("Find OnScreen is not supported", LoggingLevel.High);
+                throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
+            }
+
+            _loggingService.Info("Find found control", LoggingLevel.High);
+
+            SHSpinWait.SpinUntil(() => control.SupportsOnscreen, 500);
+            if (control.SupportsOnscreen)
+            {
+                SHSpinWait.SpinUntil(() => control.IsOnscreen, offscreenTimeout);
+                _loggingService.Info("Find OnScreen: " + control.IsOnscreen, LoggingLevel.High);
+
+            }
+            else
+                _loggingService.Info("Find OnScreen is not supported", LoggingLevel.High);
 
 
-                SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
-            }, _loggingService);
+            SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
+
 
             return control;
 
@@ -83,43 +81,38 @@ namespace SHAutomation.Core.AutomationElements
         {
             bool exists = true;
             bool regenerateXPath = false;
+            ISHAutomationElement control = null;
 
-            Diagnostics.Time(() =>
+            if (parent == null)
             {
-                ISHAutomationElement control = null;
-
-                if (parent == null)
+                control = GetXPathElementFromCondition(conditionFunc, timeout);
+                if (control == null && !xpathOnly)
                 {
-                    control = GetXPathElementFromCondition(conditionFunc, timeout);
-                    if (control == null && !xpathOnly)
-                    {
-                        regenerateXPath = true;
-                        control = FindFirstDescendant(conditionFunc, timeout: timeout);
-                    }
-                    
-                }
-                else
-                {
-                    if (xpathOnly)
-                    {
-                        throw new InvalidOperationException("Cannot search with xpath using parent");
-                    }
-                    control = parent.FindFirstDescendant(conditionFunc, timeout: timeout);
+                    regenerateXPath = true;
+                    control = FindFirstDescendant(conditionFunc, timeout: timeout);
                 }
 
-                if (control == null)
-                    exists = false;
-                else if (checkOnScreen)
+            }
+            else
+            {
+                if (xpathOnly)
                 {
-                    control.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"), false, offscreenTimeout);
-                   
-                    exists = control.IsOnscreen;
+                    throw new InvalidOperationException("Cannot search with xpath using parent");
                 }
+                control = parent.FindFirstDescendant(conditionFunc, timeout: timeout);
+            }
 
-                if (parent == null)
-                    SaveXPathFromControl((SHAutomationElement)control, conditionFunc, regenerateXPath);
+            if (control == null)
+                exists = false;
+            else if (checkOnScreen)
+            {
+                control.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"), false, offscreenTimeout);
 
-            }, _loggingService);
+                exists = control.IsOnscreen;
+            }
+
+            if (parent == null)
+                SaveXPathFromControl((SHAutomationElement)control, conditionFunc, regenerateXPath);
 
             return exists;
         }

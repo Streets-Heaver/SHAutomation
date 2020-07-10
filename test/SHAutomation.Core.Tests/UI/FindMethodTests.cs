@@ -5,6 +5,7 @@ using SHAutomation.UIA3;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace SHAutomation.Core.Tests.UI
@@ -29,14 +30,18 @@ namespace SHAutomation.Core.Tests.UI
         }
 
         [TestMethod]
-        public void ElementFoundUsingFindAllByXPath_FindAllByXPath_NotBeNull()
+        public void ElementFoundUsingConditionAndCache_Find_NotBeNull()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
-            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
+            window.GetXPathCache(TestContext.TestName);
+
+            var num3Button = window.Find(x => x.ByAutomationId("num3Button"));
             num3Button.Should().NotBeNull();
+
+            window.SaveXPathCache(TestContext.TestName);
 
         }
 
@@ -51,5 +56,66 @@ namespace SHAutomation.Core.Tests.UI
             num3Button.Should().NotBeNull();
 
         }
+
+        [TestMethod]
+        public void ElementFoundUsingCondition_Find_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.Find(x => x.ByAutomationId("num3Button"));
+            num3Button.Should().NotBeNull();
+
+        }
+
+        [TestMethod]
+        public void ElementFound_FindAllByXPath_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
+            num3Button.Should().NotBeNull();
+
+        }
+
+        [TestMethod]
+        public void ElementFound_FindFirstDescendant_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.FindFirstDescendant("num3Button");
+            num3Button.Should().NotBeNull();
+
+        }
+
+        [TestMethod]
+        public void FindsSingleElement_FindAllDescendants_BeOne()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.FindAllDescendants(x => x.ByAutomationId("num3Button"));
+            num3Button.Count().Should().Be(1);
+
+        }
+
+        [TestMethod]
+        public void FindsMultipleElements_FindAllDescendants_BeTwo()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var buttons = window.FindAllDescendants(x => x.ByControlType(Definitions.ControlType.Button));
+            buttons.Count().Should().Be(32);
+        }
+
+
     }
 }
