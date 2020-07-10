@@ -18,7 +18,7 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirstDescendant(int timeout = 20000, bool waitUntilExists = true)
         {
-          ISHAutomationElement element = null;
+            ISHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
                 if (element == null)
@@ -64,7 +64,7 @@ namespace SHAutomation.Core.AutomationElements
 
         public ISHAutomationElement FindFirstDescendant(ConditionBase condition, int timeout = 20000, bool waitUntilExists = true)
         {
-          SHAutomationElement element = null;
+            SHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
                 if ((shouldExist && element == null) || (!shouldExist && element != null))

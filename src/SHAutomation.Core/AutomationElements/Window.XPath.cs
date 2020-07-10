@@ -144,19 +144,26 @@ namespace SHAutomation.Core.AutomationElements
             {
                 if (propertyList.Count == 1)
                 {
-                    GetXPathValueFromCache(stringExtensions.ConvertstringValueToValidXPath(propertyList.First().Value.Value.ToString()), stringExtensions.ConvertstringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
                 }
                 else
                 {
                     List<string> propList = new List<string>();
                     foreach ((PropertyCondition Value, bool Ignore) p in propertyList)
                     {
-                        propList.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name.ToString()));
+                        propList.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name.ToString()));
 
                     }
-                    GetXPathValueFromCache(stringExtensions.ConvertstringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
                 }
-                return _xPathValues.Any() ? FindFirstByXPath(_xPathValues, xPathTimeout) : null;
+                if (_xPathValues.Any())
+                    return FindFirstByXPath(_xPathValues, xPathTimeout);
+                else
+                {
+                    _loggingService.Error("No matching cached xpath value found, falling back to tree traversal");
+                    return null;
+                }
+
             }
             else
                 return null;
@@ -183,13 +190,13 @@ namespace SHAutomation.Core.AutomationElements
                     {
                         if (p.Ignore)
                         {
-                            properties.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name));
-                            values.Add(stringExtensions.ConvertstringValueToValidXPath(control.GetType().GetProperty(p.Value.Property.Name).GetValue(control, null).ToString()));
+                            properties.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name));
+                            values.Add(StringExtensions.ConvertStringValueToValidXPath(control.GetType().GetProperty(p.Value.Property.Name).GetValue(control, null).ToString()));
                         }
                         else
                         {
-                            properties.Add(stringExtensions.ConvertstringPropertyToValidXPath(p.Value.Property.Name));
-                            values.Add(stringExtensions.ConvertstringValueToValidXPath(p.Value.Value.ToString()));
+                            properties.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name));
+                            values.Add(StringExtensions.ConvertStringValueToValidXPath(p.Value.Value.ToString()));
                         }
                     }
                     GenerateXPathAndCache(string.Join("`", values.ToArray()), string.Join("`", properties.ToArray()), control);
@@ -213,64 +220,67 @@ namespace SHAutomation.Core.AutomationElements
 
         private void GenerateXPathAndCache(string identifier, string property, SHAutomationElement element)
         {
+
             try
             {
-
-                if (!_xPathValues.Any())
+                Diagnostics.Time(() =>
                 {
-                    _xPathValues.Add(SHAutomation.Core.XPathHelper.GetXPathToElement(element, this));
-                    _hasXPathValue = false;
-                }
-                else
-                {
-                    _hasXPathValue = true;
-                }
-
-                if (_xPathValues.Any() && !_hasXPathValue)
-                {
-                    foreach (string str in _xPathValues)
+                    if (!_xPathValues.Any())
                     {
-                        var items = str.Split('/').ToList();
-                        // "" and Window
-                        var lastItem = items.Last();
-                        items.RemoveRange(0, 1);
-
-                        lastItem = lastItem.Split('[')[0];
-
-                        if (property.Contains("`"))
-                        {
-                            var splitAnds = identifier.Split(new string[] { "`" }, StringSplitOptions.None);
-                            var splitProperties = property.Split(new string[] { "`" }, StringSplitOptions.None);
-                            var stringBuilder = new StringBuilder();
-                            stringBuilder.Append("[");
-                            for (int i = 0; i < splitAnds.Count() - 1; i++)
-                            {
-                                stringBuilder.Append("@" + splitProperties[i] + " = '" + splitAnds[i] + "' and ");
-                            }
-                            lastItem = lastItem + stringBuilder.ToString() + string.Format("@{0} = '{1}']", splitProperties.Last(), splitAnds.Last());
-                        }
-                        else
-                        {
-                            lastItem = lastItem + string.Format("[@" + property + "='{0}']", identifier);
-                        }
-
-                        if (items.Any())
-                        {
-                            items.RemoveAt(items.Count - 1);
-                        }
-                        items.Add(lastItem);
-                        string newStr = string.Join("/", items);
-
-                        //If cache already contains the value then remove and replace with up-to-date version
-                        if (XPathList.Any(x => x.identifier == identifier && x.xpath == ("/" + newStr)))
-                        {
-                            var removeItem = XPathList.FirstOrDefault(x => x.xpath == ("/" + newStr));
-                            XPathList.Remove(removeItem);
-                        }
-
-                        XPathList.Add((identifier: identifier, property: property, xpath: "/" + newStr));
+                        _xPathValues.Add(SHAutomation.Core.XPathHelper.GetXPathToElement(element, this));
+                        _hasXPathValue = false;
                     }
-                }
+                    else
+                    {
+                        _hasXPathValue = true;
+                    }
+
+                    if (_xPathValues.Any() && !_hasXPathValue)
+                    {
+                        foreach (string str in _xPathValues)
+                        {
+                            var items = str.Split('/').ToList();
+                            // "" and Window
+                            var lastItem = items.Last();
+                            items.RemoveRange(0, 1);
+
+                            lastItem = lastItem.Split('[')[0];
+
+                            if (property.Contains("`"))
+                            {
+                                var splitAnds = identifier.Split(new string[] { "`" }, StringSplitOptions.None);
+                                var splitProperties = property.Split(new string[] { "`" }, StringSplitOptions.None);
+                                var stringBuilder = new StringBuilder();
+                                stringBuilder.Append("[");
+                                for (int i = 0; i < splitAnds.Count() - 1; i++)
+                                {
+                                    stringBuilder.Append("@" + splitProperties[i] + " = '" + splitAnds[i] + "' and ");
+                                }
+                                lastItem = lastItem + stringBuilder.ToString() + string.Format("@{0} = '{1}']", splitProperties.Last(), splitAnds.Last());
+                            }
+                            else
+                            {
+                                lastItem = lastItem + string.Format("[@" + property + "='{0}']", identifier);
+                            }
+
+                            if (items.Any())
+                            {
+                                items.RemoveAt(items.Count - 1);
+                            }
+                            items.Add(lastItem);
+                            string newStr = string.Join("/", items);
+
+                            //If cache already contains the value then remove and replace with up-to-date version
+                            if (XPathList.Any(x => x.identifier == identifier && x.xpath == ("/" + newStr)))
+                            {
+                                var removeItem = XPathList.FirstOrDefault(x => x.xpath == ("/" + newStr));
+                                XPathList.Remove(removeItem);
+                            }
+
+                            XPathList.Add((identifier, property, xpath: "/" + newStr));
+                        }
+                    }
+                }, _loggingService);
             }
             catch (Exception ex)
             {
@@ -279,12 +289,13 @@ namespace SHAutomation.Core.AutomationElements
                 if (ex is ArgumentException)
                 {
                     _loggingService.Info("Attempted to add duplicate key to dictionary");
-                    
+
                 }
 
                 throw;
 
             }
+
         }
 
         private bool GetXPathValueFromCache(string identifier, string property, out List<string> xPathValues)
@@ -310,34 +321,41 @@ namespace SHAutomation.Core.AutomationElements
 
         public SHAutomationElement FindFirstByXPath(string xpath, int? spinWaitTimeout = 1)
         {
-            if (xpath.Contains("&quot;"))
-            {
-                xpath = xpath.Replace('\'', '"');
-                xpath = xpath.Replace("&quot;", "'");
-                xpath = xpath.Replace(@"\", "");
-            }
-
             ISHAutomationElement element = null;
 
-            bool getElement()
+            Diagnostics.Time(() =>
             {
-                element = base.FindFirstByXPath(xpath);
-                return element != null;
-            }
+                _loggingService.Info(string.Format("Attempting to find control using xpath:{0}", xpath), LoggingLevel.High);
 
-            if (spinWaitTimeout != null)
-                SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout.Value);
-            else
-            {
-                getElement();
-            }
+                if (xpath.Contains("&quot;"))
+                {
+                    xpath = xpath.Replace('\'', '"');
+                    xpath = xpath.Replace("&quot;", "'");
+                    xpath = xpath.Replace(@"\", "");
+                }
 
-            if (element != null)
-            {
-                SHSpinWait.SpinUntil(() => element?.FrameworkAutomationElement != null, 5000);
-            }
-            else if (element == null)
-                _xPathValues = new List<string>();
+
+                bool getElement()
+                {
+                    element = base.FindFirstByXPath(xpath);
+                    return element != null;
+                }
+
+                if (spinWaitTimeout != null)
+                    SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout.Value);
+                else
+                {
+                    getElement();
+                }
+
+                if (element != null)
+                {
+                    SHSpinWait.SpinUntil(() => element?.FrameworkAutomationElement != null, 5000);
+                }
+                else if (element == null)
+                    _xPathValues = new List<string>();
+
+            }, _loggingService);
 
             return element?.FrameworkAutomationElement != null ? (SHAutomationElement)element : null;
         }
@@ -359,6 +377,8 @@ namespace SHAutomation.Core.AutomationElements
                 _loggingService.Error(output);
 
             }
+            else
+                _loggingService.Info("Found control using cached xpath");
 
 
             return validXpath?.FrameworkAutomationElement != null ? validXpath : null;

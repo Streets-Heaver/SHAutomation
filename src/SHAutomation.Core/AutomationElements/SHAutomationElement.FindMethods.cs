@@ -121,7 +121,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 var xPathNavigator = new SHAutomationElementXPathNavigator(this);
                 var nodeItem = xPathNavigator.SelectSingleNode(xPath);
-                return (SHAutomationElement)nodeItem?.UnderlyingObject;
+                return (ISHAutomationElement)nodeItem?.UnderlyingObject;
             }
             catch (System.Runtime.InteropServices.COMException)
             {

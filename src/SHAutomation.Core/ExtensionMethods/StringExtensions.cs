@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SHAutomation.Core.ExtensionMethods
 {
-    public static class stringExtensions
+    public static class StringExtensions
     {
         /// <summary>
         /// Changes first letter of each string (spaced) to upper case
@@ -114,7 +114,7 @@ namespace SHAutomation.Core.ExtensionMethods
         {
             return value.Split(' ')[indexToReturn];
         }
-        public static string ConvertstringValueToValidXPath(string value)
+        public static string ConvertStringValueToValidXPath(string value)
         {
             return value.Replace("'", "&quot;");
         }
@@ -122,7 +122,7 @@ namespace SHAutomation.Core.ExtensionMethods
         {
             return Regex.Replace(value, @"[^\d]", "");
         }
-        public static string ConvertstringPropertyToValidXPath(string value)
+        public static string ConvertStringPropertyToValidXPath(string value)
         {
             if (value == "Text")
             {
