@@ -1,6 +1,6 @@
 
 
-## SHAutomation
+## SHAutomation - C# library for interacting with Windows applications.
 
 ### Badges
 | What | Badge |
