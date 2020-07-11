@@ -29,8 +29,10 @@ using SHAutomation.UIA3;
 
 using var application = Application.Launch("Application.exe");
 using var automation = new UIA3Automation();
-var window = application.GetMainWindow(automation);
-var element = window.Find("elementAutomationId");
+{
+    var window = application.GetMainWindow(automation);
+    var element = window.Find("elementAutomationId");
+}
 ```
 
 To interact with an element you would call ```Click``` after finding the element
@@ -39,8 +41,10 @@ using SHAutomation.UIA3;
 
 using var application = Application.Launch("Application.exe");
 using var automation = new UIA3Automation();
-var window = application.GetMainWindow(automation);
-var element = window.Find("elementAutomationId").Click();
+{
+    var window = application.GetMainWindow(automation);
+    var element = window.Find("elementAutomationId").Click();
+}
 ```
 
 Once your code has finished running the application will automatically be closed. 
