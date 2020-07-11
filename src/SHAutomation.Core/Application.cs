@@ -304,7 +304,17 @@ namespace SHAutomation.Core
             return GetMainWindow(automation, waitTimeout, null);
         }
 
-        
+        /// <summary>
+        /// Gets the main window of the application's process.
+        /// </summary>
+        /// <param name="automation">The automation object to use.</param>
+        /// <param name="pathToConfigFile">Path to SHAutomtion.json</param>
+        public Window GetMainWindow(AutomationBase automation, string pathToConfigFile)
+        {
+            return GetMainWindow(automation, null, pathToConfigFile);
+        }
+
+
         private Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout, string pathToConfigFile)
         {
             WaitWhileMainHandleIsMissing(waitTimeout);
