@@ -49,4 +49,4 @@ using var automation = new UIA3Automation();
 
 Once your code has finished running the application will automatically be closed. 
 
-For more advanced features and more examples please see the [Wiki](https://github.com/Streets-Heaver/SHAutomation/wiki).
+For advanced features and more examples please see the [Wiki](https://github.com/Streets-Heaver/SHAutomation/wiki).
