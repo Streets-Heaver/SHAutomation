@@ -11,7 +11,7 @@ namespace SHAutomation.UIA3.Converters
         {
             if (nativeElements == null)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>(); 
             }
             var uia3Automation = (UIA3Automation)automation;
             var nativeElementsCasted = (UIA.IUIAutomationElementArray)nativeElements;

@@ -3,7 +3,7 @@
     /// <summary>
     /// Contains values used in creating property conditions.
     /// </summary>
-    public enum PropertyConditionFlags
+    public enum PropertyConditionFlag
     {
         /// <summary>
         /// No flags.

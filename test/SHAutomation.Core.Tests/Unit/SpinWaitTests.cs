@@ -46,7 +46,7 @@ namespace SHAutomation.Core.Tests.Unit
         public void TimesOutAfterTimeoutElapses_SpinWait_BeGreaterOrEqualTo()
         {
 
-            var elapsed = Diagnostics.Time(() =>
+            var elapsed = PerformanceDiagnostics.Time(() =>
                 {
                     SHSpinWait.SpinUntil(() => true == false, 50);
 

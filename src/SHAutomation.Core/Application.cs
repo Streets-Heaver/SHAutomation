@@ -243,17 +243,7 @@ namespace SHAutomation.Core
                 processStartInfo.WorkingDirectory = ".";
             }
 
-            Process process;
-            try
-            {
-                process = Process.Start(processStartInfo);
-            }
-            catch (Win32Exception ex)
-            {
-                throw ex;
-            }
-
-            return new Application(process, loggingService);
+            return new Application(Process.Start(processStartInfo), loggingService);
         }
 
         public static Application LaunchStoreApp(string appUserModelId, string arguments = null)

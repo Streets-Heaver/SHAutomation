@@ -37,7 +37,7 @@ namespace SHAutomation.Core.AutomationElements
                 return elements.ToArray();
             }
 
-            return new SHAutomationElement[0];
+            return Array.Empty<SHAutomationElement>();
         }
         public  ISHAutomationElement[] FindAllDescendants(ConditionBase condition)
         {
@@ -75,7 +75,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return elements.ToArray();
             }
-            return new SHAutomationElement[0];
+            return Array.Empty<SHAutomationElement>();
         }
     }
 }

@@ -49,8 +49,8 @@ namespace SHAutomation.Core.AutomationElements
         ISHAutomationElement[] FindAllDescendantsNameContains(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement[] FindAllDescendantsNameEndsWith(string name, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement[] FindAllDescendantsNameStartsWith(string name, int timeout = 20000, bool waitUntilExists = true);
-        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root);
-        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions, SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true);
+        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
+        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
         ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition, int timeout = 20000, bool waitUntilExists = true);
         ISHAutomationElement FindFirstChild();

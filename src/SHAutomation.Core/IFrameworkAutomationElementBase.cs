@@ -73,9 +73,9 @@ namespace SHAutomation.Core
         AutomationProperty<VisualEffects> VisualEffects { get; }
 
       SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
-      SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
+      SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root);
       SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
-      SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root);
+      SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root);
       SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
 
         Point GetClickablePoint();

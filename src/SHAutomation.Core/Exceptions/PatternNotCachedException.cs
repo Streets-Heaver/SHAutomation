@@ -14,6 +14,14 @@ namespace SHAutomation.Core.Exceptions
         {
         }
 
+        public PatternNotCachedException(string message) : base(message)
+        {
+        }
+
+        public PatternNotCachedException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
         public PatternNotCachedException(PatternId pattern)
             : base(string.Format(DefaultMessageWithData, pattern))
         {
@@ -55,5 +63,7 @@ namespace SHAutomation.Core.Exceptions
             info.AddValue("Pattern", Pattern);
             base.GetObjectData(info, context);
         }
+
+        
     }
 }

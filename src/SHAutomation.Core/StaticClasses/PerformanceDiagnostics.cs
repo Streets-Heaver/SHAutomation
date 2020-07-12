@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SHAutomation.Core.StaticClasses
 {
-    public static class Diagnostics
+    public static class PerformanceDiagnostics
     {
         public static TimeSpan Time(Action action)
         {

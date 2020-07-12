@@ -13,6 +13,13 @@ namespace SHAutomation.Core.Exceptions
         public PatternNotSupportedException() : base(DefaultMessage)
         {
         }
+        public PatternNotSupportedException(string message) : base(message)
+        {
+        }
+
+        public PatternNotSupportedException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
 
         public PatternNotSupportedException(PatternId pattern)
             : base(string.Format(DefaultMessageWithData, pattern))
@@ -55,5 +62,7 @@ namespace SHAutomation.Core.Exceptions
             info.AddValue("Pattern", Pattern);
             base.GetObjectData(info, context);
         }
+
+       
     }
 }

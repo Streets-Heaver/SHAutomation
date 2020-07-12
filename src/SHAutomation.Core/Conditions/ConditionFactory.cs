@@ -159,19 +159,19 @@ namespace SHAutomation.Core.Conditions
         }
         public PropertyCondition ByNameIgnoreCase(string value)
         {
-            return new PropertyCondition(_propertyLibrary.Element.Name, value, PropertyConditionFlags.IgnoreCase);
+            return new PropertyCondition(_propertyLibrary.Element.Name, value, PropertyConditionFlag.IgnoreCase);
         }
         public PropertyCondition ByAutomationIdIgnoreCase(string value)
         {
-            return new PropertyCondition(_propertyLibrary.Element.AutomationId, value, PropertyConditionFlags.IgnoreCase);
+            return new PropertyCondition(_propertyLibrary.Element.AutomationId, value, PropertyConditionFlag.IgnoreCase);
         }
         public PropertyCondition ByClassNameIgnoreCase(string value)
         {
-            return new PropertyCondition(_propertyLibrary.Element.ClassName, value, PropertyConditionFlags.IgnoreCase);
+            return new PropertyCondition(_propertyLibrary.Element.ClassName, value, PropertyConditionFlag.IgnoreCase);
         }
         public PropertyCondition ByHelpTextIgnoreCase(string value)
         {
-            return new PropertyCondition(_propertyLibrary.Element.HelpText, value, PropertyConditionFlags.IgnoreCase);
+            return new PropertyCondition(_propertyLibrary.Element.HelpText, value, PropertyConditionFlag.IgnoreCase);
         }
     }
 }

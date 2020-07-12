@@ -115,7 +115,7 @@ namespace SHAutomation.UIA3
 
         /// <inheritdoc />
         public override SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOptions traversalOptions,SHAutomationElement root)
+            TreeTraversalOption traversalOptions,SHAutomationElement root)
         {
             var nativeFoundElements =  NativeElement7.FindAllWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
             return SHAutomationElementConverter.NativeArrayToManaged(Automation, nativeFoundElements);
@@ -123,7 +123,7 @@ namespace SHAutomation.UIA3
 
         /// <inheritdoc />
         public override SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOptions traversalOptions,SHAutomationElement root)
+            TreeTraversalOption traversalOptions,SHAutomationElement root)
         {
             var nativeFoundElement = NativeElement7.FindFirstWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
             return SHAutomationElementConverter.NativeToManaged(Automation, nativeFoundElement);

@@ -89,7 +89,7 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     return edit.AsTextBox();
                 }
-                throw new Exception("ComboBox is not editable.");
+                throw new InvalidOperationException("ComboBox is not editable.");
             }
         }
 

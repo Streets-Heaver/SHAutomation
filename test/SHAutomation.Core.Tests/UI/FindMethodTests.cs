@@ -114,7 +114,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
 
             var num3Button = window.FindAllDescendants(x => x.ByAutomationId("num3Button"));
-            num3Button.Count().Should().Be(1);
+            num3Button.Length.Should().Be(1);
 
         }
 
@@ -126,7 +126,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
 
             var buttons = window.FindAllDescendants(x => x.ByControlType(Definitions.ControlType.Button));
-            buttons.Count().Should().BeGreaterThan(1);
+            buttons.Length.Should().BeGreaterThan(1);
         }
 
 

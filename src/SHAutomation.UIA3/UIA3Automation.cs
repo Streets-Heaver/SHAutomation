@@ -49,16 +49,16 @@ namespace SHAutomation.UIA3
         }
 
         /// <inheritdoc />
-        public override ConnectionRecoveryBehaviorOptions ConnectionRecoveryBehavior
+        public override ConnectionRecoveryBehaviorOption ConnectionRecoveryBehavior
         {
-            get => (ConnectionRecoveryBehaviorOptions)NativeAutomation6.ConnectionRecoveryBehavior;
+            get => (ConnectionRecoveryBehaviorOption)NativeAutomation6.ConnectionRecoveryBehavior;
             set => NativeAutomation6.ConnectionRecoveryBehavior = (UIA.ConnectionRecoveryBehaviorOptions)value;
         }
 
         /// <inheritdoc />
-        public override CoalesceEventsOptions CoalesceEvents
+        public override CoalesceEventsOption CoalesceEvents
         {
-            get => (CoalesceEventsOptions)NativeAutomation6.CoalesceEvents;
+            get => (CoalesceEventsOption)NativeAutomation6.CoalesceEvents;
             set => NativeAutomation6.CoalesceEvents = (UIA.CoalesceEventsOptions)value;
         }
         /// <summary>
@@ -156,7 +156,10 @@ namespace SHAutomation.UIA3
             NativeAutomation.RemoveFocusChangedEventHandler((UIA3FocusChangedEventHandler)eventHandler);
         }
 
+
+
         /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         public override void UnregisterAllEvents()
         {
             try

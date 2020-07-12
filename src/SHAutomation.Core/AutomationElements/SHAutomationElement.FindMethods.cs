@@ -33,7 +33,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Find all matching elements in the specified order.
         /// </summary>
         public SHAutomationElement[] FindAllWithOptionsBase(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOptions traversalOptions, SHAutomationElement root)
+            TreeTraversalOption traversalOptions, SHAutomationElement root)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -50,7 +50,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Finds the first matching element in the specified order.
         /// </summary>
         public SHAutomationElement FindFirstWithOptionsBase(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOptions traversalOptions, SHAutomationElement root)
+            TreeTraversalOption traversalOptions, SHAutomationElement root)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -148,7 +148,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
             }
         }
 
@@ -247,7 +247,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -265,7 +265,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -284,7 +284,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -369,7 +369,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
             }
         }
 
@@ -386,7 +386,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
             }
         }
 
@@ -404,7 +404,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -441,7 +441,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>(); 
 
             }
         }

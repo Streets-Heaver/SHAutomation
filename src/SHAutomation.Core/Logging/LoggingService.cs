@@ -36,7 +36,10 @@ namespace SHAutomation.Core.Logging
                 _loggingLevel = loggingLevel;
 
                 XmlDocument log4netConfig = new XmlDocument();
-                log4netConfig.Load(File.OpenRead(configLocation));
+                using (var config = File.OpenRead(configLocation))
+                {
+                    log4netConfig.Load(config);
+                }
 
                 log4net.Config.XmlConfigurator.Configure(LogManager.CreateRepository(assembly, typeof(log4net.Repository.Hierarchy.Hierarchy)), log4netConfig["log4net"]);
 

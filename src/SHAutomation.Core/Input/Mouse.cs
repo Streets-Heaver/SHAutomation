@@ -30,26 +30,23 @@ namespace SHAutomation.Core.Input
         /// <summary>
         /// The current max timespan (in milliseconds) for double clicks
         /// </summary>
-        private static readonly int CurrentDoubleClickTime;
+        private static readonly int CurrentDoubleClickTime = (int)User32.GetDoubleClickTime();
 
         /// <summary>
         /// Dictionary which holds the last click time for each button
         /// </summary>
-        private static readonly Dictionary<MouseButton, DateTime> LastClickTimes;
+        private static readonly Dictionary<MouseButton, DateTime> LastClickTimes = new Dictionary<MouseButton, DateTime>();
 
         /// <summary>
         /// Dictionary which holds the last click position for each button
         /// </summary>
-        private static readonly Dictionary<MouseButton, Point> LastClickPositions;
+        private static readonly Dictionary<MouseButton, Point> LastClickPositions = new Dictionary<MouseButton, Point>();
 
         /// <summary>
         /// Static constructor
         /// </summary>
         static Mouse()
         {
-            CurrentDoubleClickTime = (int)User32.GetDoubleClickTime();
-            LastClickTimes = new Dictionary<MouseButton, DateTime>();
-            LastClickPositions = new Dictionary<MouseButton, Point>();
             foreach (MouseButton mouseButton in Enum.GetValues(typeof(MouseButton)))
             {
                 LastClickTimes.Add(mouseButton, DateTime.Now);
@@ -330,7 +327,7 @@ namespace SHAutomation.Core.Input
                     mouseData = MouseEventDataXButtons.XBUTTON2;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("mouseButton");
+                    throw new ArgumentOutOfRangeException(nameof(mouseButton));
             }
             data = (uint)mouseData;
             return mouseEventFlags;
