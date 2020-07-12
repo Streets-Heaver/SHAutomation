@@ -38,7 +38,7 @@ namespace SHAutomation.Core.Tests.UI
 
 
             var num3Button = window.Find("num3Button");
-            var xpath = window.XPathList.Should().BeEquivalentTo((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+            window.XPathList.Should().BeEquivalentTo((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
             
         }
 
