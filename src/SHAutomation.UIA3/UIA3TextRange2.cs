@@ -12,6 +12,7 @@ namespace SHAutomation.UIA3
             : base(automation, nativeRange)
         {
             NativeRange2 = nativeRange;
+
         }
 
         public void ShowContextMenu()
