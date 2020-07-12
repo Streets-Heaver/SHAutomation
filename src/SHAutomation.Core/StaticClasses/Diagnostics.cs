@@ -11,6 +11,10 @@ namespace SHAutomation.Core.StaticClasses
 {
     public static class Diagnostics
     {
+        public static TimeSpan Time(Action action)
+        {
+            return Time(action, null, null);
+        }
         public static TimeSpan Time(Action action, ILoggingService loggingService)
         {
             return Time(action, loggingService, null);
@@ -24,10 +28,13 @@ namespace SHAutomation.Core.StaticClasses
             action.Invoke();
             stopwatch.Stop();
 
-            loggingService.Info(methodName + " took " + stopwatch.Elapsed.TotalSeconds + " to execute");
+            if (loggingService != null)
+            {
+                loggingService.Info(methodName + " took " + stopwatch.Elapsed.TotalSeconds + " to execute");
 
-            if (warnMilliseconds.HasValue && stopwatch.Elapsed.TotalMilliseconds > warnMilliseconds.Value)
-                loggingService.Warn(methodName + " breached limit of " + warnMilliseconds.Value + " milliseconds. Took " + stopwatch.Elapsed.TotalMilliseconds + " to execute");
+                if (warnMilliseconds.HasValue && stopwatch.Elapsed.TotalMilliseconds > warnMilliseconds.Value)
+                    loggingService.Warn(methodName + " breached limit of " + warnMilliseconds.Value + " milliseconds. Took " + stopwatch.Elapsed.TotalMilliseconds + " to execute");
+            }
 
 
             return stopwatch.Elapsed;

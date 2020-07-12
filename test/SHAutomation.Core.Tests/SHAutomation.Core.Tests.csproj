@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\src\SHAutomation.UIA3\SHAutomation.UIA3.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Unit\" />
-  </ItemGroup>
-
 </Project>
