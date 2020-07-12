@@ -285,14 +285,15 @@ namespace SHAutomation.Core
         /// <returns>True a main window handle was found, false otherwise.</returns>
         public bool WaitWhileMainHandleIsMissing(TimeSpan? waitTimeout = null)
         {
-            var waitTime = waitTimeout ?? TimeSpan.FromMilliseconds(-1);
-            return Retry.WhileTrue(() =>
+            return SHSpinWait.SpinUntil(() =>
             {
                 int processId = _process.Id;
                 _process.Dispose();
                 _process = FindProcess(processId);
-                return _process.MainWindowHandle == IntPtr.Zero;
-            }, waitTime, TimeSpan.FromMilliseconds(50)).Result;
+                return _process.MainWindowHandle != IntPtr.Zero;
+
+            }, waitTimeout.HasValue ? waitTimeout.Value.TotalMilliseconds.ToInt() : TimeSpan.FromSeconds(5).TotalMilliseconds.ToInt());
+
         }
 
         /// <summary>

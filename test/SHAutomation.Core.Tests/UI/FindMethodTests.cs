@@ -30,6 +30,19 @@ namespace SHAutomation.Core.Tests.UI
         }
 
         [TestMethod]
+        public void FoundElementXPathStoredInCache_Find_BeEquivalentTo()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+
+            var num3Button = window.Find("num3Button");
+            var xpath = window.XPathList.Should().BeEquivalentTo((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+            
+        }
+
+        [TestMethod]
         public void ElementFoundUsingConditionAndCache_Find_NotBeNull()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
