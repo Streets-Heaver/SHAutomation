@@ -6,6 +6,7 @@ using System.Linq;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Definitions;
 using SHAutomation.Core.Logging;
+using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.Tools;
 
 namespace SHAutomation.Core
@@ -324,9 +325,11 @@ namespace SHAutomation.Core
                 return null;
             }
 
+            SHSpinWait.SpinUntil(() => automation.FromHandle(mainWindowHandle) != null, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(5));
+
             var mainWindow = automation.FromHandle(mainWindowHandle)
                 .AsWindow(_loggingService, pathToConfigFile);
-           
+
             if (mainWindow != null)
             {
                 mainWindow.IsMainWindow = true;

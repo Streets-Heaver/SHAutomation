@@ -106,14 +106,14 @@ namespace SHAutomation.Core.Tests.UI
         }
 
         [TestMethod]
-        public void FindsMultipleElements_FindAllDescendants_BeTwo()
+        public void FindsMultipleElements_FindAllDescendants_BeGreaterThanOne()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
             var buttons = window.FindAllDescendants(x => x.ByControlType(Definitions.ControlType.Button));
-            buttons.Count().Should().Be(32);
+            buttons.Count().Should().BeGreaterThan(1);
         }
 
 
