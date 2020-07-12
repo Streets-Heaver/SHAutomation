@@ -71,3 +71,5 @@ dotnet_diagnostic.CA1062.severity = none
 
 # CA2000: Dispose objects before losing scope
 dotnet_diagnostic.CA2000.severity = none
+
+dotnet_diagnostic.CA3075.severity = none
