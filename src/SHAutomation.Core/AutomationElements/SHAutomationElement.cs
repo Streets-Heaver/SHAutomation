@@ -167,6 +167,7 @@ namespace SHAutomation.Core.AutomationElements
         public void Click(MouseAction buttonToPress, int mouseSpeed = 5)
         {
             HoverOver(mouseSpeed);
+            Wait.UntilInputIsProcessed();
             MouseHelpers.MouseClick(buttonToPress);
         }
 
