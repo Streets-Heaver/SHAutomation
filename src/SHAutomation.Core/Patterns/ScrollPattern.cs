@@ -4,7 +4,7 @@ using SHAutomation.Core.Patterns.Infrastructure;
 
 namespace SHAutomation.Core.Patterns
 {
-    public class ScrollPatternConstants
+    public static class ScrollPatternConstants
     {
         public const double NoScroll = -1.0;
     }

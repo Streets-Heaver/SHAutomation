@@ -89,12 +89,12 @@ namespace SHAutomation.Core
         /// </summary>
         public abstract TimeSpan ConnectionTimeout { get; set; }
 
-        public abstract ConnectionRecoveryBehaviorOptions ConnectionRecoveryBehavior { get; set; }
+        public abstract ConnectionRecoveryBehaviorOption ConnectionRecoveryBehavior { get; set; }
 
         /// <summary>
         /// Gets or sets whether an accessible technology client receives all events, or a subset where duplicate events are detected and filtered.
         /// </summary>
-        public abstract CoalesceEventsOptions CoalesceEvents { get; set; }
+        public abstract CoalesceEventsOption CoalesceEvents { get; set; }
 
         /// <summary>
         /// Gets the desktop (root) element.

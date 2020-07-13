@@ -4,7 +4,6 @@ using System.Text;
 
 namespace SHAutomation.Core.WindowsAPI
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static class User32
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -50,7 +49,7 @@ namespace SHAutomation.Core.WindowsAPI
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Unicode)]
         public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -101,7 +100,7 @@ namespace SHAutomation.Core.WindowsAPI
         [DllImport("user32.dll")]
         public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         [DllImport("User32.dll", SetLastError = true)]
@@ -110,5 +109,4 @@ namespace SHAutomation.Core.WindowsAPI
         [DllImport("User32.dll", SetLastError = true)]
         public static extern bool InjectTouchInput(int count, [MarshalAs(UnmanagedType.LPArray), In] POINTER_TOUCH_INFO[] contacts);
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

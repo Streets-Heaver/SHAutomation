@@ -20,9 +20,11 @@ namespace SHAutomation.Core.AutomationElements
     {
         private List<string> _xPathValues = new List<string>();
         private bool _hasXPathValue = false;
-        public List<(string identifier, string property, string xpath)> XPathList = new List<(string identifier, string property, string xpath)>();
+
         public IFileSystem FileSystem { get; set; } = new FileSystem();
         public ICacheService CacheService { get; set; }
+        public List<(string identifier, string property, string xpath)> XPathList { get; private set; } = new List<(string identifier, string property, string xpath)>();
+
         private string _xpathGetContent;
 
         public void GetXPathCache(string testName)
@@ -112,20 +114,20 @@ namespace SHAutomation.Core.AutomationElements
             if (condition is AndCondition)
             {
                 var andCondition = condition as AndCondition;
-                if (andCondition.Conditions.OfType<PropertyCondition>().Count() != andCondition.Conditions.Count())
+                if (andCondition.Conditions.OfType<PropertyCondition>().Count() != andCondition.Conditions.Count)
                 {
                     return new List<(PropertyCondition Value, bool Ignore)>();
                 }
                 foreach (var prop in andCondition.Conditions)
                 {
                     var propCond = prop as PropertyCondition;
-                    propertyConditions.Add((propCond, propCond.PropertyConditionFlags == PropertyConditionFlags.IgnoreCase));
+                    propertyConditions.Add((propCond, propCond.PropertyConditionFlags == PropertyConditionFlag.IgnoreCase));
                 }
             }
             else if (condition is PropertyCondition)
             {
                 var prop = condition as PropertyCondition;
-                propertyConditions.Add((prop, prop.PropertyConditionFlags == PropertyConditionFlags.IgnoreCase));
+                propertyConditions.Add((prop, prop.PropertyConditionFlags == PropertyConditionFlag.IgnoreCase));
             }
             return propertyConditions.Any() ? propertyConditions : new List<(PropertyCondition Value, bool Ignore)>();
         }
@@ -178,7 +180,7 @@ namespace SHAutomation.Core.AutomationElements
                     List<string> values = new List<string>();
                     List<string> properties = new List<string>();
 
-                    if (propertyList.Select(x => x.Value).OfType<PropertyCondition>().Count() != propertyList.Count())
+                    if (propertyList.Select(x => x.Value).OfType<PropertyCondition>().Count() != propertyList.Count)
                     {
                         return;
                     }
@@ -247,7 +249,7 @@ namespace SHAutomation.Core.AutomationElements
                             var splitProperties = property.Split(new string[] { "`" }, StringSplitOptions.None);
                             var stringBuilder = new StringBuilder();
                             stringBuilder.Append("[");
-                            for (int i = 0; i < splitAnds.Count() - 1; i++)
+                            for (int i = 0; i < splitAnds.Length - 1; i++)
                             {
                                 stringBuilder.Append("@" + splitProperties[i] + " = '" + splitAnds[i] + "' and ");
                             }

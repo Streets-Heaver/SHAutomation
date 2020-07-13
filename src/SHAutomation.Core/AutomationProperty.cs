@@ -93,6 +93,11 @@ namespace SHAutomation.Core
             return automationProperty == null ? default(TVal) : automationProperty.Value;
         }
 
+        public TVal ToTVal()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Equals(TVal other)
         {
             return Value.Equals(other);
@@ -106,6 +111,16 @@ namespace SHAutomation.Core
         public override string ToString()
         {
             return ValueOrDefault?.ToString() ?? "null";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as AutomationProperty<TVal>);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }

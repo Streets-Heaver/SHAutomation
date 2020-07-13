@@ -12,11 +12,11 @@ namespace SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {
-        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root)
+        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root)
         {
             return FindAllWithOptions(treeScope, condition, traversalOptions, root, 20000);
         }
-        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOptions traversalOptions,SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
             bool getElements(bool shouldExist)
@@ -38,7 +38,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return elements.ToArray();
             }
-            return new SHAutomationElement[0];
+            return Array.Empty<SHAutomationElement>();
         }
     }
 }

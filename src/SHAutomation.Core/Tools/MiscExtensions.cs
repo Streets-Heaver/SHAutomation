@@ -9,7 +9,7 @@ namespace SHAutomation.Core.Tools
     /// <summary>
     /// Provides various extension methods.
     /// </summary>
-    public static class ExtensionMethods
+    public static class MiscExtensions
     {
         /// <summary>
         /// Makes sure a comparable object is between a given range.

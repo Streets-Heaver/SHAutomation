@@ -25,7 +25,7 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
@@ -98,7 +98,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             window.CacheService = cacheServiceMock.Object;
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
 
             db.KeyDelete(TestContext.TestName);
 
@@ -119,7 +119,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
 
             window.SaveXPathCache(TestContext.TestName);
@@ -135,7 +135,7 @@ namespace SHAutomation.Core.Tests.Integration
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
@@ -160,7 +160,7 @@ namespace SHAutomation.Core.Tests.Integration
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
             var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
@@ -233,7 +233,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.25");
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
             db.KeyDelete(TestContext.TestName + "_8.25");
 
@@ -251,7 +251,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
 
-            IDatabase db = Redis.Connection.GetDatabase();
+            IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
             db.KeyDelete(TestContext.TestName + "_8.25");
 

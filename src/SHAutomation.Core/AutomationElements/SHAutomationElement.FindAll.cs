@@ -20,7 +20,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return new SHAutomationElement[0];
+                return Array.Empty<SHAutomationElement>();
 
             }
         }

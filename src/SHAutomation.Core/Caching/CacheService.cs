@@ -42,10 +42,10 @@ namespace SHAutomation.Core.Caching
                 if (!string.IsNullOrEmpty(config.RedisEndpoint))
                     _usingRedis = true;
 
-                Redis.EndPoint = config.RedisEndpoint;
-                Redis.Password = config.RedisPassword;
-                Redis.Port = config.RedisPort;
-                Redis.UseSSL = config.RedisUseSSL;
+                RedisManager.EndPoint = config.RedisEndpoint;
+                RedisManager.Password = config.RedisPassword;
+                RedisManager.Port = config.RedisPort;
+                RedisManager.UseSSL = config.RedisUseSSL;
                 _branchNameRegex = @"\d\.\d\d"; //config.BranchMatchRegex.Replace(@"\\", @"\");
 
             }
@@ -58,12 +58,12 @@ namespace SHAutomation.Core.Caching
                 IDatabase db;
                 try
                 {
-                    db = Redis.Connection.GetDatabase();
+                    db = RedisManager.Connection.GetDatabase();
                 }
                 catch (ObjectDisposedException)
                 {
-                    Redis.ForceReconnect();
-                    db = Redis.Connection.GetDatabase();
+                    RedisManager.ForceReconnect();
+                    db = RedisManager.Connection.GetDatabase();
 
                 }
                 db.StringSet(key, value);
@@ -96,12 +96,12 @@ namespace SHAutomation.Core.Caching
                 IDatabase db;
                 try
                 {
-                    db = Redis.Connection.GetDatabase();
+                    db = RedisManager.Connection.GetDatabase();
                 }
                 catch (ObjectDisposedException)
                 {
-                    Redis.ForceReconnect();
-                    db = Redis.Connection.GetDatabase();
+                    RedisManager.ForceReconnect();
+                    db = RedisManager.Connection.GetDatabase();
 
                 }
 

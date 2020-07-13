@@ -1,4 +1,5 @@
 ﻿using SHAutomation.Core;
+using System;
 using UIA = Interop.UIAutomationClient;
 
 namespace SHAutomation.UIA3.Converters
@@ -9,7 +10,7 @@ namespace SHAutomation.UIA3.Converters
         {
             if (nativeTextRangeArray == null)
             {
-                return new ITextRange[0];
+                return Array.Empty<ITextRange>();
             }
             var retArray = new ITextRange[nativeTextRangeArray.Length];
             for (var i = 0; i < nativeTextRangeArray.Length; i++)
@@ -18,7 +19,7 @@ namespace SHAutomation.UIA3.Converters
             }
             return retArray;
         }
-        
+
         public static UIA3TextRange NativeToManaged(UIA3Automation automation, UIA.IUIAutomationTextRange nativeTextRange)
         {
             return nativeTextRange == null ? null : new UIA3TextRange(automation, nativeTextRange);

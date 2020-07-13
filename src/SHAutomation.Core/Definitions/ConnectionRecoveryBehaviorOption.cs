@@ -9,7 +9,7 @@ namespace SHAutomation.Core.Definitions
     /// which indicates whether an accessible technology client adjusts provider
     /// request timeouts when the provider is non-responsive.
     /// </summary>
-    public enum ConnectionRecoveryBehaviorOptions
+    public enum ConnectionRecoveryBehaviorOption
     {
         /// <summary>
         /// Connection recovery is disabled.

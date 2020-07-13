@@ -9,7 +9,7 @@ namespace SHAutomation.Core.Definitions
     /// which indicates whether an accessible technology client receives all events,
     /// or a subset where duplicate events are detected and filtered.
     /// </summary>
-    public enum CoalesceEventsOptions
+    public enum CoalesceEventsOption
     {
         /// <summary>
         /// Event coalescing is disabled.

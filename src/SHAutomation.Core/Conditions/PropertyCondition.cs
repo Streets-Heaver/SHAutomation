@@ -6,11 +6,11 @@ namespace SHAutomation.Core.Conditions
     public class PropertyCondition : ConditionBase
     {
         public PropertyCondition(PropertyId property, object value)
-            : this(property, value, PropertyConditionFlags.None)
+            : this(property, value, PropertyConditionFlag.None)
         {
         }
 
-        public PropertyCondition(PropertyId property, object value, PropertyConditionFlags propertyConditionFlags)
+        public PropertyCondition(PropertyId property, object value, PropertyConditionFlag propertyConditionFlags)
         {
             Property = property;
             Value = value;
@@ -19,7 +19,7 @@ namespace SHAutomation.Core.Conditions
 
         public PropertyId Property { get; }
 
-        public PropertyConditionFlags PropertyConditionFlags { get; private set; }
+        public PropertyConditionFlag PropertyConditionFlags { get; private set; }
 
         public object Value { get; }
 

@@ -167,6 +167,7 @@ namespace SHAutomation.Core.AutomationElements
         public void Click(MouseAction buttonToPress, int mouseSpeed = 5)
         {
             HoverOver(mouseSpeed);
+            Wait.UntilInputIsProcessed();
             MouseHelpers.MouseClick(buttonToPress);
         }
 
@@ -909,7 +910,7 @@ namespace SHAutomation.Core.AutomationElements
 
         public void WaitUntilPropertyEquals(PropertyId property, int[] expected, int timeout = 10000)
         {
-            object value = new int[0];
+            object value = Array.Empty<int>();
             SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int[] == expected, timeout);
         }
         public void WaitUntilPropertyEquals(PropertyId property, VisualEffects expected, int timeout = 10000)
@@ -990,7 +991,7 @@ namespace SHAutomation.Core.AutomationElements
 
         public void WaitUntilPropertyNotEquals(PropertyId property, int[] current, int timeout = 10000)
         {
-            object value = new int[0];
+            object value = Array.Empty<int>();
             SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int[] != current, timeout);
         }
         public void WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current, int timeout = 10000)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SHAutomation.Core.StaticClasses
 {
-    public static class Redis
+    public static class RedisManager
     {
 
         private static long _lastReconnectTicks = DateTimeOffset.MinValue.UtcTicks;

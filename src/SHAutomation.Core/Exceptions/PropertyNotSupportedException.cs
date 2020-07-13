@@ -14,6 +14,13 @@ namespace SHAutomation.Core.Exceptions
         {
         }
 
+        public PropertyNotSupportedException(string message) : base(message)
+        {
+        }
+
+        public PropertyNotSupportedException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
         public PropertyNotSupportedException(PropertyId property)
             : base(string.Format(DefaultMessageWithData, property))
         {
@@ -55,5 +62,7 @@ namespace SHAutomation.Core.Exceptions
             info.AddValue("Property", Property);
             base.GetObjectData(info, context);
         }
+
+       
     }
 }

@@ -19,7 +19,6 @@ namespace SHAutomation.Core.Input
         public static void UntilInputIsProcessed(TimeSpan? waitTimeout = null)
         {
             // Let the thread some time to process the system's hardware input queue.
-            // For details see this post: http://blogs.msdn.com/b/oldnewthing/archive/2014/02/13/10499047.aspx
             var waitTime = (waitTimeout ?? TimeSpan.FromMilliseconds(100)).TotalMilliseconds;
             Thread.Sleep((int)waitTime);
         }
