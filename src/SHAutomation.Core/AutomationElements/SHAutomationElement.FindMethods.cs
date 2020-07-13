@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Xml.XPath;
 
 namespace SHAutomation.Core.AutomationElements
 {
@@ -124,6 +125,10 @@ namespace SHAutomation.Core.AutomationElements
                 return (ISHAutomationElement)nodeItem?.UnderlyingObject;
             }
             catch (System.Runtime.InteropServices.COMException)
+            {
+                return null;
+            }
+            catch (XPathException)
             {
                 return null;
             }
