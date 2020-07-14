@@ -29,6 +29,8 @@ namespace SHAutomation.Core.Tests.Integration
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
 
             db.KeyExists(TestContext.TestName).Should().BeTrue();
@@ -48,11 +50,33 @@ namespace SHAutomation.Core.Tests.Integration
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
 
             window.GetXPathCache(TestContext.TestName);
 
             window.XPathList.Count.Should().Be(1);
+
+        }
+
+        [TestMethod]
+        public void UnusedXPathsAreDiscarded_SaveXPathCache_BeTrue()
+        {
+
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+
+            IDatabase db = RedisManager.Connection.GetDatabase();
+            db.KeyDelete(TestContext.TestName);
+
+            window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.XPathList.Add((identifier: "Test2", property: "AutomationId", xpath: "XPATH123"));
+            window.UsedXPaths.Add("XPATH");
+
+            window.SaveXPathCache(TestContext.TestName);
+
+            db.StringGet(TestContext.TestName).Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
 
         }
 
@@ -64,6 +88,8 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
             window.GetXPathCache(TestContext.TestName);
 
@@ -78,6 +104,8 @@ namespace SHAutomation.Core.Tests.Integration
             var window = new Window(frameworkAutomationElementMock.Object);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
             window.GetXPathCache(TestContext.TestName);
 
@@ -159,12 +187,16 @@ namespace SHAutomation.Core.Tests.Integration
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
 
-            db.StringGet("XPathIsInsertedIntoRedis_SaveXPathCache_BeTrue").Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
+            db.StringGet(TestContext.TestName).Should().Be("[{\"Item1\":\"Test1\",\"Item2\":\"AutomationId\",\"Item3\":\"XPATH\"}]");
 
             window.XPathList.Clear();
             window.XPathList.Add((identifier: "Test2", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
 
 
@@ -184,6 +216,8 @@ namespace SHAutomation.Core.Tests.Integration
             db.KeyDelete(TestContext.TestName);
 
             window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.UsedXPaths.Add("XPATH");
+
             window.SaveXPathCache(TestContext.TestName);
 
             window.GetXPathCache(TestContext.TestName);

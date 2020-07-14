@@ -10,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("SHAutomation.Core.Tests")]
 namespace SHAutomation.Core.AutomationElements
 {
     public partial class Window
@@ -24,6 +26,7 @@ namespace SHAutomation.Core.AutomationElements
         public IFileSystem FileSystem { get; set; } = new FileSystem();
         public ICacheService CacheService { get; set; }
         public List<(string identifier, string property, string xpath)> XPathList { get; private set; } = new List<(string identifier, string property, string xpath)>();
+        internal List<string> UsedXPaths = new List<string>();
 
         private string _xpathGetContent;
 
@@ -70,7 +73,8 @@ namespace SHAutomation.Core.AutomationElements
 
             if (XPathList.Any())
             {
-                XPathList = XPathList.Distinct().ToList();
+                XPathList = XPathList.Distinct().Where(x => UsedXPaths.Contains(x.xpath)).ToList();
+
                 var output = JsonConvert.SerializeObject(XPathList);
 
                 //Only perform update when there are new xpaths to write
@@ -377,18 +381,19 @@ namespace SHAutomation.Core.AutomationElements
             return validXpath?.FrameworkAutomationElement != null ? validXpath : null;
         }
 
-        private bool FoundXPathInList(List<string> xpath, out SHAutomationElement xPathObject)
+        private bool FoundXPathInList(List<string> xpaths, out SHAutomationElement xPathObject)
         {
             xPathObject = null;
             bool found = false;
-            _loggingService.Info(xpath.Count + " potential xpaths", LoggingLevel.High);
-            foreach (var x in xpath)
+            _loggingService.Info(xpaths.Count + " potential xpath(s)", LoggingLevel.High);
+            foreach (var xpath in xpaths)
             {
-                var tempXPathObject = FindFirstByXPath(x, null);
+                var tempXPathObject = FindFirstByXPath(xpath, null);
                 if (tempXPathObject?.FrameworkAutomationElement != null)
                 {
                     found = true;
                     xPathObject = tempXPathObject;
+                    UsedXPaths.Add(xpath);
                     break;
                 }
             }
