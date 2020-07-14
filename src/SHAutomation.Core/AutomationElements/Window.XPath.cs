@@ -278,6 +278,7 @@ namespace SHAutomation.Core.AutomationElements
                         }
 
                         XPathList.Add((identifier, property, xpath: "/" + newStr));
+                        UsedXPaths.Add("/" + newStr);
                     }
                 }
             }

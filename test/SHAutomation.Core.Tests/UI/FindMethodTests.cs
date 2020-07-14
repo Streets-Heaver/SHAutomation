@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SHAutomation.UIA3;
+using System.Linq;
 
 namespace SHAutomation.Core.Tests.UI
 {
@@ -23,7 +24,21 @@ namespace SHAutomation.Core.Tests.UI
             window.SaveXPathCache(TestContext.TestName);
         }
 
-       
+        [TestMethod]
+        public void NewXPathIsSaved_Find_BeEquivalentTo()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.Find("num3Button");
+            
+            window.SaveXPathCache(TestContext.TestName);
+            window.GetXPathCache(TestContext.TestName);
+            window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+        }
+
+
         [TestMethod]
         public void FoundElementXPathStoredInCache_Find_BeEquivalentTo()
         {
