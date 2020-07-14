@@ -2,8 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SHAutomation.Core.StaticClasses;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SHAutomation.Core.Tests.Unit
 {

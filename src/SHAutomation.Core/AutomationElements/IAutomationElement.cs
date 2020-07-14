@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;

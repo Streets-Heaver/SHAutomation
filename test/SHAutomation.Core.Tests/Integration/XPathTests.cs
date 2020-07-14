@@ -1,16 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SHAutomation.Core;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Caching;
 using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.Tests.Common;
 using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace SHAutomation.Core.Tests.Integration
 {

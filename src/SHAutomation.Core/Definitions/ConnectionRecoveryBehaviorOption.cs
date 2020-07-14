@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SHAutomation.Core.Definitions
+﻿namespace SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains possible values for the ConnectionRecoveryBehavior property,

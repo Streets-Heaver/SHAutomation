@@ -1,12 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SHAutomation.Core.Enums;
 using SHAutomation.UIA3;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace SHAutomation.Core.Tests.UI
 {

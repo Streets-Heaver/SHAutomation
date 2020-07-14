@@ -1,12 +1,6 @@
 ﻿using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Identifiers;
 using SHAutomation.Core.StaticClasses;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
 
 namespace SHAutomation.Core.AutomationElements
 {

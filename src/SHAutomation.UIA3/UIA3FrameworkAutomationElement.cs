@@ -10,7 +10,6 @@ using SHAutomation.Core.Identifiers;
 using SHAutomation.Core.Tools;
 using SHAutomation.UIA3.Converters;
 using SHAutomation.UIA3.EventHandlers;
-using SHAutomation.UIA3.Extensions;
 using UIA = Interop.UIAutomationClient;
 
 namespace SHAutomation.UIA3

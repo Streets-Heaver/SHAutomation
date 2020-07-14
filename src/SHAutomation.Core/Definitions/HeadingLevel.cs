@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SHAutomation.Core.Definitions
+﻿namespace SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Indicates the heading level of a Microsoft UI Automation element.

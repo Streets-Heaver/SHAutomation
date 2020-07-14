@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
+﻿using SHAutomation.Core.AutomationElements;
 
 namespace SHAutomation.Core
 {

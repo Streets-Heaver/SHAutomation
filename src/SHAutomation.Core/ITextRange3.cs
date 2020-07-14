@@ -1,5 +1,4 @@
-﻿using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Identifiers;
+﻿using SHAutomation.Core.Identifiers;
 
 namespace SHAutomation.Core
 {

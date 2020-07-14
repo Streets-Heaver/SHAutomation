@@ -1,7 +1,6 @@
 ﻿using SHAutomation.Core;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.UIA3.Converters;
-using SHAutomation.UIA3.Extensions;
 using UIA = Interop.UIAutomationClient;
 
 namespace SHAutomation.UIA3

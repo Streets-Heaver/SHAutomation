@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SHAutomation.Core.AutomationElements.PatternElements;
 using SHAutomation.Core.Definitions;
 

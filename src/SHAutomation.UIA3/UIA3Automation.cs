@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using SHAutomation.Core;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Conditions;

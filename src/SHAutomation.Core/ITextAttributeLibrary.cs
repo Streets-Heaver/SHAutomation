@@ -1,7 +1,4 @@
 ﻿using SHAutomation.Core.Identifiers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SHAutomation.Core
 {
