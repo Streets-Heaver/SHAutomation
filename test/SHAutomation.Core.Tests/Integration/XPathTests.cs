@@ -37,6 +37,26 @@ namespace SHAutomation.Core.Tests.Integration
         }
 
         [TestMethod]
+        public void DuplicatesRemovedBeforeSave_SaveXPathCache_BeTrue()
+        {
+
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+
+            IDatabase db = RedisManager.Connection.GetDatabase();
+            db.KeyDelete(TestContext.TestName);
+
+            window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.XPathList.Add((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache(TestContext.TestName);
+
+            window.GetXPathCache(TestContext.TestName);
+
+            window.XPathList.Count.Should().Be(1);
+
+        }
+
+        [TestMethod]
         public void XPathIsInsertedIntoAppData_SaveXPathCache_BeTrue()
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();

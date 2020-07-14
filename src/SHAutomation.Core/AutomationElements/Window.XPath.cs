@@ -70,6 +70,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (XPathList.Any())
             {
+                XPathList = XPathList.Distinct().ToList();
                 var output = JsonConvert.SerializeObject(XPathList);
 
                 //Only perform update when there are new xpaths to write
@@ -380,6 +381,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             xPathObject = null;
             bool found = false;
+            _loggingService.Info(xpath.Count + " potential xpaths", LoggingLevel.High);
             foreach (var x in xpath)
             {
                 var tempXPathObject = FindFirstByXPath(x, null);
