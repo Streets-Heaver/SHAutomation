@@ -80,6 +80,7 @@ namespace SHAutomation.Core.Tests.UI
 
         }
 
+
         [TestMethod]
         public void ElementFoundUsingCondition_Find_NotBeNull()
         {

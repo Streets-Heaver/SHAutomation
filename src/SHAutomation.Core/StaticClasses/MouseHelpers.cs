@@ -6,70 +6,86 @@ using System.Threading;
 using System.Drawing;
 using SHAutomation.Core.Tools;
 using SHAutomation.Core.Enums;
+using SHAutomation.Core.WindowsAPI;
 
 namespace SHAutomation.Core.StaticClasses
 {
     public static class MouseHelpers
     {
-        public static void MouseMoveTo(Point pos, int mouseSpeed = 1)
+        /// <summary>
+        /// The current position of the mouse cursor.
+        /// </summary>
+        public static Point Position
         {
-
-            if (mouseSpeed != 0)
+            get
             {
-                // Get starting position
-                var startPos = Mouse.Position;
-                var startX = startPos.X;
-                var startY = startPos.Y;
-
-                // Prepare variables
-                var totalDistance = startPos.Distance(pos.X, pos.Y);
-
-                // Calculate the duration for the speed
-                var optimalPixelsPerMillisecond = mouseSpeed;
-                var minDuration = 1;
-                var maxDuration = 500;
-                var duration = Convert.ToInt32(totalDistance / optimalPixelsPerMillisecond).Clamp(minDuration, maxDuration);
-
-                // Calculate the steps for the smoothness
-                var optimalPixelsPerStep = mouseSpeed;
-                var minSteps = 10;
-                var maxSteps = 50;
-                var steps = Convert.ToInt32(totalDistance / optimalPixelsPerStep).Clamp(minSteps, maxSteps);
-
-                // Calculate the interval and the step size
-                var interval = duration / steps;
-                var stepX = (pos.X - startX) / steps;
-                var stepY = (pos.Y - startY) / steps;
-
-                // Build a list of movement points (except the last one, to set that one perfectly)
-                var movements = new List<Point>();
-                for (var i = 1; i < steps; i++)
+                User32.GetCursorPos(out var point);
+                return new Point(point.X, point.Y);
+            }
+            set
+            {
+                User32.SetCursorPos(value.X, value.Y);
+                // There is a bug that in a multi-monitor scenario with different sizes,
+                // the mouse is only moved to x=0 on the target monitor.
+                // In that case, just redo the move a 2nd time and it works
+                // as the mouse is on the correct monitor alreay.
+                // See https://stackoverflow.com/questions/58753372/winapi-setcursorpos-seems-like-not-working-properly-on-multiple-monitors-with-di
+                User32.GetCursorPos(out var point);
+                if (point.X != value.X || point.Y != value.Y)
                 {
-                    var tempX = (double)startX + i * stepX;
-                    var tempY = (double)startY + i * stepY;
-                    movements.Add(new Point(tempX.ToInt(), tempY.ToInt()));
-                }
-
-                // Add an exact point for the last one, if it does not fit exactly
-                var lastPoint = movements.Last();
-                if (lastPoint.X != pos.X || lastPoint.Y != pos.Y)
-                {
-                    movements.Add(new Point(pos.X, pos.Y));
-                }
-
-                // Loop thru the steps and set them
-                foreach (var point in movements)
-                {
-                    Mouse.Position = point;
-                    Thread.Sleep(interval);
+                    User32.SetCursorPos(value.X, value.Y);
                 }
             }
-            else
-                Mouse.Position = pos;
+        }
 
+        /// <summary>
+        /// The number of pixels the mouse is moved per millisecond.
+        /// Used to calculate the duration of a mouse move.
+        /// </summary>
+        public static double MovePixelsPerMillisecond { get; set; } = 2;
 
+        /// <summary>
+        /// The number of pixels the mouse is moved per step.
+        /// Used to calculate the interval of a mouse move.
+        /// </summary>
+        public static double MovePixelsPerStep { get; set; } = 10;
+
+        /// <summary>
+        /// Moves the mouse to a new position.
+        /// </summary>
+        /// <param name="newX">The new position on the x-axis.</param>
+        /// <param name="newY">The new position on the y-axis.</param>
+        public static void MoveTo(int newX, int newY)
+        {
+            // Get starting position
+            var startPos = Position;
+            var endPos = new Point(newX, newY);
+
+            // Break out if there is no positional change
+            if (startPos == endPos)
+            {
+                return;
+            }
+
+            // Calculate some values for duration and interval
+            var totalDistance = startPos.Distance(newX, newY);
+            var duration = TimeSpan.FromMilliseconds(Convert.ToInt32(totalDistance / MovePixelsPerMillisecond));
+            var steps = Math.Max(Convert.ToInt32(totalDistance / MovePixelsPerStep), 1); // Make sure to have et least one step
+            var interval = TimeSpan.FromMilliseconds(duration.TotalMilliseconds / steps);
+
+            // Execute the movement
+            Interpolation.Execute(point => { Position = point; }, startPos, endPos, duration, interval, true);
             Wait.UntilInputIsProcessed();
-            SHSpinWait.SpinUntil(() => (Mouse.Position.X == pos.X) && (Mouse.Position.Y == pos.Y), 5000);
+        }
+
+        /// <summary>
+        /// Moves the mouse to a new position.
+        /// </summary>
+        /// <param name="newPosition">The new position for the mouse.</param>
+        public static void MouseMoveTo(Point newPosition, int mouseSpeed = 1)
+        {
+            MovePixelsPerMillisecond = mouseSpeed;
+            MoveTo(newPosition.X, newPosition.Y);
         }
 
         public static void MouseClick(MouseAction button)
