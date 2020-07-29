@@ -51,7 +51,7 @@ namespace SHAutomation.Core.Tests.Unit
                 });
 
             //Because of the way spinuntil works there is a slight margin of error, this checks it's within that margin
-            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromMilliseconds(45)).And.BeLessOrEqualTo(TimeSpan.FromMilliseconds(55));
+            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromMilliseconds(30)).And.BeLessOrEqualTo(TimeSpan.FromMilliseconds(70));
 
 
         }
