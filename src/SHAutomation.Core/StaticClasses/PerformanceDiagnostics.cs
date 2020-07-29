@@ -13,11 +13,17 @@ namespace SHAutomation.Core.StaticClasses
         }
         public static TimeSpan Time(Action action, ILoggingService loggingService)
         {
-            return Time(action, loggingService, null);
+            return Time(action, null, loggingService, null);
         }
-        public static TimeSpan Time(Action action, ILoggingService loggingService, double? warnMilliseconds)
+
+        public static TimeSpan Time(Action action, string descriptor, ILoggingService loggingService)
         {
-            string methodName = Regex.Match(action.Method.Name, @"\<([^>]*)\>").Groups[1].Value;
+            return Time(action, descriptor, loggingService, null);
+        }
+
+        public static TimeSpan Time(Action action, string descriptor, ILoggingService loggingService, double? warnMilliseconds)
+        {
+            string logDescription = string.IsNullOrEmpty(descriptor) ?  Regex.Match(action.Method.Name, @"\<([^>]*)\>").Groups[1].Value : descriptor;
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -26,10 +32,10 @@ namespace SHAutomation.Core.StaticClasses
 
             if (loggingService != null)
             {
-                loggingService.Info(methodName + " took " + stopwatch.Elapsed.TotalSeconds + " to execute");
+                loggingService.Info(logDescription + " took " + stopwatch.Elapsed.TotalSeconds + " to execute");
 
                 if (warnMilliseconds.HasValue && stopwatch.Elapsed.TotalMilliseconds > warnMilliseconds.Value)
-                    loggingService.Warn(methodName + " breached limit of " + warnMilliseconds.Value + " milliseconds. Took " + stopwatch.Elapsed.TotalMilliseconds + " to execute");
+                    loggingService.Warn(logDescription + " breached limit of " + warnMilliseconds.Value + " milliseconds. Took " + stopwatch.Elapsed.TotalMilliseconds + " to execute");
             }
 
 
