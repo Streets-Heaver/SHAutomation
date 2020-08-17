@@ -10,8 +10,9 @@ namespace SHAutomation.Core.StaticClasses
             if (timeout <= 0)
                 throw new InvalidOperationException("TIMEOUT HAS TO BE GREATER THAN 0");
             DateTime date = DateTime.Now;
-            SpinWait.SpinUntil(() => (DateTime.Now > date.AddMilliseconds(timeout) || condition.Invoke()), timeout);
-            return false;
+
+            return SpinWait.SpinUntil(() => (DateTime.Now > date.AddMilliseconds(timeout) || condition.Invoke()), timeout);
+
         }
 
         public static bool SpinUntil(Func<bool> condition, TimeSpan timeout)
