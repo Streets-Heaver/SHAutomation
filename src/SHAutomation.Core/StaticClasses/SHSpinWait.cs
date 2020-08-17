@@ -7,19 +7,30 @@ namespace SHAutomation.Core.StaticClasses
     {
         public static bool SpinUntil(Func<bool> condition, int timeout)
         {
-            if (timeout <= 0)
-                throw new InvalidOperationException("TIMEOUT HAS TO BE GREATER THAN 0");
-            DateTime date = DateTime.Now;
-            SpinWait.SpinUntil(() => (DateTime.Now > date.AddMilliseconds(timeout) || condition.Invoke()), timeout);
-            return false;
+            return SpinUntil(condition, TimeSpan.FromMilliseconds(timeout));
         }
 
         public static bool SpinUntil(Func<bool> condition, TimeSpan timeout)
         {
             if (timeout.TotalMilliseconds <= 0)
                 throw new InvalidOperationException("TIMEOUT HAS TO BE GREATER THAN 0");
+            DateTime date = DateTime.Now;
 
-            return SpinWait.SpinUntil(condition, timeout);
+            try
+            {
+                return SpinWait.SpinUntil(() =>
+                {
+                    if (DateTime.Now > date.AddMilliseconds(timeout.TotalMilliseconds))
+                        throw new TimeoutException();
+                    else
+                        return condition.Invoke();
+
+                }, timeout);
+            }
+            catch(TimeoutException)
+            {
+                return false;
+            }
         }
     }
 }

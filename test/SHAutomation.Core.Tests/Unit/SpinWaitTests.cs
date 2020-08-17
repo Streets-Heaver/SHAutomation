@@ -56,5 +56,11 @@ namespace SHAutomation.Core.Tests.Unit
 
         }
 
+        [TestMethod]
+        public void ReturnsFalseWhenTimedOut_SpinWait_BeFalse()
+        {
+            SHSpinWait.SpinUntil(() => true == false, 50).Should().BeFalse();
+        }
+
     }
 }
