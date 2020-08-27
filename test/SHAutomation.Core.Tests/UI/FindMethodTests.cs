@@ -106,7 +106,7 @@ namespace SHAutomation.Core.Tests.UI
             num3Button.Should().NotBeNull();
         }
         [TestMethod]
-        public void ElementNotFoundWaitsForTimeout_Find_NotBeNull()
+        public void ElementNotFoundWaitsForTimeout_Find_BeGreaterOrEqualTo()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
@@ -119,7 +119,7 @@ namespace SHAutomation.Core.Tests.UI
             elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(5)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
         }
         [TestMethod]
-        public void ElementNotFoundUsingParentWaitsForTimeout_Find_NotBeNull()
+        public void ElementNotFoundUsingParentWaitsForTimeout_Find_BeGreaterOrEqualTo()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
