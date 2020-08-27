@@ -1,6 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SHAutomation.Core.Exceptions;
+using SHAutomation.Core.StaticClasses;
 using SHAutomation.UIA3;
+using System;
 using System.Linq;
 
 namespace SHAutomation.Core.Tests.UI
@@ -92,7 +95,43 @@ namespace SHAutomation.Core.Tests.UI
             num3Button.Should().NotBeNull();
 
         }
-
+        [TestMethod]
+        public void ElementFoundUsingParent_Find_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
+            var num3Button = window.Find(x => x.ByAutomationId("num3Button"),parent: numberPad);
+            num3Button.Should().NotBeNull();
+        }
+        [TestMethod]
+        public void ElementNotFoundWaitsForTimeout_Find_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), timeout: 5000);
+            var elapsed = PerformanceDiagnostics.Time(() =>
+            {
+                act.Should().Throw<ElementNotFoundException>();
+            });
+            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(5)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
+        }
+        [TestMethod]
+        public void ElementNotFoundUsingParentWaitsForTimeout_Find_NotBeNull()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
+            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), parent: numberPad, timeout: 5000);
+            var elapsed = PerformanceDiagnostics.Time(() =>
+            {
+                act.Should().Throw<ElementNotFoundException>();
+            });
+            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(5)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
+        }
         [TestMethod]
         public void ElementFound_FindAllByXPath_NotBeNull()
         {

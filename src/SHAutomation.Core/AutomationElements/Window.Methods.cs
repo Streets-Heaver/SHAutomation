@@ -44,7 +44,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                control = parent.FindFirstDescendant(conditionFunc);
+                control = parent.FindFirstDescendant(conditionFunc,timeout);
             }
 
             if (control == null)
