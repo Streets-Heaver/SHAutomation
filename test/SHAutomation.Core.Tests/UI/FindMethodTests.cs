@@ -116,7 +116,7 @@ namespace SHAutomation.Core.Tests.UI
             {
                 act.Should().Throw<ElementNotFoundException>();
             });
-            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(5)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
+            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(4.9)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
         }
         [TestMethod]
         public void ElementNotFoundUsingParentWaitsForTimeout_Find_BeGreaterOrEqualTo()
@@ -130,7 +130,7 @@ namespace SHAutomation.Core.Tests.UI
             {
                 act.Should().Throw<ElementNotFoundException>();
             });
-            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(5)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
+            elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(4.9)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
         }
         [TestMethod]
         public void ElementFound_FindAllByXPath_NotBeNull()
