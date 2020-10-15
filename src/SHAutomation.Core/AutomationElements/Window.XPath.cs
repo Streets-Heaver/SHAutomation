@@ -227,7 +227,9 @@ namespace SHAutomation.Core.AutomationElements
 
                 if (!_xPathValues.Any() || regenerateXPath)
                 {
-                    _xPathValues.Add(XPathHelper.GetXPathToElement(element, this));
+                    string xpath = XPathHelper.GetXPathToElement(element, this);
+                    if (!string.IsNullOrEmpty(xpath))
+                        _xPathValues.Add(xpath);
                     _hasXPathValue = false;
                 }
                 else
