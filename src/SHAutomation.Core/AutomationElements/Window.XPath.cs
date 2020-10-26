@@ -366,10 +366,7 @@ namespace SHAutomation.Core.AutomationElements
 
             return element?.FrameworkAutomationElement != null ? (SHAutomationElement)element : null;
         }
-        private SHAutomationElement FindFirstByXPath(List<string> xpath)
-        {
-            return FindFirstByXPath(xpath, TimeSpan.Zero);
-        }
+       
         private SHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
         {
             SHAutomationElement validXpath = null;
