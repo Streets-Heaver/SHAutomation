@@ -13,7 +13,7 @@ namespace SHAutomation.Core.Tests.Unit
         public void CheckZeroTimeOutIsInvalid_SpinWait_ThrowInvalidOperationException()
         {
 
-            Action act = () => SHSpinWait.SpinUntil(() => true, 0);
+            Action act = () => SHSpinWait.SpinUntil(() => true, TimeSpan.Zero);
 
             act.Should().Throw<InvalidOperationException>("Should throw invalid operation exception if 0 timeout is passed");
 
@@ -23,7 +23,7 @@ namespace SHAutomation.Core.Tests.Unit
         [TestMethod]
         public void CheckNegativeTimeOutIsInvalid_SpinWait_ThrowInvalidOperationException()
         {
-            Action act = () => SHSpinWait.SpinUntil(() => true, -10);
+            Action act = () => SHSpinWait.SpinUntil(() => true, TimeSpan.FromMilliseconds(-10));
 
             act.Should().Throw<InvalidOperationException>("Should throw invalid operation exception if timeout < 0 is passed");
 
@@ -33,7 +33,7 @@ namespace SHAutomation.Core.Tests.Unit
         public void CheckNonZeroTimeoutIsValid_SpinWait_NotThrowInvalidOperationException()
         {
 
-            Action act = () => SHSpinWait.SpinUntil(() => true, 10);
+            Action act = () => SHSpinWait.SpinUntil(() => true, TimeSpan.FromMilliseconds(10));
 
             act.Should().NotThrow<InvalidOperationException>("Should not throw invalid operation exception if timeout >0 is passed");
 
@@ -46,7 +46,7 @@ namespace SHAutomation.Core.Tests.Unit
 
             var elapsed = PerformanceDiagnostics.Time(() =>
                 {
-                    SHSpinWait.SpinUntil(() => true == false, 50);
+                    SHSpinWait.SpinUntil(() => true == false, TimeSpan.FromMilliseconds(50));
 
                 });
 
@@ -59,7 +59,7 @@ namespace SHAutomation.Core.Tests.Unit
         [TestMethod]
         public void ReturnsFalseWhenTimedOut_SpinWait_BeFalse()
         {
-            SHSpinWait.SpinUntil(() => true == false, 50).Should().BeFalse();
+            SHSpinWait.SpinUntil(() => true == false, TimeSpan.FromMilliseconds(50)).Should().BeFalse();
         }
 
     }

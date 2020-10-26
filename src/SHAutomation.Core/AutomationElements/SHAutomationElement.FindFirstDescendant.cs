@@ -6,11 +6,11 @@ namespace SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {
-        public ISHAutomationElement FindFirstDescendant()
+        public ISHAutomationElement FindFirstDescendant(bool waitUntilExists = true)
         {
-            return FindFirstDescendant(20000);
+            return FindFirstDescendant(TimeSpan.FromSeconds(20), waitUntilExists);
         }
-        public ISHAutomationElement FindFirstDescendant(int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstDescendant(TimeSpan timeout, bool waitUntilExists = true)
         {
             ISHAutomationElement element = null;
             bool getElement(bool shouldExist)
@@ -22,11 +22,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
             }
             getElement(waitUntilExists);
-            if (element == null && waitUntilExists && timeout > 0)
+            if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(true), timeout);
             }
-            else if (element != null && !waitUntilExists && timeout > 0)
+            else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(false), timeout);
             }
@@ -36,27 +36,31 @@ namespace SHAutomation.Core.AutomationElements
         {
             Func<ConditionFactory, ConditionBase> conditionFunc = x => x.ByAutomationId(automationId);
             ConditionBase condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-            return FindFirstDescendant(conditionFunc, 20000);
+            return FindFirstDescendant(conditionFunc, TimeSpan.FromSeconds(20));
         }
-        public ISHAutomationElement FindFirstDescendant(string automationId, int timeout = 20000)
+        public ISHAutomationElement FindFirstDescendant(string automationId, TimeSpan timeout)
         {
             Func<ConditionFactory, ConditionBase> conditionFunc = x => x.ByAutomationId(automationId);
             ConditionBase condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindFirstDescendant(conditionFunc, timeout);
         }
 
-        public ISHAutomationElement FindFirstDescendant(Func<ConditionFactory, ConditionBase> conditionFunc)
+        public ISHAutomationElement FindFirstDescendant(Func<ConditionFactory, ConditionBase> conditionFunc, bool waitUntilExists = true)
         {
-            return FindFirstDescendant(conditionFunc, 20000);
+            return FindFirstDescendant(conditionFunc, TimeSpan.FromSeconds(20), waitUntilExists);
         }
 
-        public ISHAutomationElement FindFirstDescendant(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstDescendant(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, bool waitUntilExists = true)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindFirstDescendant(condition, timeout: timeout, waitUntilExists: waitUntilExists);
         }
+        public ISHAutomationElement FindFirstDescendant(ConditionBase condition,  bool waitUntilExists = true)
+        {
+            return FindFirstDescendant(condition, TimeSpan.FromSeconds(20), waitUntilExists);
+        }
 
-        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
             SHAutomationElement element = null;
             bool getElement(bool shouldExist)
@@ -68,11 +72,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
             }
             getElement(true);
-            if (element == null && waitUntilExists && timeout > 0)
+            if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(waitUntilExists), timeout);
             }
-            else if (element != null && !waitUntilExists && timeout > 0)
+            else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(waitUntilExists), timeout);
             }

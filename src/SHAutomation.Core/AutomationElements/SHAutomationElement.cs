@@ -173,10 +173,10 @@ namespace SHAutomation.Core.AutomationElements
 
         public void HoverOver(int mouseSpeed = 5)
         {
-            SHSpinWait.SpinUntil(() => SupportsBoundingRectangle, 5000);
+            SHSpinWait.SpinUntil(() => SupportsBoundingRectangle, TimeSpan.FromSeconds(5));
             if (SupportsBoundingRectangle)
             {
-                SHSpinWait.SpinUntil(() => !BoundingRectangle.IsEmpty, 10000);
+                SHSpinWait.SpinUntil(() => !BoundingRectangle.IsEmpty, TimeSpan.FromSeconds(10));
                 if (!BoundingRectangle.IsEmpty)
                 {
                     MouseHelpers.MouseMoveTo(Centre(), mouseSpeed);
@@ -875,17 +875,29 @@ namespace SHAutomation.Core.AutomationElements
 
         #region WaitUntilPropertyEquals
 
-        public bool WaitUntilPropertyEquals(PropertyId property, string expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, string expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, string expected, TimeSpan timeout)
         {
             object value = string.Empty;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value.ToString() == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, double expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, double expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, double expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as double? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, bool expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, bool expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, bool expected, TimeSpan timeout)
         {
             object value = null;
             if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
@@ -897,54 +909,93 @@ namespace SHAutomation.Core.AutomationElements
                 return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? == expected, timeout);
             }
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, Rectangle expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, Rectangle expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, Rectangle expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as Rectangle? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, int expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, int expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, int expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int? == expected, timeout);
         }
+        public bool WaitUntilPropertyEquals(PropertyId property, int[] expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
 
-        public bool WaitUntilPropertyEquals(PropertyId property, int[] expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, int[] expected, TimeSpan timeout)
         {
             object value = Array.Empty<int>();
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int[] == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, VisualEffects expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, VisualEffects expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, VisualEffects expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as VisualEffects? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, OrientationType expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, OrientationType expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, OrientationType expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as OrientationType? == expected, timeout);
         }
-
-        public bool WaitUntilPropertyEquals(PropertyId property, LiveSetting expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, LiveSetting expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, LiveSetting expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as LiveSetting? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, IntPtr expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, IntPtr expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, IntPtr expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as IntPtr? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as SHAutomationElement == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, CultureInfo expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, CultureInfo expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, CultureInfo expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as CultureInfo == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, ControlType expected, int timeout = 10000)
+        public bool WaitUntilPropertyEquals(PropertyId property, ControlType expected)
+        {
+            return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyEquals(PropertyId property, ControlType expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as ControlType? == expected, timeout);
@@ -955,17 +1006,30 @@ namespace SHAutomation.Core.AutomationElements
 
         #region WaitUntilPropertyNotEquals
 
-        public bool WaitUntilPropertyNotEquals(PropertyId property, string current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, string current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+
+        public bool WaitUntilPropertyNotEquals(PropertyId property, string current, TimeSpan timeout)
         {
             object value = string.Empty;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value.ToString() != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, double current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, double current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, double current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as double? != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, bool current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, bool current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, bool current, TimeSpan timeout)
         {
             object value = null;
             if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
@@ -977,55 +1041,95 @@ namespace SHAutomation.Core.AutomationElements
                 return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? != current, timeout);
             }
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, Rectangle current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, Rectangle current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, Rectangle current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as Rectangle? != current, timeout);
 
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, int current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, int current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, int current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int? != current, timeout);
         }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, int[] current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
 
-        public bool WaitUntilPropertyNotEquals(PropertyId property, int[] current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, int[] current, TimeSpan timeout)
         {
             object value = Array.Empty<int>();
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as int[] != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+
+        public bool WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as VisualEffects? != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, OrientationType current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, OrientationType current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, OrientationType current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as OrientationType? != current, timeout);
         }
-
-        public bool WaitUntilPropertyNotEquals(PropertyId property, LiveSetting current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, LiveSetting current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, LiveSetting current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as LiveSetting? != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, IntPtr current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, IntPtr current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, IntPtr current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as IntPtr? != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as SHAutomationElement != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, CultureInfo current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, CultureInfo current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, CultureInfo current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as CultureInfo != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, ControlType current, int timeout = 10000)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, ControlType current)
+        {
+            return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
+        }
+        public bool WaitUntilPropertyNotEquals(PropertyId property, ControlType current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as ControlType? != current, timeout);

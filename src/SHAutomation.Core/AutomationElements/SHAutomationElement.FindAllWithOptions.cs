@@ -11,9 +11,9 @@ namespace SHAutomation.Core.AutomationElements
     {
         public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root)
         {
-            return FindAllWithOptions(treeScope, condition, traversalOptions, root, 20000);
+            return FindAllWithOptions(treeScope, condition, traversalOptions, root, TimeSpan.FromSeconds(20));
         }
-        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root, TimeSpan timeout, bool waitUntilExists = true)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
             bool getElements(bool shouldExist)
@@ -23,11 +23,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? elements.Any() : !elements.Any();
             }
             getElements(waitUntilExists);
-            if (!elements.Any() && waitUntilExists && timeout > 0)
+            if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(true), timeout);
             }
-            else if (elements.Any() && !waitUntilExists && timeout > 0)
+            else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(false), timeout);
             }

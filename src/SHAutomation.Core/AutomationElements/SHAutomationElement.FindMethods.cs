@@ -443,7 +443,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return Array.Empty<SHAutomationElement>(); 
+                return Array.Empty<SHAutomationElement>();
 
             }
         }
@@ -484,13 +484,13 @@ namespace SHAutomation.Core.AutomationElements
                 return null;
             }
         }
-        public ISHAutomationElement FindFirstChild()
+        public ISHAutomationElement FindFirstChild(bool waitUntilExists = true)
         {
-            return FindFirstChild(20000);
+            return FindFirstChild(TimeSpan.FromSeconds(20), waitUntilExists);
         }
-        public ISHAutomationElement FindFirstChild(int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstChild(TimeSpan timeout, bool waitUntilExists = true)
         {
-          SHAutomationElement element = null;
+            SHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
                 if (element == null)
@@ -500,23 +500,23 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
             }
             getElement(waitUntilExists);
-            if (element == null && waitUntilExists && timeout > 0)
+            if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(true), timeout);
             }
-            else if (element != null && !waitUntilExists && timeout > 0)
+            else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(false), timeout);
             }
             return element?.FrameworkAutomationElement != null ? element : null;
         }
-        public  ISHAutomationElement FindFirstChild(ConditionBase condition)
+        public ISHAutomationElement FindFirstChild(ConditionBase condition, bool waitUntilExists = true)
         {
-            return FindFirstChild(condition, 20000);
+            return FindFirstChild(condition, TimeSpan.FromSeconds(20), waitUntilExists);
         }
-        public ISHAutomationElement FindFirstChild(ConditionBase condition, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstChild(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
-          SHAutomationElement element = null;
+            SHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
                 if (element == null)
@@ -526,11 +526,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
             }
             getElement(waitUntilExists);
-            if (element == null && waitUntilExists && timeout > 0)
+            if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(true), timeout);
             }
-            else if (element != null && !waitUntilExists && timeout > 0)
+            else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElement(false), timeout);
             }
@@ -542,16 +542,28 @@ namespace SHAutomation.Core.AutomationElements
             ConditionBase condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindFirstChild(condition);
         }
-        public ISHAutomationElement FindFirstChild(string automationId, int timeout = 20000, bool waitUntilExists = true)
+
+        public ISHAutomationElement FindFirstChild(string automationId, bool waitUntilExists = true)
+        {
+            return FindFirstChild(automationId, TimeSpan.FromSeconds(20), waitUntilExists);
+        }
+
+        public ISHAutomationElement FindFirstChild(string automationId, TimeSpan timeout, bool waitUntilExists = true)
         {
             Func<ConditionFactory, ConditionBase> conditionFunc = x => x.ByAutomationId(automationId);
             ConditionBase condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindFirstChild(condition, timeout, waitUntilExists);
         }
-        public ISHAutomationElement FindFirstChild(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, bool waitUntilExists = true)
+
+        public ISHAutomationElement FindFirstChild(Func<ConditionFactory, ConditionBase> conditionFunc, bool waitUntilExists = true)
+        {
+            return FindFirstChild(conditionFunc, TimeSpan.FromSeconds(20), waitUntilExists);
+        }
+
+        public ISHAutomationElement FindFirstChild(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, bool waitUntilExists = true)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-            return FindFirstChild(condition,timeout,waitUntilExists);
+            return FindFirstChild(condition, timeout, waitUntilExists);
         }
 
     }

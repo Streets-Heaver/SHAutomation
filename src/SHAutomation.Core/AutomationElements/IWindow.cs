@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 
 namespace SHAutomation.Core.AutomationElements
 {
-    public interface IWindow : ISHAutomationElement
+    public interface IWindow
     {
         ICacheService CacheService { get; set; }
         Menu ContextMenu { get; }
@@ -16,16 +16,23 @@ namespace SHAutomation.Core.AutomationElements
         Window Popup { get; }
         string Title { get; }
         TitleBar TitleBar { get; }
+        List<(string identifier, string property, string xpath)> XPathList { get; }
 
         void Close();
-        bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, int timeout = 500, int offscreenTimeout = 500, ISHAutomationElement parent = null, bool xpathOnly = false);
-        ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, int offscreenTimeout = 10000, ISHAutomationElement parent = null);
-        ISHAutomationElement Find(string automationID, int timeout = 20000, int offscreenTimeout = 10000, ISHAutomationElement parent = null);
-        SHAutomationElement FindFirstByXPath(string xpath, int? spinWaitTimeout = 1);
+        bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);
+        bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);
+        ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, ISHAutomationElement parent = null);
+        ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, ISHAutomationElement parent = null);
+        ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null);
+        ISHAutomationElement Find(string automationID, ISHAutomationElement parent = null);
+        ISHAutomationElement Find(string automationID, TimeSpan timeout, ISHAutomationElement parent = null);
+        ISHAutomationElement Find(string automationID, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null);
+        SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout);
         Menu GetContextMenuByFrameworkType(FrameworkType frameworkType);
         List<(PropertyCondition Value, bool Ignore)> GetPropertyConditions(ConditionBase condition);
         void GetXPathCache(string testName);
-        SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 10000);
+        SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc);
+        SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout);
         void Move(int x, int y);
         void SaveXPathCache(string testName);
         void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc, bool regenerateXPath);

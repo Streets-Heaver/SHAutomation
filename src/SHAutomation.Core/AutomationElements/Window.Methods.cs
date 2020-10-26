@@ -10,13 +10,32 @@ namespace SHAutomation.Core.AutomationElements
 {
     public partial class Window
     {
+        public ISHAutomationElement Find(string automationID, ISHAutomationElement parent = null)
+        {
+            return Find(x => x.ByAutomationId(automationID), TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(10), parent);
+        }
 
-        public ISHAutomationElement Find(string automationID, int timeout = 20000, int offscreenTimeout = 10000, ISHAutomationElement parent = null)
+        public ISHAutomationElement Find(string automationID, TimeSpan timeout, ISHAutomationElement parent = null)
+        {
+            return Find(x => x.ByAutomationId(automationID), timeout, TimeSpan.FromSeconds(10), parent);
+        }
+
+        public ISHAutomationElement Find(string automationID, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null)
         {
             return Find(x => x.ByAutomationId(automationID), timeout, offscreenTimeout, parent);
         }
+        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, ISHAutomationElement parent = null)
+        {
+            return Find(conditionFunc, timeout, TimeSpan.FromSeconds(10), parent);
 
-        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, int offscreenTimeout = 10000, ISHAutomationElement parent = null)
+        }
+
+        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, ISHAutomationElement parent = null)
+        {
+            return Find(conditionFunc, TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(10), parent);
+        }
+
+        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null)
         {
             ISHAutomationElement control = null;
             bool regenerateXPath = false;
@@ -44,7 +63,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                control = parent.FindFirstDescendant(conditionFunc,timeout);
+                control = parent.FindFirstDescendant(conditionFunc, timeout);
             }
 
             if (control == null)
@@ -56,7 +75,7 @@ namespace SHAutomation.Core.AutomationElements
 
             _loggingService.Info("Find found control", LoggingLevel.High);
 
-            SHSpinWait.SpinUntil(() => control.SupportsOnscreen, 500);
+            SHSpinWait.SpinUntil(() => control.SupportsOnscreen, TimeSpan.FromMilliseconds(500));
             if (control.SupportsOnscreen)
             {
                 SHSpinWait.SpinUntil(() => control.IsOnscreen, offscreenTimeout);
@@ -74,7 +93,12 @@ namespace SHAutomation.Core.AutomationElements
 
         }
 
-        public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, int timeout = 500, int offscreenTimeout = 500, ISHAutomationElement parent = null, bool xpathOnly = false)
+        public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false)
+        {
+            return Exists(conditionFunc, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500), checkOnScreen, parent, xpathOnly);
+        }
+
+        public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false)
         {
             bool exists = true;
             bool regenerateXPath = false;
