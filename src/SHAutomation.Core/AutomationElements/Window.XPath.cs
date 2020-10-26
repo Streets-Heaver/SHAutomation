@@ -330,11 +330,6 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
 
-        //public SHAutomationElement FindFirstByXPath(string xpath)
-        //{
-        //    return FindFirstByXPath(xpath, TimeSpan.Zero);
-        //}
-
         public SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
         {
             ISHAutomationElement element = null;
@@ -351,11 +346,11 @@ namespace SHAutomation.Core.AutomationElements
 
             bool getElement()
             {
-                element = base.FindFirstByXPath(xpath);
+                element = FindFirstByXPath(xpath);
                 return element != null;
             }
 
-            if (spinWaitTimeout != null)
+            if (spinWaitTimeout != TimeSpan.Zero)
                 SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout);
             else
             {
