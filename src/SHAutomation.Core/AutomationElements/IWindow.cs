@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 
 namespace SHAutomation.Core.AutomationElements
 {
-    public interface IWindow
+    public interface IWindow : ISHAutomationElement
     {
         ICacheService CacheService { get; set; }
         Menu ContextMenu { get; }
