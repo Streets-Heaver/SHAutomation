@@ -5,7 +5,7 @@ namespace SHAutomation.Core.AutomationElements.Infrastructure
     /// <summary>
     /// Interface for methods to unsubscribe to events on an <see cref="AutomationElement"/>.
     /// </summary>
-    public interface IAutomationElementEventUnsubscriber
+    public interface ISHAutomationElementEventUnsubscriber
     {
         /// <summary>
         /// Unregisters the given active text position changed event handler.

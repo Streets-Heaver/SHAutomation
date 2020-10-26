@@ -15,7 +15,7 @@ using SHAutomation.Core.Enums;
 
 namespace SHAutomation.Core.AutomationElements
 {
-    public partial class SHAutomationElement : IEquatable<SHAutomationElement>, IAutomationElementEventSubscriber, ISHAutomationElement
+    public partial class SHAutomationElement : IEquatable<SHAutomationElement>, ISHAutomationElementEventSubscriber, ISHAutomationElement
     {
         public SHAutomationElement(FrameworkAutomationElementBase frameworkAutomationElement)
         {

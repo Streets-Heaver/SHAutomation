@@ -5,8 +5,8 @@ namespace SHAutomation.Core
 {
     public interface IPropertyLibrary
     {
-        IAutomationElementPatternAvailabilityPropertyIds PatternAvailability { get; }
-        IAutomationElementPropertyIds Element { get; }
+        ISHAutomationElementPatternAvailabilityPropertyIds PatternAvailability { get; }
+        ISHAutomationElementPropertyIds Element { get; }
         IAnnotationPatternPropertyIds Annotation { get; }
         IDockPatternPropertyIds Dock { get; }
         IDragPatternPropertyIds Drag { get; }

@@ -63,7 +63,7 @@ namespace SHAutomation.Core
         AutomationProperty<int> PositionInSet { get; }
         AutomationProperty<int> ProcessId { get; }
         FrameworkAutomationElementBase.IProperties Properties { get; }
-        IAutomationElementPropertyIds PropertyIdLibrary { get; }
+        ISHAutomationElementPropertyIds PropertyIdLibrary { get; }
         AutomationProperty<string> ProviderDescription { get; }
         AutomationProperty<int> Rotation { get; }
         AutomationProperty<int[]> RuntimeId { get; }

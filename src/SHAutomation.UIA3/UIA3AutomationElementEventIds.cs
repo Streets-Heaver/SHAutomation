@@ -4,7 +4,7 @@ using SHAutomation.UIA3.Identifiers;
 
 namespace SHAutomation.UIA3
 {
-    public class UIA3AutomationElementEventIds : IAutomationElementEventIds
+    public class UIA3AutomationElementEventIds : ISHAutomationElementEventIds
     {
         public EventId ActiveTextPositionChangedEvent => AutomationObjectIds.ActiveTextPositionChangedEvent;
 
