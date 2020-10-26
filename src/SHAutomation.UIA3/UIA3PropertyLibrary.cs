@@ -36,8 +36,8 @@ namespace SHAutomation.UIA3
             Window = new WindowPatternPropertyIds();
         }
 
-        public IAutomationElementPatternAvailabilityPropertyIds PatternAvailability { get; }
-        public IAutomationElementPropertyIds Element { get; }
+        public ISHAutomationElementPatternAvailabilityPropertyIds PatternAvailability { get; }
+        public ISHAutomationElementPropertyIds Element { get; }
         public IAnnotationPatternPropertyIds Annotation { get; }
         public IDockPatternPropertyIds Dock { get; }
         public IDragPatternPropertyIds Drag { get; }

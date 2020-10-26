@@ -4,7 +4,7 @@ using SHAutomation.UIA3.Identifiers;
 
 namespace SHAutomation.UIA3
 {
-    public class UIA3AutomationElementPropertyIds : IAutomationElementPropertyIds
+    public class UIA3AutomationElementPropertyIds : ISHAutomationElementPropertyIds
     {
         public PropertyId AcceleratorKey => AutomationObjectIds.AcceleratorKeyProperty;
         public PropertyId AccessKey => AutomationObjectIds.AccessKeyProperty;

@@ -2,7 +2,7 @@
 
 namespace SHAutomation.Core.AutomationElements.Infrastructure
 {
-    public interface IAutomationElementPatternAvailabilityPropertyIds
+    public interface ISHAutomationElementPatternAvailabilityPropertyIds
     {
         PropertyId IsAnnotationPatternAvailable { get; }
         PropertyId IsDockPatternAvailable { get; }

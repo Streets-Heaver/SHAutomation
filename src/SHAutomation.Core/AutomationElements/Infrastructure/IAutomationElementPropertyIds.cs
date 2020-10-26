@@ -2,7 +2,7 @@
 
 namespace SHAutomation.Core.AutomationElements.Infrastructure
 {
-    public interface IAutomationElementPropertyIds
+    public interface ISHAutomationElementPropertyIds
     {
         PropertyId AcceleratorKey { get; }
         PropertyId AccessKey { get; }

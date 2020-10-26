@@ -35,7 +35,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
 
             var num3Button = window.Find("num3Button");
-            
+
             window.SaveXPathCache(TestContext.TestName);
             window.GetXPathCache(TestContext.TestName);
             window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Group/Group[5]/Button[@AutomationId='num3Button']"));
@@ -102,7 +102,7 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
             var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
-            var num3Button = window.Find(x => x.ByAutomationId("num3Button"),parent: numberPad);
+            var num3Button = window.Find(x => x.ByAutomationId("num3Button"), parent: numberPad);
             num3Button.Should().NotBeNull();
         }
         [TestMethod]
@@ -111,7 +111,7 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), timeout: 5000);
+            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), TimeSpan.FromSeconds(5));
             var elapsed = PerformanceDiagnostics.Time(() =>
             {
                 act.Should().Throw<ElementNotFoundException>();
@@ -125,7 +125,7 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
             var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
-            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), parent: numberPad, timeout: 5000);
+            Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), TimeSpan.FromSeconds(5), parent: numberPad);
             var elapsed = PerformanceDiagnostics.Time(() =>
             {
                 act.Should().Throw<ElementNotFoundException>();

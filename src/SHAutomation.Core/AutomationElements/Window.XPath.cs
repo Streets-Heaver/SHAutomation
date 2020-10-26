@@ -99,8 +99,12 @@ namespace SHAutomation.Core.AutomationElements
 
         }
 
+        public SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc)
+        {
+            return GetXPathElementFromCondition(conditionFunc, TimeSpan.FromSeconds(10));
+        }
 
-        public SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 10000)
+        public SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var condition_string = condition.ToString();
@@ -140,7 +144,12 @@ namespace SHAutomation.Core.AutomationElements
             return GetPropertyConditions(condition);
         }
 
-        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, int xPathTimeout = 10000)
+        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
+        {
+            return GetXPathFromPropertyConditions(propertyList, TimeSpan.FromSeconds(10));
+        }
+
+        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, TimeSpan xPathTimeout)
         {
             if (propertyList.Any())
             {
@@ -321,7 +330,7 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
 
-        public SHAutomationElement FindFirstByXPath(string xpath, int? spinWaitTimeout = 1)
+        public SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
         {
             ISHAutomationElement element = null;
 
@@ -337,12 +346,12 @@ namespace SHAutomation.Core.AutomationElements
 
             bool getElement()
             {
-                element = base.FindFirstByXPath(xpath);
+                element = FindFirstByXPath(xpath);
                 return element != null;
             }
 
-            if (spinWaitTimeout != null)
-                SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout.Value);
+            if (spinWaitTimeout != TimeSpan.Zero)
+                SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout);
             else
             {
                 getElement();
@@ -350,24 +359,21 @@ namespace SHAutomation.Core.AutomationElements
 
             if (element != null)
             {
-                SHSpinWait.SpinUntil(() => element?.FrameworkAutomationElement != null, 5000);
+                SHSpinWait.SpinUntil(() => element?.FrameworkAutomationElement != null, TimeSpan.FromSeconds(5));
             }
             else if (element == null)
                 _xPathValues = new List<string>();
 
             return element?.FrameworkAutomationElement != null ? (SHAutomationElement)element : null;
         }
-        private SHAutomationElement FindFirstByXPath(List<string> xpath, int? spinWaitTimeout = 10000)
+       
+        private SHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
         {
             SHAutomationElement validXpath = null;
-            if (spinWaitTimeout.HasValue)
-            {
-                SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout.Value);
-            }
-            else
-            {
-                FoundXPathInList(xpath, out validXpath);
-            }
+
+            SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout);
+
+
             if (validXpath == null)
             {
                 _xPathValues = new List<string>();
@@ -389,7 +395,7 @@ namespace SHAutomation.Core.AutomationElements
             _loggingService.Info(xpaths.Count + " potential xpath(s)", LoggingLevel.High);
             foreach (var xpath in xpaths)
             {
-                var tempXPathObject = FindFirstByXPath(xpath, null);
+                var tempXPathObject = FindFirstByXPath(xpath, TimeSpan.Zero);
                 if (tempXPathObject?.FrameworkAutomationElement != null)
                 {
                     found = true;

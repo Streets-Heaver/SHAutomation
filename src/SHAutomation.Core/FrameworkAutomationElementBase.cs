@@ -33,7 +33,7 @@ namespace SHAutomation.Core
         /// <summary>
         /// Provides access to all <see cref="PropertyId"/>s.
         /// </summary>
-        public IAutomationElementPropertyIds PropertyIdLibrary => Automation.PropertyLibrary.Element;
+        public ISHAutomationElementPropertyIds PropertyIdLibrary => Automation.PropertyLibrary.Element;
 
         /// <summary>
         /// Underlying <see cref="AutomationBase" /> object where this element belongs to.

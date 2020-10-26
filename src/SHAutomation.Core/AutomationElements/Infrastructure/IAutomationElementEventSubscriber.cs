@@ -8,7 +8,7 @@ namespace SHAutomation.Core.AutomationElements.Infrastructure
     /// <summary>
     /// Interface for methods to subscribe to events on an <see cref="AutomationElement"/>.
     /// </summary>
-    public interface IAutomationElementEventSubscriber
+    public interface ISHAutomationElementEventSubscriber
     {
         /// <summary>
         /// Registers a active text position changed event.

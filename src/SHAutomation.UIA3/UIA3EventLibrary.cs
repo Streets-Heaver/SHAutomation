@@ -21,7 +21,7 @@ namespace SHAutomation.UIA3
             Window = new WindowPatternEventIds();
         }
 
-        public IAutomationElementEventIds Element { get; }
+        public ISHAutomationElementEventIds Element { get; }
         public IDragPatternEventIds Drag { get; }
         public IDropTargetPatternEventIds DropTarget { get; }
         public IInvokePatternEventIds Invoke { get; }

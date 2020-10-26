@@ -21,11 +21,11 @@ namespace SHAutomation.Core.AutomationElements
 
             }
         }
-        public  ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition)
+        public  ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition, bool waitUntilExists = true)
         {
-            return FindAll(treeScope, condition, 20000);
+            return FindAll(treeScope, condition, TimeSpan.FromSeconds(20), waitUntilExists);
         }
-        public ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
             bool getElements(bool shouldExist)
@@ -37,11 +37,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? elements.Any() : !elements.Any();
             }
             getElements(waitUntilExists);
-            if (!elements.Any() && waitUntilExists && timeout > 0)
+            if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(true), timeout);
             }
-            else if (elements.Any() && !waitUntilExists && timeout > 0)
+            else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(false), timeout);
             }

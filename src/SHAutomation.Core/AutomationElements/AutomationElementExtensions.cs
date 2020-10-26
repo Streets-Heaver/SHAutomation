@@ -58,7 +58,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             if (self != null)
             {
-                SHSpinWait.SpinUntil(() => self.TryGetClickablePoint(out var _), timeout.HasValue ? timeout.Value.TotalMilliseconds.ToInt() : 500);
+                SHSpinWait.SpinUntil(() => self.TryGetClickablePoint(out var _), timeout.HasValue ? timeout.Value : TimeSpan.FromMilliseconds(500));
             }
             return self;
         }
@@ -70,7 +70,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             if (self != null)
             {
-                SHSpinWait.SpinUntil(() => self.IsEnabled, timeout.HasValue ? timeout.Value.TotalMilliseconds.ToInt() : 500);
+                SHSpinWait.SpinUntil(() => self.IsEnabled, timeout.HasValue ? timeout.Value : TimeSpan.FromMilliseconds(500));
             }
             return self;
         }

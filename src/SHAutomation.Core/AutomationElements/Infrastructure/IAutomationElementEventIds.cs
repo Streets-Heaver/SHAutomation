@@ -2,7 +2,7 @@
 
 namespace SHAutomation.Core.AutomationElements.Infrastructure
 {
-    public interface IAutomationElementEventIds
+    public interface ISHAutomationElementEventIds
     {
         EventId AsyncContentLoadedEvent { get; }
         EventId ChangesEvent { get; }

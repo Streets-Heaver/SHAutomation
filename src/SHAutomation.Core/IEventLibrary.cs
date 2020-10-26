@@ -5,7 +5,7 @@ namespace SHAutomation.Core
 {
     public interface IEventLibrary
     {
-        IAutomationElementEventIds Element { get; }
+        ISHAutomationElementEventIds Element { get; }
         IDragPatternEventIds Drag { get; }
         IDropTargetPatternEventIds DropTarget { get; }
         IInvokePatternEventIds Invoke { get; }

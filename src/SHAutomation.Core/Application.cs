@@ -281,7 +281,7 @@ namespace SHAutomation.Core
                 _process = FindProcess(processId);
                 return _process.MainWindowHandle != IntPtr.Zero;
 
-            }, waitTimeout.HasValue ? waitTimeout.Value.TotalMilliseconds.ToInt() : TimeSpan.FromMinutes(2).TotalMilliseconds.ToInt());
+            }, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(2));
 
         }
 

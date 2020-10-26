@@ -5,10 +5,7 @@ namespace SHAutomation.Core.StaticClasses
 {
     public static class SHSpinWait
     {
-        public static bool SpinUntil(Func<bool> condition, int timeout)
-        {
-            return SpinUntil(condition, TimeSpan.FromMilliseconds(timeout));
-        }
+      
 
         public static bool SpinUntil(Func<bool> condition, TimeSpan timeout)
         {

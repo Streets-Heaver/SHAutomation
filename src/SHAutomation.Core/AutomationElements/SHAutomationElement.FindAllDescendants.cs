@@ -10,9 +10,9 @@ namespace SHAutomation.Core.AutomationElements
     {
         public  ISHAutomationElement[] FindAllDescendants()
         {
-            return FindAllDescendants(20000);
+            return FindAllDescendants(TimeSpan.FromSeconds(20));
         }
-        public ISHAutomationElement[] FindAllDescendants(int timeout = 20000)
+        public ISHAutomationElement[] FindAllDescendants(TimeSpan timeout)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
 
@@ -23,7 +23,7 @@ namespace SHAutomation.Core.AutomationElements
                 return elements.Any();
             }
             getElements();
-            if (!elements.Any() && timeout != 0)
+            if (!elements.Any() && timeout.TotalSeconds != 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(), timeout);
             }
@@ -37,19 +37,19 @@ namespace SHAutomation.Core.AutomationElements
         }
         public  ISHAutomationElement[] FindAllDescendants(ConditionBase condition)
         {
-            return FindAllDescendants(condition, 20000);
+            return FindAllDescendants(condition, TimeSpan.FromSeconds(20));
         }
-        public  ISHAutomationElement[] FindAllDescendants(Func<ConditionFactory, ConditionBase> conditionFunc)
+        public  ISHAutomationElement[] FindAllDescendants(Func<ConditionFactory, ConditionBase> conditionFunc, bool waitUntilExists = true)
         {
-            return FindAllDescendants(conditionFunc, 20000);
+            return FindAllDescendants(conditionFunc, TimeSpan.FromSeconds(20), waitUntilExists);
         }
-        public ISHAutomationElement[] FindAllDescendants(Func<ConditionFactory, ConditionBase> conditionFunc, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement[] FindAllDescendants(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, bool waitUntilExists = true)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindAllDescendants(condition, timeout, waitUntilExists);
         }
 
-        public ISHAutomationElement[] FindAllDescendants(ConditionBase condition, int timeout = 20000, bool waitUntilExists = true)
+        public ISHAutomationElement[] FindAllDescendants(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
             bool getElements(bool shouldExist)
@@ -59,11 +59,11 @@ namespace SHAutomation.Core.AutomationElements
                 return shouldExist ? elements.Any() : !elements.Any();
             }
             getElements(waitUntilExists);
-            if (!elements.Any() && waitUntilExists && timeout > 0)
+            if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(true), timeout);
             }
-            else if (elements.Any() && !waitUntilExists && timeout > 0)
+            else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => getElements(false), timeout);
             }
