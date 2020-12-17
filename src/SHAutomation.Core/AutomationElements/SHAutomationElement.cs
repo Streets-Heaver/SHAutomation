@@ -179,7 +179,7 @@ namespace SHAutomation.Core.AutomationElements
                 SHSpinWait.SpinUntil(() => !BoundingRectangle.IsEmpty, TimeSpan.FromSeconds(10));
                 if (!BoundingRectangle.IsEmpty)
                 {
-                    MouseHelpers.MouseMoveTo(Centre(), mouseSpeed);
+                    MouseHelpers.MoveTo(Centre(), mouseSpeed);
                 }
                 else
                 {

@@ -37,25 +37,12 @@ namespace SHAutomation.Core.StaticClasses
                 }
             }
         }
-
-        /// <summary>
-        /// The number of pixels the mouse is moved per millisecond.
-        /// Used to calculate the duration of a mouse move.
-        /// </summary>
-        public static double MovePixelsPerMillisecond { get; set; } = 2;
-
-        /// <summary>
-        /// The number of pixels the mouse is moved per step.
-        /// Used to calculate the interval of a mouse move.
-        /// </summary>
-        public static double MovePixelsPerStep { get; set; } = 10;
-
         /// <summary>
         /// Moves the mouse to a new position.
         /// </summary>
         /// <param name="newX">The new position on the x-axis.</param>
         /// <param name="newY">The new position on the y-axis.</param>
-        public static void MoveTo(int newX, int newY)
+        public static void MoveTo(int newX, int newY, double mouseSpeed = 2, double movePixelsPerStep = 10)
         {
             // Get starting position
             var startPos = Position;
@@ -69,8 +56,8 @@ namespace SHAutomation.Core.StaticClasses
 
             // Calculate some values for duration and interval
             var totalDistance = startPos.Distance(newX, newY);
-            var duration = TimeSpan.FromMilliseconds(Convert.ToInt32(totalDistance / MovePixelsPerMillisecond));
-            var steps = Math.Max(Convert.ToInt32(totalDistance / MovePixelsPerStep), 1); // Make sure to have et least one step
+            var duration = TimeSpan.FromMilliseconds(Convert.ToInt32(totalDistance / mouseSpeed));
+            var steps = Math.Max(Convert.ToInt32(totalDistance / movePixelsPerStep), 1); // Make sure to have et least one step
             var interval = TimeSpan.FromMilliseconds(duration.TotalMilliseconds / steps);
 
             // Execute the movement
@@ -82,12 +69,9 @@ namespace SHAutomation.Core.StaticClasses
         /// Moves the mouse to a new position.
         /// </summary>
         /// <param name="newPosition">The new position for the mouse.</param>
-        public static void MouseMoveTo(Point newPosition, double mouseSpeed = 1)
+        public static void MoveTo(Point newPosition, double mouseSpeed = 2, double movePixelsPerStep = 10)
         {
-            double currentSpeed = MovePixelsPerMillisecond;
-            MovePixelsPerMillisecond = mouseSpeed;
-            MoveTo(newPosition.X, newPosition.Y);
-            MovePixelsPerMillisecond = currentSpeed;
+            MoveTo(newPosition.X, newPosition.Y,mouseSpeed, movePixelsPerStep);
         }
 
         public static void MouseClick(MouseAction button)
