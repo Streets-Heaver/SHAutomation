@@ -82,10 +82,12 @@ namespace SHAutomation.Core.StaticClasses
         /// Moves the mouse to a new position.
         /// </summary>
         /// <param name="newPosition">The new position for the mouse.</param>
-        public static void MouseMoveTo(Point newPosition, int mouseSpeed = 1)
+        public static void MouseMoveTo(Point newPosition, double mouseSpeed = 1)
         {
+            double currentSpeed = MovePixelsPerMillisecond;
             MovePixelsPerMillisecond = mouseSpeed;
             MoveTo(newPosition.X, newPosition.Y);
+            MovePixelsPerMillisecond = currentSpeed;
         }
 
         public static void MouseClick(MouseAction button)
