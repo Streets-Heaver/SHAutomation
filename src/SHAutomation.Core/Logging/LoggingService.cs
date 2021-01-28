@@ -9,9 +9,9 @@ using System.Xml;
 
 namespace SHAutomation.Core.Logging
 {
-    public class LoggingService : ILoggingService, IDisposable
+    public class LoggingService : ILoggingService
     {
-        private readonly ElasticLogging.ElasticLogging _elasticLogging;
+        private readonly Logger _elasticLogging;
         private readonly bool _disabled;
 
         public LoggingService()
@@ -21,10 +21,10 @@ namespace SHAutomation.Core.Logging
 
         public LoggingService(LoggingSettings loggingSettings, string name, bool logToFile)
         {
-            _elasticLogging = new ElasticLogging.ElasticLogging(loggingSettings, name, logToFile);
+            _elasticLogging = new Logger(loggingSettings, name, logToFile);
         }
 
-        public LoggingService(ElasticLogging.ElasticLogging elasticLogging)
+        public LoggingService(Logger elasticLogging)
         {
             if (elasticLogging != null)
             {
