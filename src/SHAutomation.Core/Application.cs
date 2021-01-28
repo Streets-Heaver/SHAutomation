@@ -321,8 +321,10 @@ namespace SHAutomation.Core
                 .AsWindow(_loggingService, pathToConfigFile);
 
             if (mainWindow != null)
-            {
                 mainWindow.IsMainWindow = true;
+            else
+            {
+                throw new InvalidOperationException("mainWindow is null");
             }
             return mainWindow;
         }
