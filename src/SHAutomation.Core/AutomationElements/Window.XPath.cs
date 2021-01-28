@@ -35,7 +35,7 @@ namespace SHAutomation.Core.AutomationElements
 
             try
             {
-                _loggingService.Info($"Attempting to find cache member with key {testName}", LoggingLevel.Medium);
+                _loggingService.Info($"Attempting to find cache member with key {testName}");
 
                 _xpathGetContent = CacheService.GetCacheValue(cacheKey, testName);
             }
@@ -48,7 +48,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (!string.IsNullOrEmpty(_xpathGetContent))
             {
-                _loggingService.Warn("XPath Json found in cache", LoggingLevel.High);
+                _loggingService.Warn("XPath Json found in cache");
 
                 XPathList = JsonConvert.DeserializeObject<List<(string identifier, string property, string xpath)>>(_xpathGetContent);
                 if (XPathList == null)
@@ -58,7 +58,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                _loggingService.Warn("XPath Json not found in cache", LoggingLevel.Medium);
+                _loggingService.Warn("XPath Json not found in cache");
 
                 XPathList = new List<(string identifier, string property, string xpath)>();
             }
@@ -78,7 +78,7 @@ namespace SHAutomation.Core.AutomationElements
                 //Only perform update when there are new xpaths to write
                 if (_xpathGetContent != output)
                 {
-                    _loggingService.Info("Saving XPaths to cache", LoggingLevel.High);
+                    _loggingService.Info("Saving XPaths to cache");
 
                     try
                     {
@@ -92,7 +92,7 @@ namespace SHAutomation.Core.AutomationElements
                     }
                 }
                 else
-                    _loggingService.Info("No XPath changes detected so not saving", LoggingLevel.High);
+                    _loggingService.Info("No XPath changes detected so not saving");
 
             }
 
@@ -108,7 +108,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var condition_string = condition.ToString();
-            _loggingService.Info(string.Format("GetXPathElementFromCondition called {0}", condition_string), LoggingLevel.High);
+            _loggingService.Info(string.Format("GetXPathElementFromCondition called {0}", condition_string));
 
             bool canUseXpath = !(condition_string.Contains("OR") || condition_string.Contains("NOT"));
             return canUseXpath ? GetXPathFromPropertyConditions(GetPropertyConditions(condition), timeout) : null;
@@ -171,7 +171,7 @@ namespace SHAutomation.Core.AutomationElements
                     return FindFirstByXPath(_xPathValues, xPathTimeout);
                 else
                 {
-                    _loggingService.Info("No matching cached xpath value found, falling back to tree traversal", LoggingLevel.High);
+                    _loggingService.Info("No matching cached xpath value found, falling back to tree traversal");
                     return null;
                 }
 
@@ -311,20 +311,20 @@ namespace SHAutomation.Core.AutomationElements
 
         private bool GetXPathValueFromCache(string identifier, string property, out List<string> xPathValues)
         {
-            _loggingService.Info("Getting XPath From Cache :" + identifier, LoggingLevel.Medium);
+            _loggingService.Info("Getting XPath From Cache :" + identifier);
 
             xPathValues = new List<string>();
 
             if (XPathList.Any(x => x.identifier.ToUpper() == identifier.ToUpper() && x.property == property))
             {
                 xPathValues = XPathList.Where(x => x.identifier.ToUpper() == identifier.ToUpper()).Select(x => x.xpath).ToList();
-                _loggingService.Info("XPath found in Cache", LoggingLevel.High);
+                _loggingService.Info("XPath found in Cache");
 
                 return true;
             }
             else
             {
-                _loggingService.Info("XPath not found", LoggingLevel.High);
+                _loggingService.Info("XPath not found");
                 return false;
 
             }
@@ -334,7 +334,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement element = null;
 
-            _loggingService.Info(string.Format("Attempting to find control using xpath:{0}", xpath), LoggingLevel.High);
+            _loggingService.Info(string.Format("Attempting to find control using xpath:{0}", xpath));
 
             if (xpath.Contains("&quot;"))
             {
@@ -382,7 +382,7 @@ namespace SHAutomation.Core.AutomationElements
 
             }
             else
-                _loggingService.Info("Found control using cached xpath", LoggingLevel.Medium);
+                _loggingService.Info("Found control using cached xpath");
 
 
             return validXpath?.FrameworkAutomationElement != null ? validXpath : null;
@@ -392,7 +392,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             xPathObject = null;
             bool found = false;
-            _loggingService.Info(xpaths.Count + " potential xpath(s)", LoggingLevel.High);
+            _loggingService.Info(xpaths.Count + " potential xpath(s)");
             foreach (var xpath in xpaths)
             {
                 var tempXPathObject = FindFirstByXPath(xpath, TimeSpan.Zero);

@@ -73,17 +73,17 @@ namespace SHAutomation.Core.AutomationElements
                 throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
             }
 
-            _loggingService.Info("Find found control", LoggingLevel.High);
+            _loggingService.Info("Find found control");
 
             SHSpinWait.SpinUntil(() => control.SupportsOnscreen, TimeSpan.FromMilliseconds(500));
             if (control.SupportsOnscreen)
             {
                 SHSpinWait.SpinUntil(() => control.IsOnscreen, offscreenTimeout);
-                _loggingService.Info("Find OnScreen: " + control.IsOnscreen, LoggingLevel.High);
+                _loggingService.Info("Find OnScreen: " + control.IsOnscreen);
 
             }
             else
-                _loggingService.Info("Find OnScreen is not supported", LoggingLevel.High);
+                _loggingService.Info("Find OnScreen is not supported");
 
 
             SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);

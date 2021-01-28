@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ElasticLogging" Version="0.0.3" />
     <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-    <PackageReference Include="log4net.ElasticSearch" Version="2.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

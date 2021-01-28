@@ -5,13 +5,12 @@ namespace SHAutomation.Core.Logging
 {
     public interface ILoggingService
     {
-        void Debug(string message, LoggingLevel loggingLevel = LoggingLevel.Low);
+        void Debug(string message);
         void Error(Exception ex);
         void Error(string errorMessage);
         void Fatal(Exception ex);
         void Fatal(string errorMessage);
-        void Flush();
-        void Info(string message, LoggingLevel loggingLevel = LoggingLevel.Low);
-        void Warn(string message, LoggingLevel loggingLevel = LoggingLevel.Low);
+        void Info(string message);
+        void Warn(string message);
     }
 }
