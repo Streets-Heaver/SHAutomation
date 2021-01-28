@@ -1,4 +1,5 @@
 ﻿using ElasticLogging;
+using ElasticLogging.Classes;
 using SHAutomation.Core.Enums;
 using System;
 using System.Diagnostics;
@@ -8,9 +9,9 @@ using System.Xml;
 
 namespace SHAutomation.Core.Logging
 {
-    public class LoggingService : ILoggingService
+    public class LoggingService : ILoggingService, IDisposable
     {
-        private readonly IElasticLogging _elasticLogging;
+        private readonly ElasticLogging.ElasticLogging _elasticLogging;
         private readonly bool _disabled;
 
         public LoggingService()
@@ -18,7 +19,12 @@ namespace SHAutomation.Core.Logging
             _disabled = true;
         }
 
-        public LoggingService(IElasticLogging elasticLogging)
+        public LoggingService(LoggingSettings loggingSettings, string name, bool logToFile)
+        {
+            _elasticLogging = new ElasticLogging.ElasticLogging(loggingSettings, name, logToFile);
+        }
+
+        public LoggingService(ElasticLogging.ElasticLogging elasticLogging)
         {
             if (elasticLogging != null)
             {
@@ -27,6 +33,11 @@ namespace SHAutomation.Core.Logging
             else
                 _disabled = true;
 
+        }
+
+        public void Dispose()
+        {
+            _elasticLogging.Dispose();
         }
 
         public void Error(Exception ex)
