@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace SHAutomation.Core.Logging
 {
-    public class LoggingService : ILoggingService, IDisposable
+    public class LoggingService : ILoggingService
     {
         private readonly Logger _elasticLogging;
         private readonly bool _disabled;
