@@ -3,7 +3,7 @@ using System;
 
 namespace SHAutomation.Core.Logging
 {
-    public interface ILoggingService
+    public interface ILoggingService 
     {
         void Debug(string message);
         void Error(Exception ex);
