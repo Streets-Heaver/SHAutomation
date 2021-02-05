@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
 using SHAutomation.Core.Classes;
+using SHAutomation.Core.Logging;
 
 namespace SHAutomation.Core.Caching
 {
@@ -14,15 +15,19 @@ namespace SHAutomation.Core.Caching
         private bool _usingRedis;
         private string _branchNameRegex;
         private IDatabase _database;
+        private readonly ILoggingService _loggingService;
 
-        public CacheService()
+        public CacheService(ILoggingService loggingService)
         {
             Init();
+            _loggingService = loggingService;
         }
 
-        public CacheService(string pathToConfigFile)
+        public CacheService(string pathToConfigFile, ILoggingService loggingService)
         {
             Init(pathToConfigFile);
+            _loggingService = loggingService;
+
         }
 
         private void Init()
@@ -64,12 +69,14 @@ namespace SHAutomation.Core.Caching
                         {
                             if (ex is ObjectDisposedException || ex is RedisTimeoutException)
                             {
+                                _loggingService.Error(ex);
                                 RedisManager.ForceReconnect();
                                 _database = RedisManager.Connection.GetDatabase();
                             }
                         }
                         catch
                         {
+                            _loggingService.Error("Retry attempt to get Redis DB failed, setting Redis DB to null to prevent usage");
                             _database = null;
                         }
 
@@ -114,12 +121,15 @@ namespace SHAutomation.Core.Caching
                     {
                         if (ex is ObjectDisposedException || ex is RedisTimeoutException)
                         {
+                            _loggingService.Error(ex);
                             RedisManager.ForceReconnect();
                             _database = RedisManager.Connection.GetDatabase();
                         }
                     }
                     catch
                     {
+                        _loggingService.Error("Retry attempt to get Redis DB failed, setting Redis DB to null to prevent usage");
+
                         _database = null;
                     }
 
