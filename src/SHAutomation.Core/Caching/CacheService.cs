@@ -13,6 +13,7 @@ namespace SHAutomation.Core.Caching
     {
         private bool _usingRedis;
         private string _branchNameRegex;
+        private IDatabase _database;
 
         public CacheService()
         {
@@ -51,18 +52,32 @@ namespace SHAutomation.Core.Caching
         {
             if (_usingRedis)
             {
-                IDatabase db;
-                try
+                if (_database != null)
                 {
-                    db = RedisManager.Connection.GetDatabase();
-                }
-                catch (ObjectDisposedException)
-                {
-                    RedisManager.ForceReconnect();
-                    db = RedisManager.Connection.GetDatabase();
+                    try
+                    {
+                        _database = RedisManager.Connection.GetDatabase();
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            if (ex is ObjectDisposedException || ex is RedisTimeoutException)
+                            {
+                                RedisManager.ForceReconnect();
+                                _database = RedisManager.Connection.GetDatabase();
+                            }
+                        }
+                        catch
+                        {
+                            _database = null;
+                        }
 
+                    }
                 }
-                db.StringSet(key, value);
+
+                if (_database != null)
+                    _database.StringSet(key, value);
             }
             else
             {
@@ -89,22 +104,31 @@ namespace SHAutomation.Core.Caching
             {
                 ThreadPool.SetMinThreads(300, 300);
 
-                IDatabase db;
                 try
                 {
-                    db = RedisManager.Connection.GetDatabase();
+                    _database = RedisManager.Connection.GetDatabase();
                 }
-                catch (ObjectDisposedException)
+                catch (Exception ex)
                 {
-                    RedisManager.ForceReconnect();
-                    db = RedisManager.Connection.GetDatabase();
+                    try
+                    {
+                        if (ex is ObjectDisposedException || ex is RedisTimeoutException)
+                        {
+                            RedisManager.ForceReconnect();
+                            _database = RedisManager.Connection.GetDatabase();
+                        }
+                    }
+                    catch
+                    {
+                        _database = null;
+                    }
 
                 }
 
-                var cacheValue = db.StringGet(key);
+                var cacheValue = _database.StringGet(key);
                 if (string.IsNullOrEmpty(cacheValue) && key != testName)
                 {
-                    return db.StringGet(testName);
+                    return _database.StringGet(testName);
                 }
                 else
                     return cacheValue;
