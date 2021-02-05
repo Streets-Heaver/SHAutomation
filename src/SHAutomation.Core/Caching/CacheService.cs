@@ -52,7 +52,7 @@ namespace SHAutomation.Core.Caching
         {
             if (_usingRedis)
             {
-                if (_database != null)
+                if (_database == null)
                 {
                     try
                     {
