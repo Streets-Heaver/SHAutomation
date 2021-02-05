@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Caching;
+using SHAutomation.Core.Logging;
 using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.Tests.Common;
 using StackExchange.Redis;
@@ -239,8 +240,12 @@ namespace SHAutomation.Core.Tests.Integration
         public void XPathKeyReturnedSavesAsNormalTestNameWhenBranchNameNotNumericFormat_GenerateCacheKey_BeTrue()
         {
 
+            var loggingServiceMock = new Mock<ILoggingService>();
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<Exception>()));
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<string>()));
+
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var cache = new CacheService(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"), loggingServiceMock.Object);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
             string output = cache.GenerateCacheKey(TestContext.TestName);
             output.Should().Be(TestContext.TestName);
@@ -252,9 +257,12 @@ namespace SHAutomation.Core.Tests.Integration
         [TestMethod]
         public void XPathKeyReturnedAsNormalTestWhenNoBranchVariable_GenerateCacheKey_BeTrue()
         {
+            var loggingServiceMock = new Mock<ILoggingService>();
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<Exception>()));
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<string>()));
 
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var cache = new CacheService(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"), loggingServiceMock.Object);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", string.Empty);
             string output = cache.GenerateCacheKey(TestContext.TestName);
             output.Should().Be(TestContext.TestName);
@@ -263,9 +271,13 @@ namespace SHAutomation.Core.Tests.Integration
         [TestMethod]
         public void XPathKeyReturnedWithIterationWhenIterationBranchAvailable_GenerateCacheKey_BeTrue()
         {
+            var loggingServiceMock = new Mock<ILoggingService>();
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<Exception>()));
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<string>()));
+
             Environment.SetEnvironmentVariable("BranchMatchRegex", @"\d\.\d\d");
             string currentVariable = Environment.GetEnvironmentVariable("Build_SourceBranchName");
-            var cache = new CacheService(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var cache = new CacheService(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"), loggingServiceMock.Object);
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.24");
             string output = cache.GenerateCacheKey(TestContext.TestName);
             output.Should().Be(TestContext.TestName + "_8.24");

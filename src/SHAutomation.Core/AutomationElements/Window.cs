@@ -47,7 +47,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public Window(FrameworkAutomationElementBase frameworkAutomationElement, ILoggingService loggingService, string pathToConfigFile) : base(frameworkAutomationElement)
         {
-            CacheService = new CacheService(pathToConfigFile);
+            CacheService = new CacheService(pathToConfigFile, loggingService);
 
             if (loggingService == null)
                 _loggingService = new LoggingService();
