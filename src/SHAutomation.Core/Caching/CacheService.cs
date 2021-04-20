@@ -96,7 +96,7 @@ namespace SHAutomation.Core.Caching
                         {
                             _loggingService.Warn("Encountered issue performing Redis StringSet so retrying");
                             _loggingService.Warn(ex.Message);
-                            _database.StringSet(key, value);
+                            _database.StringSet(key, value, expiry: RedisManager.KeyExpiry.HasValue ? RedisManager.KeyExpiry.Value : (TimeSpan?)null);
 
                         }
                         else
