@@ -48,6 +48,7 @@ namespace SHAutomation.Core.Caching
                 RedisManager.Password = config.RedisPassword;
                 RedisManager.Port = config.RedisPort;
                 RedisManager.UseSSL = config.RedisUseSSL;
+                RedisManager.KeyExpiry = config.KeyExpiry;
                 _branchNameRegex = @"\d\.\d\d"; //config.BranchMatchRegex.Replace(@"\\", @"\");
 
             }
@@ -84,7 +85,26 @@ namespace SHAutomation.Core.Caching
                 }
 
                 if (_database != null)
-                    _database.StringSet(key, value);
+                {
+                    try
+                    {
+                        _database.StringSet(key, value, expiry: RedisManager.KeyExpiry.HasValue ? RedisManager.KeyExpiry.Value : (TimeSpan?)null);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is RedisTimeoutException || ex is RedisConnectionException)
+                        {
+                            _loggingService.Warn("Encountered issue performing Redis StringSet so retrying");
+                            _loggingService.Warn(ex.Message);
+                            _database.StringSet(key, value);
+
+                        }
+                        else
+                            _loggingService.Error(ex.Message);
+                    }
+
+
+                }
             }
             else
             {
@@ -138,7 +158,26 @@ namespace SHAutomation.Core.Caching
                 var cacheValue = _database.StringGet(key);
                 if (string.IsNullOrEmpty(cacheValue) && key != testName)
                 {
-                    return _database.StringGet(testName);
+                    try
+                    {
+                        return _database.StringGet(testName);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is RedisTimeoutException || ex is RedisConnectionException)
+                        {
+                            _loggingService.Warn("Encountered issue performing Redis StringGet so retrying");
+                            _loggingService.Warn(ex.Message);
+
+                            return _database.StringGet(testName);
+                        }
+                        else
+                            _loggingService.Error(ex.Message);
+
+
+                        return null;
+                    }
+
                 }
                 else
                     return cacheValue;

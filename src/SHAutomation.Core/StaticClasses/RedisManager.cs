@@ -18,6 +18,7 @@ namespace SHAutomation.Core.StaticClasses
         public static string Password { get; set; }
         public static int Port { get; set; }
         public static bool UseSSL { get; set; }
+        public static TimeSpan? KeyExpiry { get; set; }
 
         // In general, let StackExchange.Redis handle most reconnects, 
         // so limit the frequency of how often this will actually reconnect.
