@@ -10,5 +10,6 @@ namespace SHAutomation.Core.Classes
         public bool RedisUseSSL { get; set; }
         public string BranchMatchRegex { get; set; }
         public TimeSpan? KeyExpiry { get; set; }
+        public TimeSpan? UpdateExpiryIfTTLLessThan { get; set; }
     }
 }

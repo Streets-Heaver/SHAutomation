@@ -17,6 +17,7 @@ namespace SHAutomation.Core.Caching
         private IDatabase _database;
         private readonly ILoggingService _loggingService;
 
+
         public CacheService(ILoggingService loggingService)
         {
             Init();
@@ -49,6 +50,7 @@ namespace SHAutomation.Core.Caching
                 RedisManager.Port = config.RedisPort;
                 RedisManager.UseSSL = config.RedisUseSSL;
                 RedisManager.KeyExpiry = config.KeyExpiry;
+                RedisManager.UpdateExpiryIfTTLLessThan = config.UpdateExpiryIfTTLLessThan;
                 _branchNameRegex = @"\d\.\d\d"; //config.BranchMatchRegex.Replace(@"\\", @"\");
 
             }
@@ -155,12 +157,12 @@ namespace SHAutomation.Core.Caching
 
                 }
 
-                var cacheValue = _database.StringGet(key);
-                if (string.IsNullOrEmpty(cacheValue) && key != testName)
+                var cacheValue = _database.StringGetWithExpiry(key);
+                if (string.IsNullOrEmpty(cacheValue.Value) && key != testName)
                 {
                     try
                     {
-                        return _database.StringGet(testName);
+                        cacheValue = _database.StringGetWithExpiry(testName);
                     }
                     catch (Exception ex)
                     {
@@ -169,7 +171,7 @@ namespace SHAutomation.Core.Caching
                             _loggingService.Warn("Encountered issue performing Redis StringGet so retrying");
                             _loggingService.Warn(ex.Message);
 
-                            return _database.StringGet(testName);
+                            cacheValue = _database.StringGetWithExpiry(testName);
                         }
                         else
                             _loggingService.Error(ex.Message);
@@ -179,8 +181,12 @@ namespace SHAutomation.Core.Caching
                     }
 
                 }
-                else
-                    return cacheValue;
+
+                if (cacheValue.Expiry.HasValue && RedisManager.KeyExpiry.HasValue && RedisManager.UpdateExpiryIfTTLLessThan.HasValue
+                    && cacheValue.Expiry.Value < RedisManager.UpdateExpiryIfTTLLessThan.Value)
+                    _database.KeyExpire(testName, RedisManager.KeyExpiry);
+
+                return cacheValue.Value;
             }
             else
             {

@@ -245,6 +245,37 @@ namespace SHAutomation.Core.Tests.Integration
         }
 
         [TestMethod]
+        public void KeyExpiryIsUpdatedWhenTTLIsLessThanUpdateExpiryIfTTLLessThan_GetXPathCache_BeTrue()
+        {
+
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+
+            var loggingServiceMock = new Mock<ILoggingService>();
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<Exception>()));
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<string>()));
+
+            var cache = new CacheService(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"), loggingServiceMock.Object);
+
+            RedisManager.KeyExpiry = TimeSpan.FromMinutes(5);
+
+            IDatabase db = RedisManager.Connection.GetDatabase();
+
+            window.XPathList.Add((identifier: "KeyExpTest", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache(TestContext.TestName);
+
+            RedisManager.KeyExpiry = TimeSpan.FromDays(60);
+            RedisManager.UpdateExpiryIfTTLLessThan = TimeSpan.FromDays(10);
+
+
+            cache.GetCacheValue(TestContext.TestName, TestContext.TestName);
+
+            var record = db.StringGetWithExpiry(TestContext.TestName);
+            record.Expiry.Should().BeGreaterThan(TimeSpan.FromMinutes(5));
+
+        }
+
+        [TestMethod]
         public void XPathIsEmptyCollectionWhenNoCacheHit_GetXPathCache_BeTrue()
         {
 
