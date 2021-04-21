@@ -20,7 +20,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
 
             IDatabase db = RedisManager.Connection.GetDatabase();
@@ -41,7 +41,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
@@ -63,7 +63,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
@@ -115,7 +115,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             var cacheServiceMock = new Mock<ICacheService>();
             cacheServiceMock.Setup(x => x.GetCacheValue(It.IsAny<string>(), It.IsAny<string>()));
@@ -136,7 +136,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             var cacheServiceMock = new Mock<ICacheService>();
             cacheServiceMock.Setup(x => x.GetCacheValue(It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +163,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
 
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
@@ -179,7 +179,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
@@ -208,7 +208,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             IDatabase db = RedisManager.Connection.GetDatabase();
             db.KeyDelete(TestContext.TestName);
@@ -224,12 +224,63 @@ namespace SHAutomation.Core.Tests.Integration
 
         }
 
+
+        [TestMethod]
+        public void KeyExpiryIsSetOnRecordWhenSet_SetXPathCache_BeTrue()
+        {
+
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+
+            RedisManager.KeyExpiry = TimeSpan.FromMinutes(5);
+
+            IDatabase db = RedisManager.Connection.GetDatabase();
+
+            window.XPathList.Add((identifier: "KeyExpTest", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache(TestContext.TestName);
+
+            var record = db.StringGetWithExpiry(TestContext.TestName);
+            record.Expiry.Should().NotBeNull();
+
+        }
+
+        [TestMethod]
+        public void KeyExpiryIsUpdatedWhenTTLIsLessThanUpdateExpiryIfTTLLessThan_GetXPathCache_BeTrue()
+        {
+
+            var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+
+            var loggingServiceMock = new Mock<ILoggingService>();
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<Exception>()));
+            loggingServiceMock.Setup(x => x.Error(It.IsAny<string>()));
+
+            var cache = new CacheService(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"), loggingServiceMock.Object);
+
+            RedisManager.KeyExpiry = TimeSpan.FromMinutes(5);
+
+            IDatabase db = RedisManager.Connection.GetDatabase();
+
+            window.XPathList.Add((identifier: "KeyExpTest", property: "AutomationId", xpath: "XPATH"));
+            window.SaveXPathCache(TestContext.TestName);
+
+            RedisManager.KeyExpiry = TimeSpan.FromDays(60);
+            RedisManager.UpdateExpiryIfTTLLessThan = TimeSpan.FromDays(10);
+
+
+            cache.GetCacheValue(TestContext.TestName, TestContext.TestName);
+
+            var record = db.StringGetWithExpiry(TestContext.TestName);
+            record.Expiry.Should().BeGreaterThan(TimeSpan.FromMinutes(5));
+
+        }
+
         [TestMethod]
         public void XPathIsEmptyCollectionWhenNoCacheHit_GetXPathCache_BeTrue()
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             window.GetXPathCache(TestContext.TestName);
 
@@ -292,7 +343,7 @@ namespace SHAutomation.Core.Tests.Integration
         {
 
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "8.25");
 
@@ -310,7 +361,7 @@ namespace SHAutomation.Core.Tests.Integration
         public void SavesXPathWithoutIterationName_SaveXPathCache_BeTrue()
         {
             var frameworkAutomationElementMock = new Mock<FrameworkAutomationElementBase>();
-            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
+            var window = new Window(frameworkAutomationElementMock.Object, Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "shautomation.json"));
 
             Environment.SetEnvironmentVariable("Build_SourceBranchName", "master");
 

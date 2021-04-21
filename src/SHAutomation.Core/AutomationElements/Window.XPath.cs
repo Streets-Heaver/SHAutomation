@@ -33,18 +33,11 @@ namespace SHAutomation.Core.AutomationElements
 
             var cacheKey = CacheService.GenerateCacheKey(testName);
 
-            try
-            {
-                _loggingService.Info($"Attempting to find cache member with key {testName}");
 
-                _xpathGetContent = CacheService.GetCacheValue(cacheKey, testName);
-            }
-            catch (RedisTimeoutException ex)
-            {
-                _loggingService.Info(ex.Message);
-                _loggingService.Info("Redis timed out getting xpath so retrying");
-                _xpathGetContent = CacheService.GetCacheValue(cacheKey, testName);
-            }
+            _loggingService.Info($"Attempting to find cache member with key {testName}");
+
+            _xpathGetContent = CacheService.GetCacheValue(cacheKey, testName);
+
 
             if (!string.IsNullOrEmpty(_xpathGetContent))
             {
@@ -80,16 +73,9 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     _loggingService.Info("Saving XPaths to cache");
 
-                    try
-                    {
-                        CacheService.SetCacheValue(cacheKey, output);
-                    }
-                    catch (RedisConnectionException ex)
-                    {
-                        _loggingService.Error(ex.Message);
 
-                        CacheService.SetCacheValue(cacheKey, output);
-                    }
+                    CacheService.SetCacheValue(cacheKey, output);
+
                 }
                 else
                     _loggingService.Info("No XPath changes detected so not saving");
@@ -366,7 +352,7 @@ namespace SHAutomation.Core.AutomationElements
 
             return element?.FrameworkAutomationElement != null ? (SHAutomationElement)element : null;
         }
-       
+
         private SHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
         {
             SHAutomationElement validXpath = null;

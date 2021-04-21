@@ -17,6 +17,7 @@ namespace SHAutomation.Core.Caching
         private IDatabase _database;
         private readonly ILoggingService _loggingService;
 
+
         public CacheService(ILoggingService loggingService)
         {
             Init();
@@ -48,6 +49,8 @@ namespace SHAutomation.Core.Caching
                 RedisManager.Password = config.RedisPassword;
                 RedisManager.Port = config.RedisPort;
                 RedisManager.UseSSL = config.RedisUseSSL;
+                RedisManager.KeyExpiry = config.KeyExpiry;
+                RedisManager.UpdateExpiryIfTTLLessThan = config.UpdateExpiryIfTTLLessThan;
                 _branchNameRegex = @"\d\.\d\d"; //config.BranchMatchRegex.Replace(@"\\", @"\");
 
             }
@@ -84,7 +87,26 @@ namespace SHAutomation.Core.Caching
                 }
 
                 if (_database != null)
-                    _database.StringSet(key, value);
+                {
+                    try
+                    {
+                        _database.StringSet(key, value, expiry: RedisManager.KeyExpiry.HasValue ? RedisManager.KeyExpiry.Value : (TimeSpan?)null);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is RedisTimeoutException || ex is RedisConnectionException)
+                        {
+                            _loggingService.Warn("Encountered issue performing Redis StringSet so retrying");
+                            _loggingService.Warn(ex.Message);
+                            _database.StringSet(key, value, expiry: RedisManager.KeyExpiry.HasValue ? RedisManager.KeyExpiry.Value : (TimeSpan?)null);
+
+                        }
+                        else
+                            _loggingService.Error(ex.Message);
+                    }
+
+
+                }
             }
             else
             {
@@ -135,13 +157,36 @@ namespace SHAutomation.Core.Caching
 
                 }
 
-                var cacheValue = _database.StringGet(key);
-                if (string.IsNullOrEmpty(cacheValue) && key != testName)
+                var cacheValue = _database.StringGetWithExpiry(key);
+                if (string.IsNullOrEmpty(cacheValue.Value) && key != testName)
                 {
-                    return _database.StringGet(testName);
+                    try
+                    {
+                        cacheValue = _database.StringGetWithExpiry(testName);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is RedisTimeoutException || ex is RedisConnectionException)
+                        {
+                            _loggingService.Warn("Encountered issue performing Redis StringGet so retrying");
+                            _loggingService.Warn(ex.Message);
+
+                            cacheValue = _database.StringGetWithExpiry(testName);
+                        }
+                        else
+                            _loggingService.Error(ex.Message);
+
+
+                        return null;
+                    }
+
                 }
-                else
-                    return cacheValue;
+
+                if (cacheValue.Expiry.HasValue && RedisManager.KeyExpiry.HasValue && RedisManager.UpdateExpiryIfTTLLessThan.HasValue
+                    && cacheValue.Expiry.Value < RedisManager.UpdateExpiryIfTTLLessThan.Value)
+                    _database.KeyExpire(testName, RedisManager.KeyExpiry);
+
+                return cacheValue.Value;
             }
             else
             {
