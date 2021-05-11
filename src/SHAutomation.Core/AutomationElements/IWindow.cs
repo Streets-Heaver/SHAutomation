@@ -27,7 +27,7 @@ namespace SHAutomation.Core.AutomationElements
         ISHAutomationElement Find(string automationID, ISHAutomationElement parent = null);
         ISHAutomationElement Find(string automationID, TimeSpan timeout, ISHAutomationElement parent = null);
         ISHAutomationElement Find(string automationID, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null);
-        SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout);
+        new SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout);
         Menu GetContextMenuByFrameworkType(FrameworkType frameworkType);
         List<(PropertyCondition Value, bool Ignore)> GetPropertyConditions(ConditionBase condition);
         void GetXPathCache(string testName);

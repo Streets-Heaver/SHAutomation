@@ -316,7 +316,7 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
 
-        public SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
+        public new SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
         {
             ISHAutomationElement element = null;
 
