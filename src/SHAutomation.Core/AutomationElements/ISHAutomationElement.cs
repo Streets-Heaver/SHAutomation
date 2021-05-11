@@ -100,6 +100,7 @@ namespace SHAutomation.Core.AutomationElements
         ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true);
         SHAutomationElement FindFirstBase(TreeScope treeScope, ConditionBase condition);
         ISHAutomationElement FindFirstByXPath(string xPath);
+        ISHAutomationElement FindFirstByXPath(string xPath, TimeSpan timeout);
         ISHAutomationElement FindFirstChild(bool waitUntilExists = true);
         ISHAutomationElement FindFirstChild(ConditionBase condition, bool waitUntilExists = true);
         ISHAutomationElement FindFirstChild(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true);

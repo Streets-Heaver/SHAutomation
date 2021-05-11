@@ -13,21 +13,6 @@ namespace SHAutomation.Core.Tests.UI
     public class FindMethodTests : UITestBase
     {
         [TestMethod]
-        public void ElementFoundUsingAutomationIdAndCache_Find_NotBeNull()
-        {
-            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-            using var automation = new UIA3Automation();
-            var window = calc.GetMainWindow(automation);
-
-            window.GetXPathCache(TestContext.TestName);
-
-            var num3Button = window.Find("num3Button");
-            num3Button.Should().NotBeNull();
-
-            window.SaveXPathCache(TestContext.TestName);
-        }
-
-        [TestMethod]
         public void NewXPathIsSaved_Find_BeEquivalentTo()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
@@ -133,14 +118,26 @@ namespace SHAutomation.Core.Tests.UI
             elapsed.Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(4.9)).And.BeLessOrEqualTo(TimeSpan.FromSeconds(6));
         }
         [TestMethod]
-        public void ElementFound_FindAllByXPath_NotBeNull()
+        public void ElementFound_FindAllByXPath_HaveCount()
         {
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
             var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
-            num3Button.Should().NotBeNull();
+            num3Button.Should().HaveCount(1);
+
+        }
+
+        [TestMethod]
+        public void ElementNotFound_FindAllByXPath_HaveCount()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='randomthing']",TimeSpan.FromSeconds(2));
+            num3Button.Should().BeEmpty();
 
         }
 

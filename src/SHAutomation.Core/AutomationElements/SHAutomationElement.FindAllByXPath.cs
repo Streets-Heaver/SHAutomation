@@ -16,20 +16,20 @@ namespace SHAutomation.Core.AutomationElements
         public ISHAutomationElement[] FindAllByXPath(string xPath, TimeSpan timeout, bool waitUntilExists = true)
         {
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
-            bool getElements(bool shouldExist)
+            bool getElements(bool shouldExist, bool firstRun)
             {
-                if (!elements.Any())
+                if (firstRun || elements.Any() != shouldExist)
                     elements = FindAllByXPathBase(xPath).Where(x => x.FrameworkAutomationElement != null).ToList();
                 return shouldExist ? elements.Any() : !elements.Any();
             }
-            getElements(waitUntilExists);
+            getElements(waitUntilExists,true);
             if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(true), timeout);
+                SHSpinWait.SpinUntil(() => getElements(true,false), timeout);
             }
             else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(false), timeout);
+                SHSpinWait.SpinUntil(() => getElements(false,false), timeout);
             }
             return elements.ToArray();
         }

@@ -130,18 +130,30 @@ namespace SHAutomation.Core.AutomationElements
                 return null;
             }
         }
+        public ISHAutomationElement FindFirstByXPath(string xPath, TimeSpan timeout)
+        {
+            ISHAutomationElement element = null;
+            bool getElement(string xpath)
+            {
+                element = FindFirstByXPath(xpath);
+                return element != null;
+            }
 
+            SHSpinWait.SpinUntil(() => getElement(xPath), timeout);
+            return element;
+        }
         /// <summary>
         /// Finds all items which match the given xpath.
         /// </summary>
         private SHAutomationElement[] FindAllByXPathBase(string xPath)
         {
+            DateTime startTime = DateTime.Now;
             try
             {
                 var xPathNavigator = new SHAutomationElementXPathNavigator(this);
                 var itemNodeIterator = xPathNavigator.Select(xPath);
                 var itemList = new List<SHAutomationElement>();
-                while (itemNodeIterator.MoveNext())
+                while (itemNodeIterator.MoveNext() && DateTime.Now.Subtract(startTime).TotalSeconds < 1)
                 {
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
                     itemList.Add(automationItem);
