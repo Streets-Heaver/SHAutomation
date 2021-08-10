@@ -300,6 +300,23 @@ namespace SHAutomation.Core.Input
         }
 
         /// <summary>
+        /// Drags the mouse from the starting point to another point.
+        /// </summary>
+        /// <param name="mouseButton">The mouse button to use for dragging.</param>
+        /// <param name="action">"Action to be carried out between mouse button down and mouse button up"</param>
+        public static void Drag(MouseButton mouseButton, Action action)
+        {
+            Down(mouseButton);
+            Wait.UntilInputIsProcessed();
+
+            action.Invoke();
+
+            Up(mouseButton);
+            Wait.UntilInputIsProcessed();
+
+        }
+
+        /// <summary>
         /// Converts the button to the correct <see cref="MouseEventFlags" /> object
         /// and fills the additional data if needed
         /// </summary>
