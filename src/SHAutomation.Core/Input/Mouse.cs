@@ -281,15 +281,29 @@ namespace SHAutomation.Core.Input
             Drag(mouseButton, startingPoint, endingPoint);
         }
 
+
+        /// <summary>
+        /// Drags the mouse from the starting point with the given distance.
+        /// </summary>
+        /// <param name="mouseButton">The mouse button to use for dragging.</param>
+        /// <param name="distanceX">The x distance to drag, + for down, - for up.</param>
+        /// <param name="distanceY">The y distance to drag, + for right, - for left.</param>
+        public static void Drag(MouseButton mouseButton, int distanceX, int distanceY)
+        {
+            Drag(mouseButton, null, new Point(Position.X + distanceX, Position.Y + distanceY));
+        }
+
         /// <summary>
         /// Drags the mouse from the starting point to another point.
         /// </summary>
         /// <param name="mouseButton">The mouse button to use for dragging.</param>
         /// <param name="startingPoint">Starting point of the drag.</param>
         /// <param name="endingPoint">Ending point of the drag.</param>
-        public static void Drag(MouseButton mouseButton, Point startingPoint, Point endingPoint)
+        public static void Drag(MouseButton mouseButton, Point? startingPoint, Point endingPoint)
         {
-            Position = startingPoint;
+            if (startingPoint != null)
+                Position = startingPoint.Value;
+
             Wait.UntilInputIsProcessed();
             Down(mouseButton);
             Wait.UntilInputIsProcessed();
@@ -298,6 +312,8 @@ namespace SHAutomation.Core.Input
             Up(mouseButton);
             Wait.UntilInputIsProcessed();
         }
+
+
 
         /// <summary>
         /// Converts the button to the correct <see cref="MouseEventFlags" /> object
