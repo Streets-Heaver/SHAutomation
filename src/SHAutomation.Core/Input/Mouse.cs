@@ -290,9 +290,7 @@ namespace SHAutomation.Core.Input
         /// <param name="distanceY">The y distance to drag, + for right, - for left.</param>
         public static void Drag(MouseButton mouseButton, int distanceX, int distanceY)
         {
-            var startingPoint = Position;
-            var endingPoint = new Point(startingPoint.X + distanceX, startingPoint.Y + distanceY);
-            Drag(mouseButton, startingPoint, endingPoint);
+            Drag(mouseButton, null, new Point(Position.X + distanceX, Position.Y + distanceY));
         }
 
         /// <summary>
