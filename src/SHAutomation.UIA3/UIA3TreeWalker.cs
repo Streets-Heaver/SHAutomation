@@ -1,6 +1,7 @@
 ﻿using SHAutomation.Core;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.UIA3.Converters;
+using System;
 using UIA = Interop.UIAutomationClient;
 
 namespace SHAutomation.UIA3
@@ -32,45 +33,80 @@ namespace SHAutomation.UIA3
         /// <inheritdoc />
         public SHAutomationElement GetParent(SHAutomationElement element)
         {
-            var parent =
+            try
+            {
+                var parent =
                 NativeTreeWalker.GetParentElement(SHAutomationElementConverter.ToNative(element));
-            return Automation.WrapNativeElement(parent);
+                return Automation.WrapNativeElement(parent);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetFirstChild(SHAutomationElement element)
         {
-            var child =
+            try
+            {
+                var child =
                 NativeTreeWalker.GetFirstChildElement(SHAutomationElementConverter.ToNative(element));
-             
-            return Automation.WrapNativeElement(child);
+
+                return Automation.WrapNativeElement(child);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetLastChild(SHAutomationElement element)
         {
-            var child =
+            try
+            {
+                var child =
                 NativeTreeWalker.GetLastChildElement(SHAutomationElementConverter.ToNative(element));
-              
-            return Automation.WrapNativeElement(child);
+
+                return Automation.WrapNativeElement(child);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetNextSibling(SHAutomationElement element)
         {
-            var child =
-                NativeTreeWalker.GetNextSiblingElement(SHAutomationElementConverter.ToNative(element));
-              
-            return Automation.WrapNativeElement(child);
+            try
+            {
+                var child =
+                    NativeTreeWalker.GetNextSiblingElement(SHAutomationElementConverter.ToNative(element));
+
+                return Automation.WrapNativeElement(child);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         /// <inheritdoc />
         public SHAutomationElement GetPreviousSibling(SHAutomationElement element)
         {
-            var child =
+            try
+            {
+                var child =
                 NativeTreeWalker.GetPreviousSiblingElement(SHAutomationElementConverter.ToNative(element));
-               
-            return Automation.WrapNativeElement(child);
+
+                return Automation.WrapNativeElement(child);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
     }
 }
