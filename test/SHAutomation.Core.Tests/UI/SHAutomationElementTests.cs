@@ -47,7 +47,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
             DateTime previousTime = DateTime.Now;
             window.FindFirstByXPath("//*[@AutomationId='randomThing']", TimeSpan.FromSeconds(10)).Should().BeNull();
-            DateTime.Now.Subtract(previousTime).Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(10));
+            DateTime.Now.Subtract(previousTime).Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(9));
             DateTime.Now.Subtract(previousTime).Should().BeLessOrEqualTo(TimeSpan.FromSeconds(12));
         }
     }
