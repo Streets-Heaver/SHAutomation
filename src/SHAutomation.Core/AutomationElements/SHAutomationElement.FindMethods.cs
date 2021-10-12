@@ -153,7 +153,8 @@ namespace SHAutomation.Core.AutomationElements
                 var xPathNavigator = new SHAutomationElementXPathNavigator(this);
                 var itemNodeIterator = xPathNavigator.Select(xPath);
                 var itemList = new List<SHAutomationElement>();
-                while (itemNodeIterator.MoveNext() && DateTime.Now.Subtract(startTime).TotalSeconds < 1)
+                //keep moving to next node, if xpath search is longer than 2 minutes end search
+                while (itemNodeIterator.MoveNext() && DateTime.Now.Subtract(startTime).TotalMinutes < 2)
                 {
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
                     itemList.Add(automationItem);
