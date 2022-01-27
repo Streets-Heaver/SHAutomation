@@ -1,4 +1,5 @@
 ﻿using SHAutomation.Core.AutomationElements;
+using System.Runtime.InteropServices;
 
 namespace SHAutomation.Core
 {
@@ -19,30 +20,37 @@ namespace SHAutomation.Core
 
         private static string GetXPathToElement(SHAutomationElement element, ITreeWalker treeWalker, SHAutomationElement rootElement = null)
         {
-            var parent = treeWalker.GetParent(element);
-            if (parent == null || (rootElement != null && parent.Equals(_callingRoot.Parent)))
+            try
             {
-                _callingRoot = null;
-                return string.Empty;
-            }
-            // Get the index
-            var allChildren = parent.FindAllChildren(cf => cf.ByControlType(element.Properties.ControlType));
-            var currentItemText = $"{element.Properties.ControlType.Value}";
-            if (allChildren.Length > 1)
-            {
-                // There is more than one matching child, find out the index
-                var indexInParent = 1; // Index starts with 1
-                foreach (var child in allChildren)
+                var parent = treeWalker.GetParent(element);
+                if (parent == null || (rootElement != null && parent.Equals(_callingRoot.Parent)))
                 {
-                    if (child.Equals(element))
-                    {
-                        break;
-                    }
-                    indexInParent++;
+                    _callingRoot = null;
+                    return string.Empty;
                 }
-                currentItemText += $"[{indexInParent}]";
+                // Get the index
+                var allChildren = parent.FindAllChildren(cf => cf.ByControlType(element.Properties.ControlType));
+                var currentItemText = $"{element.Properties.ControlType.Value}";
+                if (allChildren.Length > 1)
+                {
+                    // There is more than one matching child, find out the index
+                    var indexInParent = 1; // Index starts with 1
+                    foreach (var child in allChildren)
+                    {
+                        if (child.Equals(element))
+                        {
+                            break;
+                        }
+                        indexInParent++;
+                    }
+                    currentItemText += $"[{indexInParent}]";
+                }
+                return $"{GetXPathToElement(parent, treeWalker, rootElement)}/{currentItemText}";
             }
-            return $"{GetXPathToElement(parent, treeWalker, rootElement)}/{currentItemText}";
+            catch(COMException)
+            {
+                return null;
+            }
         }
 
 
