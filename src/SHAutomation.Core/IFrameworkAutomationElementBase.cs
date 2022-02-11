@@ -72,11 +72,11 @@ namespace SHAutomation.Core
         AutomationProperty<string> Value { get; }
         AutomationProperty<VisualEffects> VisualEffects { get; }
 
-      SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
-      SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root);
-      SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
-      SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions,SHAutomationElement root);
-      SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
+        SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
+        SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
+        SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
+        SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
+        SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
 
         Point GetClickablePoint();
         object GetCurrentMetadataValue(PropertyId targetId, int metadataId);
@@ -85,13 +85,14 @@ namespace SHAutomation.Core
         T GetPropertyValue<T>(PropertyId property);
         PatternId[] GetSupportedPatterns();
         PropertyId[] GetSupportedProperties();
-     
+
         AutomationEventHandlerBase RegisterAutomationEvent(EventId @event, TreeScope treeScope, Action<SHAutomationElement, EventId> action);
         NotificationEventHandlerBase RegisterNotificationEvent(TreeScope treeScope, Action<SHAutomationElement, NotificationKind, NotificationProcessing, string, string> action);
         PropertyChangedEventHandlerBase RegisterPropertyChangedEvent(TreeScope treeScope, Action<SHAutomationElement, PropertyId, object> action, PropertyId[] properties);
         StructureChangedEventHandlerBase RegisterStructureChangedEvent(TreeScope treeScope, Action<SHAutomationElement, StructureChangeType, int[]> action);
         TextEditTextChangedEventHandlerBase RegisterTextEditTextChangedEventHandler(TreeScope treeScope, TextEditChangeType textEditChangeType, Action<SHAutomationElement, TextEditChangeType, string[]> action);
         void SetFocus();
+        object GetCurrentPropertyValue(int propertyId);
         bool TryGetClickablePoint(out Point point);
         bool TryGetNativePattern<T>(PatternId pattern, out T nativePattern);
         bool TryGetPropertyValue(PropertyId property, out object value);

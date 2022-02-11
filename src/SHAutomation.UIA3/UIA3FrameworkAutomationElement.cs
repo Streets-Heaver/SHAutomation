@@ -152,6 +152,11 @@ namespace SHAutomation.UIA3
             return success;
         }
 
+        public override object GetCurrentPropertyValue(int propertyId)
+        {
+            return NativeElement.GetCurrentPropertyValue(propertyId);
+        }
+
         /// <inheritdoc />
         public override ActiveTextPositionChangedEventHandlerBase RegisterActiveTextPositionChangedEvent(TreeScope treeScope, Action<SHAutomationElement, ITextRange> action)
         {

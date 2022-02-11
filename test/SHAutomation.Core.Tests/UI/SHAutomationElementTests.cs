@@ -1,5 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SHAutomation.Core.Identifiers;
+using SHAutomation.Core.Input;
+using SHAutomation.Core.WindowsAPI;
 using SHAutomation.UIA3;
 using System;
 
@@ -9,7 +12,7 @@ namespace SHAutomation.Core.Tests.UI
 
     public class SHAutomationElementTests : UITestBase
     {
-      
+
 
         [TestMethod]
         public void StringRepresentationReturnedCorrectly_ToString_ShouldBeCorrectString()
@@ -37,7 +40,7 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
-            window.FindFirstByXPath("//*[@AutomationId='num3Button']",TimeSpan.FromSeconds(10)).AutomationId.Should().Be("num3Button");
+            window.FindFirstByXPath("//*[@AutomationId='num3Button']", TimeSpan.FromSeconds(10)).AutomationId.Should().Be("num3Button");
         }
         [TestMethod]
         public void TimeOutWaitsFullAmountFindFirstByXPath_FindFirstByXPath_Be()
@@ -49,6 +52,35 @@ namespace SHAutomation.Core.Tests.UI
             window.FindFirstByXPath("//*[@AutomationId='randomThing']", TimeSpan.FromSeconds(10)).Should().BeNull();
             DateTime.Now.Subtract(previousTime).Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(10));
             DateTime.Now.Subtract(previousTime).Should().BeLessOrEqualTo(TimeSpan.FromSeconds(12));
+        }
+
+        [TestMethod]
+        public void ReturnsExpectedValue_GetCurrentPropertyValue_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var pad = window.Find(x => x.ByAutomationId("NumberPad"));
+            var offscreenValue = pad.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"));
+
+            ((bool)offscreenValue == false).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void ReturnsUpdatedValue_GetCurrentPropertyValue_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            window.Find(x => x.ByAutomationId("num3Button")).Click();
+            var results = window.Find(x => x.ByAutomationId("CalculatorResults"));
+            var resultsName = results.Name;
+            window.Find(x => x.ByAutomationId("clearEntryButton")).Click();
+
+            results.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30005, "Name"), "Display is 0", TimeSpan.FromMilliseconds(500));
+            var nameValue = results.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30005, "Name"));
+
+            ((string)nameValue != resultsName).Should().BeTrue();
         }
     }
 }

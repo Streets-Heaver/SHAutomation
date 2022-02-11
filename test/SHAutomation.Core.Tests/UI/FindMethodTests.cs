@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Exceptions;
 using SHAutomation.Core.StaticClasses;
 using SHAutomation.UIA3;
@@ -136,7 +138,7 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
-            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='randomthing']",TimeSpan.FromSeconds(2));
+            var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='randomthing']", TimeSpan.FromSeconds(2));
             num3Button.Should().BeEmpty();
 
         }
@@ -176,6 +178,7 @@ namespace SHAutomation.Core.Tests.UI
             buttons.Length.Should().BeGreaterThan(1);
         }
 
+       
 
     }
 }

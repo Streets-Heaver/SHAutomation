@@ -211,5 +211,6 @@ namespace SHAutomation.Core.AutomationElements
         bool WaitUntilPropertyNotEquals(PropertyId property, string current, TimeSpan timeout);
         bool WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current);
         bool WaitUntilPropertyNotEquals(PropertyId property, VisualEffects current, TimeSpan timeout);
+        object GetCurrentPropertyValue(PropertyId propertyId);
     }
 }
