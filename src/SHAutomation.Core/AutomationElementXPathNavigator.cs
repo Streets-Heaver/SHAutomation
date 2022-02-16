@@ -163,7 +163,7 @@ namespace SHAutomation.Core
         {
             if (IsInAttribute) { return false; }
             var nextElement = _treeWalker.GetNextSibling(_currentElement);
-            if (nextElement == null)
+            if (nextElement == null || _currentElement == null)
             {
                 return false;
             }
@@ -176,7 +176,7 @@ namespace SHAutomation.Core
         {
             if (IsInAttribute) { return false; }
             var previousElement = _treeWalker.GetPreviousSibling(_currentElement);
-            if (previousElement == null)
+            if (previousElement == null || _currentElement == null)
             {
                 return false;
             }
@@ -189,7 +189,7 @@ namespace SHAutomation.Core
         {
             if (IsInAttribute) { return false; }
             var childElement = _treeWalker.GetFirstChild(_currentElement);
-            if (childElement == null)
+            if (childElement == null || _currentElement == null)
             {
                 return false;
             }
@@ -205,7 +205,7 @@ namespace SHAutomation.Core
                 _attributeIndex = NoAttributeValue;
                 return true;
             }
-            if (_currentElement.Equals(_rootElement))
+            if (_currentElement == null || _rootElement == null || _currentElement.Equals(_rootElement))
             {
                 return false;
             }
@@ -244,7 +244,7 @@ namespace SHAutomation.Core
             {
                 return false;
             }
-            if (!_rootElement.Equals(specificNavigator._rootElement))
+            if (_rootElement == null || _currentElement == null || !_rootElement.Equals(specificNavigator._rootElement))
             {
                 return false;
             }
