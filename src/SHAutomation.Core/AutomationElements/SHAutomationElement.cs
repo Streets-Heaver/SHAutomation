@@ -357,6 +357,13 @@ namespace SHAutomation.Core.AutomationElements
             return FrameworkAutomationElement.TryGetClickablePoint(out point);
         }
 
+        public object GetCurrentPropertyValue(PropertyId propertyId)
+        {
+            return FrameworkAutomationElement.GetCurrentPropertyValue(propertyId.Id);
+
+        }
+
+
         /// <inheritdoc />
         public ActiveTextPositionChangedEventHandlerBase RegisterActiveTextPositionChangedEvent(TreeScope treeScope, Action<SHAutomationElement, ITextRange> action)
         {

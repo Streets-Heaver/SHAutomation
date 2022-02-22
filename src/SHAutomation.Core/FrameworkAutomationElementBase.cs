@@ -253,6 +253,7 @@ namespace SHAutomation.Core
         /// Tries to get a clickable point.
         /// </summary>
         public abstract bool TryGetClickablePoint(out Point point);
+        public abstract object GetCurrentPropertyValue(int propertyId);
         public abstract ActiveTextPositionChangedEventHandlerBase RegisterActiveTextPositionChangedEvent(TreeScope treeScope, Action<SHAutomationElement, ITextRange> action);
 
         /// <summary>
