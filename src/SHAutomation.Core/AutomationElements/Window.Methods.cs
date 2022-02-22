@@ -63,7 +63,10 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                control = parent.FindFirstDescendant(conditionFunc, timeout);
+                if (parent.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30005, "Name")) != null)
+                    control = parent.FindFirstDescendant(conditionFunc, timeout);
+                else
+                    throw new ElementNotFoundException("Parent not found");
             }
 
             if (control == null)

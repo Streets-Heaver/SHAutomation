@@ -188,12 +188,19 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-
-            //Keyboard.TypeSimultaneously(VirtualKeyShort.ALT, VirtualKeyShort.KEY_3);
-            //var switchModeToggleButton = window.Find("SwitchModeToggleButton");
-            //Keyboard.TypeSimultaneously(VirtualKeyShort.ALT, VirtualKeyShort.KEY_1);
             var automationElement = new Mock<ISHAutomationElement>();
-            window.Find("EquationsIconX", automationElement.Object);
+            Action act = () => window.Find("EquationsIconX", automationElement.Object);
+            act.Should().Throw<ElementNotFoundException>().WithMessage("Parent not found");
+        }
+
+        [TestMethod]
+        public void ExceptionNotThrownWhenParentExists_Find_NotThrowElementNotFoundException()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            Action act = () => window.Find("num9Button", window.Find("NumberPad"));
+            act.Should().NotThrow<ElementNotFoundException>();
         }
     }
 }
