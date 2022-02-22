@@ -1,7 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Exceptions;
+using SHAutomation.Core.Input;
 using SHAutomation.Core.StaticClasses;
+using SHAutomation.Core.WindowsAPI;
 using SHAutomation.UIA3;
 using System;
 using System.Linq;
@@ -176,6 +180,18 @@ namespace SHAutomation.Core.Tests.UI
             buttons.Length.Should().BeGreaterThan(1);
         }
 
+        [TestMethod]
+        public void ExceptionThrownWhenParentNoLongerExists_Find_ThrowElementNotFoundException()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
 
+            //Keyboard.TypeSimultaneously(VirtualKeyShort.ALT, VirtualKeyShort.KEY_3);
+            //var switchModeToggleButton = window.Find("SwitchModeToggleButton");
+            //Keyboard.TypeSimultaneously(VirtualKeyShort.ALT, VirtualKeyShort.KEY_1);
+            var automationElement = new Mock<ISHAutomationElement>();
+            window.Find("EquationsIconX", automationElement.Object);
+        }
     }
 }
