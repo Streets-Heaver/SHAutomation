@@ -3,7 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.Exceptions;
+using SHAutomation.Core.Input;
 using SHAutomation.Core.StaticClasses;
+using SHAutomation.Core.WindowsAPI;
 using SHAutomation.UIA3;
 using System;
 using System.Linq;
@@ -180,5 +182,25 @@ namespace SHAutomation.Core.Tests.UI
 
        
 
+        [TestMethod]
+        public void ExceptionThrownWhenParentNoLongerExists_Find_ThrowElementNotFoundException()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var automationElement = new Mock<ISHAutomationElement>();
+            Action act = () => window.Find("EquationsIconX", automationElement.Object);
+            act.Should().Throw<ElementNotFoundException>().WithMessage("Parent not found");
+        }
+
+        [TestMethod]
+        public void ExceptionNotThrownWhenParentExists_Find_NotThrowElementNotFoundException()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            Action act = () => window.Find("num9Button", window.Find("NumberPad"));
+            act.Should().NotThrow<ElementNotFoundException>();
+        }
     }
 }
