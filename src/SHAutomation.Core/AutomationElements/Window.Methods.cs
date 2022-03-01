@@ -63,7 +63,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                if (parent.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30005, "Name")) != null)
+                if (parent.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen")) != null)
                     control = parent.FindFirstDescendant(conditionFunc, timeout);
                 else
                     throw new ElementNotFoundException("Parent not found");
