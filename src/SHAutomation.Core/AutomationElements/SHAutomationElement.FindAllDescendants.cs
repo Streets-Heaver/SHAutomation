@@ -14,6 +14,10 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement[] FindAllDescendants(TimeSpan timeout)
         {
+            var originalTransactionTimeout = Automation.TransactionTimeout;
+            var originalConnectionTimeout = Automation.ConnectionTimeout;
+            Automation.TransactionTimeout = timeout;
+            Automation.ConnectionTimeout = timeout;
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
 
             bool getElements()
@@ -27,7 +31,8 @@ namespace SHAutomation.Core.AutomationElements
             {
                 SHSpinWait.SpinUntil(() => getElements(), timeout);
             }
-
+            Automation.TransactionTimeout = originalTransactionTimeout;
+            Automation.ConnectionTimeout = originalConnectionTimeout;
             if (elements != null && elements.Any())
             {
                 return elements.ToArray();
@@ -51,6 +56,8 @@ namespace SHAutomation.Core.AutomationElements
 
         public ISHAutomationElement[] FindAllDescendants(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
+            var originalTransactionTimeout = Automation.TransactionTimeout;
+            var originalConnectionTimeout = Automation.ConnectionTimeout;
             List<SHAutomationElement> elements = new List<SHAutomationElement>();
             bool getElements(bool shouldExist)
             {
@@ -67,10 +74,13 @@ namespace SHAutomation.Core.AutomationElements
             {
                 SHSpinWait.SpinUntil(() => getElements(false), timeout);
             }
+            Automation.TransactionTimeout = originalTransactionTimeout;
+            Automation.ConnectionTimeout = originalConnectionTimeout;
             if (elements != null && elements.Any())
             {
                 return elements.ToArray();
             }
+
             return Array.Empty<SHAutomationElement>();
         }
     }

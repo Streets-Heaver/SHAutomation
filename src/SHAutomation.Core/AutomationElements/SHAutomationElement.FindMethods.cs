@@ -529,6 +529,10 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirstChild(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
+            var originalTransactionTimeout = Automation.TransactionTimeout;
+            var originalConnectionTimeout = Automation.ConnectionTimeout;
+            Automation.TransactionTimeout = timeout;
+            Automation.ConnectionTimeout = timeout;
             SHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
@@ -547,6 +551,8 @@ namespace SHAutomation.Core.AutomationElements
             {
                 SHSpinWait.SpinUntil(() => getElement(false), timeout);
             }
+            Automation.TransactionTimeout = originalTransactionTimeout;
+            Automation.ConnectionTimeout = originalConnectionTimeout;
             return element?.FrameworkAutomationElement != null ? element : null;
         }
         public ISHAutomationElement FindFirstChild(string automationId)

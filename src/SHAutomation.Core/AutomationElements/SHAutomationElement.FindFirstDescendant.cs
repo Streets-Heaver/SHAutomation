@@ -12,6 +12,10 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirstDescendant(TimeSpan timeout, bool waitUntilExists = true)
         {
+            var originalTransactionTimeout = Automation.TransactionTimeout;
+            var originalConnectionTimeout = Automation.ConnectionTimeout;
+            Automation.TransactionTimeout = timeout;
+            Automation.ConnectionTimeout = timeout;
             ISHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
@@ -30,6 +34,8 @@ namespace SHAutomation.Core.AutomationElements
             {
                 SHSpinWait.SpinUntil(() => getElement(false), timeout);
             }
+            Automation.TransactionTimeout = Automation.TransactionTimeout;
+            Automation.ConnectionTimeout = Automation.ConnectionTimeout;
             return element?.FrameworkAutomationElement != null ? element : null;
         }
         public ISHAutomationElement FindFirstDescendant(string automationId)
@@ -62,6 +68,10 @@ namespace SHAutomation.Core.AutomationElements
 
         public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
+            var originalTransactionTimeout = Automation.TransactionTimeout;
+            var originalConnectionTimeout = Automation.ConnectionTimeout;
+            Automation.TransactionTimeout = timeout;
+            Automation.ConnectionTimeout = timeout;
             SHAutomationElement element = null;
             bool getElement(bool shouldExist)
             {
@@ -80,7 +90,8 @@ namespace SHAutomation.Core.AutomationElements
             {
                 SHSpinWait.SpinUntil(() => getElement(waitUntilExists), timeout);
             }
-
+            Automation.TransactionTimeout = originalTransactionTimeout;
+            Automation.ConnectionTimeout = originalConnectionTimeout;
             return element?.FrameworkAutomationElement != null ? element : null;
         }
 

@@ -180,8 +180,6 @@ namespace SHAutomation.Core.Tests.UI
             buttons.Length.Should().BeGreaterThan(1);
         }
 
-       
-
         [TestMethod]
         public void ExceptionThrownWhenParentNoLongerExists_Find_ThrowElementNotFoundException()
         {
