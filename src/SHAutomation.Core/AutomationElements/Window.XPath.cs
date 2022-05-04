@@ -352,7 +352,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (element?.FrameworkAutomationElement != null)
             {
-                element.FoundByXpath = true;
+                element.FoundByXPath = true;
                 return (SHAutomationElement)element;
             }
             return null;

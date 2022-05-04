@@ -130,7 +130,7 @@ namespace SHAutomation.Core.Tests.UI
 
             var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
             num3Button.Should().HaveCount(1);
-            num3Button[0].FoundByXpath.Should().BeTrue();
+            num3Button[0].FoundByXPath.Should().BeTrue();
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
 
             var num3Button = window.FindFirstDescendant("num3Button");
-            num3Button.FoundByXpath.Should().BeFalse();
+            num3Button.FoundByXPath.Should().BeFalse();
             num3Button.Should().NotBeNull();
 
         }

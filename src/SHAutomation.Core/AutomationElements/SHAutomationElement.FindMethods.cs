@@ -122,7 +122,7 @@ namespace SHAutomation.Core.AutomationElements
                 if (nodeItem?.UnderlyingObject != null)
                 {
                     var element = (ISHAutomationElement)nodeItem?.UnderlyingObject;
-                    element.FoundByXpath = true;
+                    element.FoundByXPath = true;
                     return element;
                 }
                 return null;
@@ -144,7 +144,7 @@ namespace SHAutomation.Core.AutomationElements
             SHSpinWait.SpinUntil(() => getElement(xPath), timeout);
             if(element != null)
             {
-                element.FoundByXpath = true;
+                element.FoundByXPath = true;
             }
             return element;
         }
@@ -165,7 +165,7 @@ namespace SHAutomation.Core.AutomationElements
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
                     if(automationItem?.FrameworkAutomationElement != null)
                     {
-                        automationItem.FoundByXpath = true;
+                        automationItem.FoundByXPath = true;
                         itemList.Add(automationItem);
                     }
                 }

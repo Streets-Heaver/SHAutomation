@@ -32,7 +32,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
             var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']");
             item.AutomationId.Should().Be("num3Button");
-            item.FoundByXpath.Should().BeTrue();
+            item.FoundByXPath.Should().BeTrue();
         }
         [TestMethod]
         public void TimeOutWithOverloadedFindFirstByXPath_FindFirstByXPath_Be()
@@ -43,7 +43,7 @@ namespace SHAutomation.Core.Tests.UI
 
             var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']", TimeSpan.FromSeconds(10));
             item.AutomationId.Should().Be("num3Button");
-            item.FoundByXpath.Should().BeTrue();
+            item.FoundByXPath.Should().BeTrue();
         }
         [TestMethod]
         public void TimeOutWaitsFullAmountFindFirstByXPath_FindFirstByXPath_Be()

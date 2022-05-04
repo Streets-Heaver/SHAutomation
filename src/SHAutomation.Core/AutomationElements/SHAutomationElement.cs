@@ -878,7 +878,7 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
         private bool foundByXPath;
-        public bool FoundByXpath
+        public bool FoundByXPath
         {
             get => foundByXPath;
             set

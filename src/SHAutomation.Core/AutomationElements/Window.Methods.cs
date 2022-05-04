@@ -54,7 +54,7 @@ namespace SHAutomation.Core.AutomationElements
                 control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
                 if(control != null)
                 {
-                    regenerateXPath = !control.FoundByXpath;
+                    regenerateXPath = !control.FoundByXPath;
                 }
             }
             else
