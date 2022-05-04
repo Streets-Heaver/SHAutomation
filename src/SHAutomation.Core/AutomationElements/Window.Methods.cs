@@ -5,6 +5,8 @@ using SHAutomation.Core.Identifiers;
 using SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SHAutomation.Core.AutomationElements
 {
@@ -42,6 +44,7 @@ namespace SHAutomation.Core.AutomationElements
 
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var conditionString = condition.ToString();
+
             _loggingService.Info(string.Format("Find called {0}", conditionString));
             bool canUseXpath = !(conditionString.Contains("OR") || conditionString.Contains("NOT"));
             List<(PropertyCondition Value, bool Ignore)> propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
@@ -52,13 +55,18 @@ namespace SHAutomation.Core.AutomationElements
                     propertyConditions = GetPropertyConditions(condition);
                 }
 
-                control = GetXPathFromPropertyConditions(propertyConditions);
+                Task<ISHAutomationElement>[] tasks = new Task<ISHAutomationElement>[2];
 
-                if (control == null)
-                {
-                    regenerateXPath = true;
-                    control = FindFirstDescendant(conditionFunc, timeout: timeout);
-                }
+                tasks[0] = Task.Run(() => GetXPathFromPropertyConditions(propertyConditions));
+                tasks[1] = Task.Run(() => FindFirstDescendant(conditionFunc, timeout: timeout));
+
+                Task.WaitAny(tasks);
+                control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
+                //if (control == null)
+                //{
+                //    regenerateXPath = true;
+                //    control = FindFirstDescendant(conditionFunc, timeout: timeout);
+                //}
 
             }
             else

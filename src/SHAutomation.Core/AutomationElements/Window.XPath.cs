@@ -130,7 +130,7 @@ namespace SHAutomation.Core.AutomationElements
             return GetPropertyConditions(condition);
         }
 
-        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
+        private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
         {
             return GetXPathFromPropertyConditions(propertyList, TimeSpan.FromSeconds(10));
         }
