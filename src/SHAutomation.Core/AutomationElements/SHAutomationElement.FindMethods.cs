@@ -155,6 +155,7 @@ namespace SHAutomation.Core.AutomationElements
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
                     if(automationItem?.FrameworkAutomationElement != null)
                     {
+                        automationItem.FoundByXpath = true;
                         itemList.Add(automationItem);
                     }
                 }

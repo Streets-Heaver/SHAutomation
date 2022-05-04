@@ -14,30 +14,20 @@ namespace SHAutomation.Core.AutomationElements
     {
         public ISHAutomationElement Find(string automationID, ISHAutomationElement parent = null)
         {
-            return Find(x => x.ByAutomationId(automationID), TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(10), parent);
+            return Find(x => x.ByAutomationId(automationID), TimeSpan.FromSeconds(20), parent);
         }
 
         public ISHAutomationElement Find(string automationID, TimeSpan timeout, ISHAutomationElement parent = null)
         {
-            return Find(x => x.ByAutomationId(automationID), timeout, TimeSpan.FromSeconds(10), parent);
-        }
-
-        public ISHAutomationElement Find(string automationID, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null)
-        {
-            return Find(x => x.ByAutomationId(automationID), timeout, offscreenTimeout, parent);
-        }
-        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, ISHAutomationElement parent = null)
-        {
-            return Find(conditionFunc, timeout, TimeSpan.FromSeconds(10), parent);
-
+            return Find(x => x.ByAutomationId(automationID), timeout, parent);
         }
 
         public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, ISHAutomationElement parent = null)
         {
-            return Find(conditionFunc, TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(10), parent);
+            return Find(conditionFunc, TimeSpan.FromSeconds(20), parent);
         }
 
-        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, ISHAutomationElement parent = null)
+        public ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, ISHAutomationElement parent = null)
         {
             ISHAutomationElement control = null;
             bool regenerateXPath = false;
@@ -55,10 +45,10 @@ namespace SHAutomation.Core.AutomationElements
                     propertyConditions = GetPropertyConditions(condition);
                 }
 
-                Task<ISHAutomationElement>[] tasks = new Task<ISHAutomationElement>[2];
-
-                tasks[0] = Task.Run(() => GetXPathFromPropertyConditions(propertyConditions));
-                tasks[1] = Task.Run(() => FindFirstDescendant(conditionFunc, timeout: timeout));
+                Task<ISHAutomationElement>[] tasks = {
+                    Task.Run(() => GetXPathFromPropertyConditions(propertyConditions, xPathTimeout: timeout)),
+                    Task.Run(() => FindFirstDescendant(conditionFunc, timeout: timeout))
+                };
 
                 Task.WaitAny(tasks);
                 control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
@@ -81,25 +71,10 @@ namespace SHAutomation.Core.AutomationElements
 
                 throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
             }
-
             _loggingService.Info("Find found control");
 
-            SHSpinWait.SpinUntil(() => control.SupportsOnscreen, TimeSpan.FromMilliseconds(500));
-            if (control.SupportsOnscreen)
-            {
-                SHSpinWait.SpinUntil(() => control.IsOnscreen, offscreenTimeout);
-                _loggingService.Info("Find OnScreen: " + control.IsOnscreen);
-
-            }
-            else
-                _loggingService.Info("Find OnScreen is not supported");
-
-
             SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
-
-
             return control;
-
         }
 
         public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false)
