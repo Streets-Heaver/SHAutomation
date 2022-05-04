@@ -85,12 +85,12 @@ namespace SHAutomation.Core.AutomationElements
 
         }
 
-        public SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc)
+        public ISHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc)
         {
             return GetXPathElementFromCondition(conditionFunc, TimeSpan.FromSeconds(10));
         }
 
-        public SHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout)
+        public ISHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var condition_string = condition.ToString();
@@ -130,12 +130,12 @@ namespace SHAutomation.Core.AutomationElements
             return GetPropertyConditions(condition);
         }
 
-        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
+        private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
         {
             return GetXPathFromPropertyConditions(propertyList, TimeSpan.FromSeconds(10));
         }
 
-        private SHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, TimeSpan xPathTimeout)
+        private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, TimeSpan xPathTimeout)
         {
             if (propertyList.Any())
             {
@@ -350,7 +350,12 @@ namespace SHAutomation.Core.AutomationElements
             else if (element == null)
                 _xPathValues = new List<string>();
 
-            return element?.FrameworkAutomationElement != null ? (SHAutomationElement)element : null;
+            if (element?.FrameworkAutomationElement != null)
+            {
+                element.FoundByXPath = true;
+                return (SHAutomationElement)element;
+            }
+            return null;
         }
 
         private SHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
@@ -370,8 +375,11 @@ namespace SHAutomation.Core.AutomationElements
             else
                 _loggingService.Info("Found control using cached xpath");
 
-
-            return validXpath?.FrameworkAutomationElement != null ? validXpath : null;
+            if (validXpath?.FrameworkAutomationElement != null)
+            {
+                return validXpath;
+            }
+            return null;
         }
 
         private bool FoundXPathInList(List<string> xpaths, out SHAutomationElement xPathObject)

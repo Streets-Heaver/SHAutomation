@@ -153,6 +153,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         public string ItemStatus => Properties.ItemStatus.Value;
 
+
         /// <summary>
         /// The help text of this element.
         /// </summary>
@@ -874,6 +875,16 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     return false;
                 }
+            }
+        }
+        private bool foundByXPath;
+        public bool FoundByXPath
+        {
+            get => foundByXPath;
+            set
+            {
+                if (value != foundByXPath)
+                    foundByXPath = value;
             }
         }
 

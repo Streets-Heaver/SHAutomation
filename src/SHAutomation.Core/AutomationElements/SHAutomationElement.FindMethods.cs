@@ -119,7 +119,13 @@ namespace SHAutomation.Core.AutomationElements
             {
                 var xPathNavigator = new SHAutomationElementXPathNavigator(this);
                 var nodeItem = xPathNavigator.SelectSingleNode(xPath);
-                return (ISHAutomationElement)nodeItem?.UnderlyingObject;
+                if (nodeItem?.UnderlyingObject != null)
+                {
+                    var element = (ISHAutomationElement)nodeItem?.UnderlyingObject;
+                    element.FoundByXPath = true;
+                    return element;
+                }
+                return null;
             }
             catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
             {
@@ -136,6 +142,10 @@ namespace SHAutomation.Core.AutomationElements
             }
 
             SHSpinWait.SpinUntil(() => getElement(xPath), timeout);
+            if(element != null)
+            {
+                element.FoundByXPath = true;
+            }
             return element;
         }
         /// <summary>
@@ -155,6 +165,7 @@ namespace SHAutomation.Core.AutomationElements
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
                     if(automationItem?.FrameworkAutomationElement != null)
                     {
+                        automationItem.FoundByXPath = true;
                         itemList.Add(automationItem);
                     }
                 }
