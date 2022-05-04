@@ -370,8 +370,15 @@ namespace SHAutomation.Core.AutomationElements
             else
                 _loggingService.Info("Found control using cached xpath");
 
-
-            return validXpath?.FrameworkAutomationElement != null ? validXpath : null;
+            if (validXpath?.FrameworkAutomationElement != null)
+            {
+                validXpath.FoundByXpath = true;
+                return validXpath;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private bool FoundXPathInList(List<string> xpaths, out SHAutomationElement xPathObject)

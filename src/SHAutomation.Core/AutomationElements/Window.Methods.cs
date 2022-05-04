@@ -62,12 +62,10 @@ namespace SHAutomation.Core.AutomationElements
 
                 Task.WaitAny(tasks);
                 control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
-                //if (control == null)
-                //{
-                //    regenerateXPath = true;
-                //    control = FindFirstDescendant(conditionFunc, timeout: timeout);
-                //}
-
+                if(control != null)
+                {
+                    regenerateXPath = !control.FoundByXpath;
+                }
             }
             else
             {
