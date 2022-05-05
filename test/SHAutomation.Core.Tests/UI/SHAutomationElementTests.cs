@@ -30,8 +30,9 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-
-            window.FindFirstByXPath("//*[@AutomationId='num3Button']").AutomationId.Should().Be("num3Button");
+            var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']");
+            item.AutomationId.Should().Be("num3Button");
+            item.FoundByXPath.Should().BeTrue();
         }
         [TestMethod]
         public void TimeOutWithOverloadedFindFirstByXPath_FindFirstByXPath_Be()
@@ -40,7 +41,9 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
-            window.FindFirstByXPath("//*[@AutomationId='num3Button']", TimeSpan.FromSeconds(10)).AutomationId.Should().Be("num3Button");
+            var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']", TimeSpan.FromSeconds(10));
+            item.AutomationId.Should().Be("num3Button");
+            item.FoundByXPath.Should().BeTrue();
         }
         [TestMethod]
         public void TimeOutWaitsFullAmountFindFirstByXPath_FindFirstByXPath_Be()

@@ -29,6 +29,7 @@ namespace SHAutomation.Core.AutomationElements
         bool IsEnabled { get; }
         bool IsOffscreen { get; }
         bool IsOnscreen { get; }
+        bool FoundByXPath { get; set; }
         string ItemStatus { get; }
         string Name { get; }
         ISHAutomationElement Parent { get; }

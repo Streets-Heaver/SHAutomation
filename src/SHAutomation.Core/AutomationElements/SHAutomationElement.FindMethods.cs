@@ -119,13 +119,15 @@ namespace SHAutomation.Core.AutomationElements
             {
                 var xPathNavigator = new SHAutomationElementXPathNavigator(this);
                 var nodeItem = xPathNavigator.SelectSingleNode(xPath);
-                return (ISHAutomationElement)nodeItem?.UnderlyingObject;
-            }
-            catch (System.Runtime.InteropServices.COMException)
-            {
+                if (nodeItem?.UnderlyingObject != null)
+                {
+                    var element = (ISHAutomationElement)nodeItem?.UnderlyingObject;
+                    element.FoundByXPath = true;
+                    return element;
+                }
                 return null;
             }
-            catch (XPathException)
+            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
             {
                 return null;
             }
@@ -136,10 +138,14 @@ namespace SHAutomation.Core.AutomationElements
             bool getElement(string xpath)
             {
                 element = FindFirstByXPath(xpath);
-                return element != null;
+                return element?.FrameworkAutomationElement != null;
             }
 
             SHSpinWait.SpinUntil(() => getElement(xPath), timeout);
+            if(element != null)
+            {
+                element.FoundByXPath = true;
+            }
             return element;
         }
         /// <summary>
@@ -157,12 +163,16 @@ namespace SHAutomation.Core.AutomationElements
                 while (itemNodeIterator.MoveNext() && DateTime.Now.Subtract(startTime).TotalMinutes < 2)
                 {
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
-                    itemList.Add(automationItem);
+                    if(automationItem?.FrameworkAutomationElement != null)
+                    {
+                        automationItem.FoundByXPath = true;
+                        itemList.Add(automationItem);
+                    }
                 }
                 return itemList.ToArray();
             }
-            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException)
-            {
+            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
+                {
                 return Array.Empty<SHAutomationElement>();
             }
         }
