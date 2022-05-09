@@ -72,11 +72,11 @@ namespace SHAutomation.Core
         AutomationProperty<string> Value { get; }
         AutomationProperty<VisualEffects> VisualEffects { get; }
 
-        SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
-        SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
-        SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
-        SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
-        SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
+        ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
+        ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, ISHAutomationElement root);
+        ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
+        ISHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, ISHAutomationElement root);
+        ISHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
 
         Point GetClickablePoint();
         object GetCurrentMetadataValue(PropertyId targetId, int metadataId);

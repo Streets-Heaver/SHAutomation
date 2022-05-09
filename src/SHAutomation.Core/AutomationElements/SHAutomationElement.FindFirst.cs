@@ -13,23 +13,17 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
-            SHAutomationElement element = null;
-            bool getElement(bool shouldExist)
-            {
-                if (element == null)
-                {
-                    element = FindFirstBase(treeScope, condition);
-                }
-                return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
-            }
-            getElement(waitUntilExists);
+            ISHAutomationElement element = null;
+            Func<ISHAutomationElement> function = () => FindFirstBase(treeScope, condition);
+           
+            GetElement(function,waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, false, ref element), timeout);
             }
             return element?.FrameworkAutomationElement != null ? element : null;
         }

@@ -16,13 +16,19 @@ namespace SHAutomation.Core.Conditions
         {
             _propertyLibrary = propertyLibrary;
         }
-
         /// <summary>
         /// Creates a condition to search by an automation id.
         /// </summary>
         public PropertyCondition ByAutomationId(string automationId)
         {
-            return new PropertyCondition(_propertyLibrary.Element.AutomationId, automationId);
+            return new PropertyCondition(_propertyLibrary.Element.AutomationId, automationId, PropertyConditionFlag.None);
+        }
+        /// <summary>
+        /// Creates a condition to search by an automation id.
+        /// </summary>
+        public PropertyCondition ByAutomationId(string automationId, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Element.AutomationId, automationId,conditionsFlags);
         }
 
         /// <summary>
@@ -32,29 +38,48 @@ namespace SHAutomation.Core.Conditions
         {
             return new PropertyCondition(_propertyLibrary.Element.ControlType, controlType);
         }
-
         /// <summary>
         /// Creates a condition to search by a class name.
         /// </summary>
         public PropertyCondition ByClassName(string className)
         {
-            return new PropertyCondition(_propertyLibrary.Element.ClassName, className);
+            return new PropertyCondition(_propertyLibrary.Element.ClassName, className, PropertyConditionFlag.None);
         }
-
+        /// <summary>
+        /// Creates a condition to search by a class name.
+        /// </summary>
+        public PropertyCondition ByClassName(string className, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Element.ClassName, className, conditionsFlags);
+        }
         /// <summary>
         /// Creates a condition to search by a name.
         /// </summary>
         public PropertyCondition ByName(string name)
         {
-            return new PropertyCondition(_propertyLibrary.Element.Name, name);
+            return new PropertyCondition(_propertyLibrary.Element.Name, name, PropertyConditionFlag.None);
         }
-
+        /// <summary>
+        /// Creates a condition to search by a name.
+        /// </summary>
+        public PropertyCondition ByName(string name, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Element.Name, name, conditionsFlags);
+        }
         /// <summary>
         /// Creates a condition to search by a text (same as <see cref="ByName"/>).
         /// </summary>
         public PropertyCondition ByText(string text)
         {
-            return ByName(text);
+            return ByName(text, PropertyConditionFlag.None);
+        }
+
+        /// <summary>
+        /// Creates a condition to search by a text (same as <see cref="ByName"/>).
+        /// </summary>
+        public PropertyCondition ByText(string text, PropertyConditionFlag conditionsFlags)
+        {
+            return ByName(text, conditionsFlags);
         }
 
         /// <summary>
@@ -64,29 +89,47 @@ namespace SHAutomation.Core.Conditions
         {
             return new PropertyCondition(_propertyLibrary.Element.ProcessId, processId);
         }
-
         /// <summary>
         /// Creates a condition to search by a localized control type.
         /// </summary>
         public PropertyCondition ByLocalizedControlType(string localizedControlType)
         {
-            return new PropertyCondition(_propertyLibrary.Element.LocalizedControlType, localizedControlType);
+            return new PropertyCondition(_propertyLibrary.Element.LocalizedControlType, localizedControlType, PropertyConditionFlag.None);
         }
-
+        /// <summary>
+        /// Creates a condition to search by a localized control type.
+        /// </summary>
+        public PropertyCondition ByLocalizedControlType(string localizedControlType, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Element.LocalizedControlType, localizedControlType, conditionsFlags);
+        }
         /// <summary>
         /// Creates a condition to search by a help text.
         /// </summary>
         public PropertyCondition ByHelpText(string helpText)
         {
-            return new PropertyCondition(_propertyLibrary.Element.HelpText, helpText);
+            return new PropertyCondition(_propertyLibrary.Element.HelpText, helpText, PropertyConditionFlag.None);
         }
-
+        /// <summary>
+        /// Creates a condition to search by a help text.
+        /// </summary>
+        public PropertyCondition ByHelpText(string helpText, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Element.HelpText, helpText, conditionsFlags);
+        }
         /// <summary>
         /// Creates a condition to search by a value.
         /// </summary>
         public PropertyCondition ByValue(string value)
         {
-            return new PropertyCondition(_propertyLibrary.Value.Value, value);
+            return new PropertyCondition(_propertyLibrary.Value.Value, value, PropertyConditionFlag.None);
+        }
+        /// <summary>
+        /// Creates a condition to search by a value.
+        /// </summary>
+        public PropertyCondition ByValue(string value, PropertyConditionFlag conditionsFlags)
+        {
+            return new PropertyCondition(_propertyLibrary.Value.Value, value, conditionsFlags);
         }
 
         /// <summary>
@@ -156,22 +199,6 @@ namespace SHAutomation.Core.Conditions
         public PropertyCondition ByIsKeyboardFocusable(bool value)
         {
             return new PropertyCondition(_propertyLibrary.Element.IsKeyboardFocusable, value);
-        }
-        public PropertyCondition ByNameIgnoreCase(string value)
-        {
-            return new PropertyCondition(_propertyLibrary.Element.Name, value, PropertyConditionFlag.IgnoreCase);
-        }
-        public PropertyCondition ByAutomationIdIgnoreCase(string value)
-        {
-            return new PropertyCondition(_propertyLibrary.Element.AutomationId, value, PropertyConditionFlag.IgnoreCase);
-        }
-        public PropertyCondition ByClassNameIgnoreCase(string value)
-        {
-            return new PropertyCondition(_propertyLibrary.Element.ClassName, value, PropertyConditionFlag.IgnoreCase);
-        }
-        public PropertyCondition ByHelpTextIgnoreCase(string value)
-        {
-            return new PropertyCondition(_propertyLibrary.Element.HelpText, value, PropertyConditionFlag.IgnoreCase);
         }
     }
 }

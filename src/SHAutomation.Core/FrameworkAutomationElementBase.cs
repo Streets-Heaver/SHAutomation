@@ -210,7 +210,7 @@ namespace SHAutomation.Core
         /// <param name="treeScope">The scope to search.</param>
         /// <param name="condition">The condition to use.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public abstract SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
+        public abstract ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition);
 
         /// <summary>
         /// Finds the first element in the given scope with the given condition.
@@ -218,7 +218,7 @@ namespace SHAutomation.Core
         /// <param name="treeScope">The scope to search.</param>
         /// <param name="condition">The condition to use.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public abstract SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
+        public abstract ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition);
 
         /// <summary>
         /// Find all matching elements in the specified order.
@@ -228,7 +228,7 @@ namespace SHAutomation.Core
         /// <param name="traversalOptions">Value specifying the tree navigation order.</param>
         /// <param name="root">An element with which to begin the search.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public abstract SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
+        public abstract ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, ISHAutomationElement root);
 
         /// <summary>
         /// Finds the first matching element in the specified order.
@@ -238,7 +238,7 @@ namespace SHAutomation.Core
         /// <param name="traversalOptions">Value specifying the tree navigation order.</param>
         /// <param name="root">An element with which to begin the search.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public abstract SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, SHAutomationElement root);
+        public abstract ISHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition, TreeTraversalOption traversalOptions, ISHAutomationElement root);
 
         /// <summary>
         /// Finds the element with the given index with the given condition.
@@ -247,7 +247,7 @@ namespace SHAutomation.Core
         /// <param name="index">The index of the element to return (0-based).</param>
         /// <param name="condition">The condition to use.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public abstract SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
+        public abstract ISHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition);
 
         /// <summary>
         /// Tries to get a clickable point.

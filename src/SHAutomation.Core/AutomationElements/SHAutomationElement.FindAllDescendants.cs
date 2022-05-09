@@ -14,18 +14,13 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement[] FindAllDescendants(TimeSpan timeout)
         {
-            List<SHAutomationElement> elements = new List<SHAutomationElement>();
+            List<ISHAutomationElement> elements = new List<ISHAutomationElement>();
+            Func<List<ISHAutomationElement>> function = () => FindAllDescendantsBase().Where(x => x.FrameworkAutomationElement != null).ToList();
 
-            bool getElements()
-            {
-                if (!elements.Any())
-                    elements = FindAllDescendantsBase().Where(x => x.FrameworkAutomationElement != null).ToList();
-                return elements.Any();
-            }
-            getElements();
+            GetElements(function,true,ref elements);
             if (!elements.Any() && timeout.TotalSeconds != 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function, true, ref elements), timeout);
             }
 
             if (elements != null && elements.Any())
@@ -51,21 +46,16 @@ namespace SHAutomation.Core.AutomationElements
 
         public ISHAutomationElement[] FindAllDescendants(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
-            List<SHAutomationElement> elements = new List<SHAutomationElement>();
-            bool getElements(bool shouldExist)
-            {
-                if (!elements.Any())
-                    elements = FindAllDescendantsBase(condition).Where(x => x.FrameworkAutomationElement != null).ToList();
-                return shouldExist ? elements.Any() : !elements.Any();
-            }
-            getElements(waitUntilExists);
+            List<ISHAutomationElement> elements = new List<ISHAutomationElement>();
+            Func<List<ISHAutomationElement>> function = () => FindAllDescendantsBase(condition).Where(x => x.FrameworkAutomationElement != null).ToList();
+            GetElements(function,waitUntilExists,ref elements);
             if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function,true, ref elements), timeout);
             }
             else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function,false, ref elements), timeout);
             }
             if (elements != null && elements.Any())
             {

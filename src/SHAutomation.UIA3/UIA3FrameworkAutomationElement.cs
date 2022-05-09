@@ -99,37 +99,37 @@ namespace SHAutomation.UIA3
         }
 
         /// <inheritdoc />
-        public override SHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition)
+        public override ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition)
         {
             var nativeFoundElements = NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             return SHAutomationElementConverter.NativeArrayToManaged(Automation, nativeFoundElements);
         }
 
         /// <inheritdoc />
-        public override SHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition)
+        public override ISHAutomationElement FindFirst(TreeScope treeScope, ConditionBase condition)
         {
             var nativeFoundElement = NativeElement.FindFirst((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             return SHAutomationElementConverter.NativeToManaged(Automation, nativeFoundElement);
         }
 
         /// <inheritdoc />
-        public override SHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOption traversalOptions,SHAutomationElement root)
+        public override ISHAutomationElement[] FindAllWithOptions(TreeScope treeScope, ConditionBase condition,
+            TreeTraversalOption traversalOptions,ISHAutomationElement root)
         {
-            var nativeFoundElements =  NativeElement7.FindAllWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
+            var nativeFoundElements =  NativeElement7.FindAllWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root as SHAutomationElement));
             return SHAutomationElementConverter.NativeArrayToManaged(Automation, nativeFoundElements);
         }
 
         /// <inheritdoc />
-        public override SHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOption traversalOptions,SHAutomationElement root)
+        public override ISHAutomationElement FindFirstWithOptions(TreeScope treeScope, ConditionBase condition,
+            TreeTraversalOption traversalOptions,ISHAutomationElement root)
         {
-            var nativeFoundElement = NativeElement7.FindFirstWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root));
+            var nativeFoundElement = NativeElement7.FindFirstWithOptions((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition), (UIA.TreeTraversalOptions)traversalOptions, SHAutomationElementConverter.ToNative(root as SHAutomationElement));
             return SHAutomationElementConverter.NativeToManaged(Automation, nativeFoundElement);
         }
 
         /// <inheritdoc />
-        public override SHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition)
+        public override ISHAutomationElement FindIndexed(TreeScope treeScope, int index, ConditionBase condition)
         {
             var nativeFoundElements =  NativeElement.FindAll((UIA.TreeScope)treeScope, ConditionConverter.ToNative(Automation, condition));
             var nativeElement = nativeFoundElements.GetElement(index);

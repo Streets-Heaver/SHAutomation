@@ -15,20 +15,16 @@ namespace SHAutomation.Core.AutomationElements
         public ISHAutomationElement[] FindAllDescendantsNameContains(string name, TimeSpan timeout, bool waitUntilExists = true)
         {
             List<ISHAutomationElement> elements = new List<ISHAutomationElement>();
-            bool getElements(bool shouldExist)
-            {
-                if (!elements.Any())
-                    elements = FindAllDescendants(timeout: TimeSpan.Zero).Where(x => x.FrameworkAutomationElement != null && x.SupportsName && !string.IsNullOrEmpty(x.Name) && x.Name.Contains(name)).ToList();
-                return shouldExist ? elements.Any() : !elements.Any();
-            }
-            getElements(waitUntilExists);
+            Func<List<ISHAutomationElement>> function = () => FindAllDescendants(x => x.ByName(name, Definitions.PropertyConditionFlag.MatchSubstring), TimeSpan.Zero).ToList();
+            
+            GetElements(function,waitUntilExists,ref elements);
             if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function, true, ref elements), timeout);
             }
             else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function, false, ref elements), timeout);
             }
             return elements.ToArray();
         }
