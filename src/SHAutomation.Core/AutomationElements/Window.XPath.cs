@@ -316,10 +316,10 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
 
-        public new SHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
+        public new ISHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
         {
             ISHAutomationElement element = null;
-
+            Func<ISHAutomationElement> function = () => FindFirstByXPath(xpath);
             _loggingService.Info(string.Format("Attempting to find control using xpath:{0}", xpath));
 
             if (xpath.Contains("&quot;"))
@@ -330,17 +330,12 @@ namespace SHAutomation.Core.AutomationElements
             }
 
 
-            bool getElement()
-            {
-                element = FindFirstByXPath(xpath);
-                return element != null;
-            }
-
+            
             if (spinWaitTimeout != TimeSpan.Zero)
-                SHSpinWait.SpinUntil(() => getElement(), spinWaitTimeout);
+                SHSpinWait.SpinUntil(() => GetElement(function,true,ref element), spinWaitTimeout);
             else
             {
-                getElement();
+                GetElement(function, false, ref element);
             }
 
             if (element != null)
@@ -358,9 +353,9 @@ namespace SHAutomation.Core.AutomationElements
             return null;
         }
 
-        private SHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
+        private ISHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
         {
-            SHAutomationElement validXpath = null;
+            ISHAutomationElement validXpath = null;
 
             SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout);
 
@@ -382,7 +377,7 @@ namespace SHAutomation.Core.AutomationElements
             return null;
         }
 
-        private bool FoundXPathInList(List<string> xpaths, out SHAutomationElement xPathObject)
+        private bool FoundXPathInList(List<string> xpaths, out ISHAutomationElement xPathObject)
         {
             xPathObject = null;
             bool found = false;

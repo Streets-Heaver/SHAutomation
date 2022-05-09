@@ -27,12 +27,6 @@ namespace SHAutomation.Core.AutomationElements
         /// Object which contains the native wrapper element (UIA2 or UIA3) for this element.
         /// </summary>
         public FrameworkAutomationElementBase FrameworkAutomationElement { get; }
-
-        /// <summary>
-        /// Get the parent <see cref="AutomationElement"/>.
-        /// </summary>
-      //  public SHAutomationElement Parent => Automation.TreeWalkerFactory.GetRawViewWalker().GetParent(this);
-
         /// <summary>
         /// The current used automation object.
         /// </summary>
@@ -991,11 +985,11 @@ namespace SHAutomation.Core.AutomationElements
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as IntPtr? == expected, timeout);
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected)
+        public bool WaitUntilPropertyEquals(PropertyId property, ISHAutomationElement expected)
         {
             return WaitUntilPropertyEquals(property, expected, TimeSpan.FromSeconds(10));
         }
-        public bool WaitUntilPropertyEquals(PropertyId property, SHAutomationElement expected, TimeSpan timeout)
+        public bool WaitUntilPropertyEquals(PropertyId property, ISHAutomationElement expected, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as SHAutomationElement == expected, timeout);
@@ -1125,11 +1119,11 @@ namespace SHAutomation.Core.AutomationElements
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as IntPtr? != current, timeout);
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, ISHAutomationElement current)
         {
             return WaitUntilPropertyNotEquals(property, current, TimeSpan.FromSeconds(10));
         }
-        public bool WaitUntilPropertyNotEquals(PropertyId property, SHAutomationElement current, TimeSpan timeout)
+        public bool WaitUntilPropertyNotEquals(PropertyId property, ISHAutomationElement current, TimeSpan timeout)
         {
             object value = null;
             return SHSpinWait.SpinUntil(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as SHAutomationElement != current, timeout);

@@ -269,6 +269,7 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
 
             var pad = window.FindAllDescendantsNameContains("Memory");
+            var test = pad[0].FindFirstChild();
             pad.Count().Should().Be(7);
         }
     }

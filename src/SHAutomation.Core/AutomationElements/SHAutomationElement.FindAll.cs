@@ -9,7 +9,7 @@ namespace SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {
-        private SHAutomationElement[] FindAllBase(TreeScope treeScope, ConditionBase condition)
+        private ISHAutomationElement[] FindAllBase(TreeScope treeScope, ConditionBase condition)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return Array.Empty<SHAutomationElement>();
+                return Array.Empty<ISHAutomationElement>();
 
             }
         }
@@ -27,23 +27,17 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement[] FindAll(TreeScope treeScope, ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
-            List<SHAutomationElement> elements = new List<SHAutomationElement>();
-            bool getElements(bool shouldExist)
-            {
-                if (!elements.Any())
-                {
-                    elements = FindAllBase(treeScope, condition).Where(x => x.FrameworkAutomationElement != null).ToList();
-                }
-                return shouldExist ? elements.Any() : !elements.Any();
-            }
-            getElements(waitUntilExists);
+            List<ISHAutomationElement> elements = new List<ISHAutomationElement>();
+            Func<List<ISHAutomationElement>> function = () => FindAllBase(treeScope, condition).Where(x => x.FrameworkAutomationElement != null).ToList();
+         
+            GetElements(function,waitUntilExists,ref elements);
             if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function,true, ref elements), timeout);
             }
             else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElements(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElements(function,false, ref elements), timeout);
             }
             return elements.ToArray();
         }

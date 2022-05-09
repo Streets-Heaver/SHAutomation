@@ -15,7 +15,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds the first element which is in the given treescope with the given condition.
         /// </summary>
-        public SHAutomationElement FindFirstBase(TreeScope treeScope, ConditionBase condition)
+        public ISHAutomationElement FindFirstBase(TreeScope treeScope, ConditionBase condition)
         {
             try
             {
@@ -30,8 +30,8 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Find all matching elements in the specified order.
         /// </summary>
-        public SHAutomationElement[] FindAllWithOptionsBase(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOption traversalOptions, SHAutomationElement root)
+        public ISHAutomationElement[] FindAllWithOptionsBase(TreeScope treeScope, ConditionBase condition,
+            TreeTraversalOption traversalOptions, ISHAutomationElement root)
         {
             try
             {
@@ -47,8 +47,8 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds the first matching element in the specified order.
         /// </summary>
-        public SHAutomationElement FindFirstWithOptionsBase(TreeScope treeScope, ConditionBase condition,
-            TreeTraversalOption traversalOptions, SHAutomationElement root)
+        public ISHAutomationElement FindFirstWithOptionsBase(TreeScope treeScope, ConditionBase condition,
+            TreeTraversalOption traversalOptions, ISHAutomationElement root)
         {
             try
             {
@@ -63,11 +63,11 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds the first element by iterating thru all conditions.
         /// </summary>
-        public SHAutomationElement FindFirstNested(params ConditionBase[] nestedConditions)
+        public ISHAutomationElement FindFirstNested(params ConditionBase[] nestedConditions)
         {
             try
             {
-                var currentElement = this;
+                ISHAutomationElement currentElement = this;
                 foreach (var condition in nestedConditions)
                 {
                     currentElement = currentElement.FindFirstChildBase(condition);
@@ -87,11 +87,11 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds all elements by iterating thru all conditions.
         /// </summary>
-        public SHAutomationElement[] FindAllNested(params ConditionBase[] nestedConditions)
+        public ISHAutomationElement[] FindAllNested(params ConditionBase[] nestedConditions)
         {
             try
             {
-                var currentElement = this;
+                ISHAutomationElement currentElement = this;
                 for (var i = 0; i < nestedConditions.Length - 1; i++)
                 {
                     var condition = nestedConditions[i];
@@ -105,7 +105,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return Array.Empty<SHAutomationElement>();
+                return Array.Empty<ISHAutomationElement>();
 
             }
         }
@@ -135,13 +135,9 @@ namespace SHAutomation.Core.AutomationElements
         public ISHAutomationElement FindFirstByXPath(string xPath, TimeSpan timeout)
         {
             ISHAutomationElement element = null;
-            bool getElement(string xpath)
-            {
-                element = FindFirstByXPath(xpath);
-                return element?.FrameworkAutomationElement != null;
-            }
+            Func<ISHAutomationElement> function = () => FindFirstByXPath(xPath);
 
-            SHSpinWait.SpinUntil(() => getElement(xPath), timeout);
+            SHSpinWait.SpinUntil(() => GetElement(function,true,ref element), timeout);
             if(element != null)
             {
                 element.FoundByXPath = true;
@@ -151,7 +147,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds all items which match the given xpath.
         /// </summary>
-        private SHAutomationElement[] FindAllByXPathBase(string xPath)
+        private ISHAutomationElement[] FindAllByXPathBase(string xPath)
         {
             DateTime startTime = DateTime.Now;
             try
@@ -180,7 +176,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Finds the element which is in the given treescope with the given condition and the given index.
         /// </summary>
-        public SHAutomationElement FindAt(TreeScope treeScope, int index, ConditionBase condition)
+        public ISHAutomationElement FindAt(TreeScope treeScope, int index, ConditionBase condition)
         {
             try
             {
@@ -196,7 +192,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Finds the first child.
         /// </summary>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindFirstChildBase()
+        public ISHAutomationElement FindFirstChildBase()
         {
             try
             {
@@ -213,7 +209,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="automationId">The automation id.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindFirstChildBase(string automationId)
+        public ISHAutomationElement FindFirstChildBase(string automationId)
         {
             try
             {
@@ -230,7 +226,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindFirstChildBase(ConditionBase condition)
+        public ISHAutomationElement FindFirstChildBase(ConditionBase condition)
         {
             try
             {
@@ -264,7 +260,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Finds all children.
         /// </summary>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllChildrenBase()
+        public ISHAutomationElement[] FindAllChildrenBase()
         {
             try
             {
@@ -282,7 +278,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllChildrenBase(ConditionBase condition)
+        public ISHAutomationElement[] FindAllChildrenBase(ConditionBase condition)
         {
             try
             {
@@ -300,7 +296,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="conditionFunc">The condition mehtod.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllChildrenBase(Func<ConditionFactory, ConditionBase> conditionFunc)
+        public ISHAutomationElement[] FindAllChildrenBase(Func<ConditionFactory, ConditionBase> conditionFunc)
         {
             try
             {
@@ -309,7 +305,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                return Array.Empty<SHAutomationElement>();
+                return Array.Empty<ISHAutomationElement>();
 
             }
         }
@@ -352,7 +348,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindFirstDescendantBase(ConditionBase condition)
+        public ISHAutomationElement FindFirstDescendantBase(ConditionBase condition)
         {
             try
             {
@@ -386,7 +382,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Finds all descendants.
         /// </summary>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllDescendantsBase()
+        public ISHAutomationElement[] FindAllDescendantsBase()
         {
             try
             {
@@ -403,7 +399,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllDescendantsBase(ConditionBase condition)
+        public ISHAutomationElement[] FindAllDescendantsBase(ConditionBase condition)
         {
             try
             {
@@ -439,7 +435,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="conditionFunc">The condition method.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindFirstNested(Func<ConditionFactory, IList<ConditionBase>> conditionFunc)
+        public ISHAutomationElement FindFirstNested(Func<ConditionFactory, IList<ConditionBase>> conditionFunc)
         {
             try
             {
@@ -457,7 +453,7 @@ namespace SHAutomation.Core.AutomationElements
         /// </summary>
         /// <param name="conditionFunc">The condition method.</param>
         /// <returns>The found elements or an empty list if no elements were found.</returns>
-        public SHAutomationElement[] FindAllNested(Func<ConditionFactory, IList<ConditionBase>> conditionFunc)
+        public ISHAutomationElement[] FindAllNested(Func<ConditionFactory, IList<ConditionBase>> conditionFunc)
         {
             try
             {
@@ -477,7 +473,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <param name="index">The index of the child to find.</param>
         /// <param name="condition">The condition.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindChildAt(int index, ConditionBase condition = null)
+        public ISHAutomationElement FindChildAt(int index, ConditionBase condition = null)
         {
             try
             {
@@ -495,7 +491,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <param name="index">The index of the child to find.</param>
         /// <param name="conditionFunc">The condition mehtod.</param>
         /// <returns>The found element or null if no element was found.</returns>
-        public SHAutomationElement FindChildAt(int index, Func<ConditionFactory, ConditionBase> conditionFunc)
+        public ISHAutomationElement FindChildAt(int index, Func<ConditionFactory, ConditionBase> conditionFunc)
         {
             try
             {
@@ -513,25 +509,34 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirstChild(TimeSpan timeout, bool waitUntilExists = true)
         {
-            SHAutomationElement element = null;
-            bool getElement(bool shouldExist)
-            {
-                if (element == null)
-                {
-                    element = FindFirstChildBase();
-                }
-                return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
-            }
-            getElement(waitUntilExists);
+            ISHAutomationElement element = null;
+            Func<ISHAutomationElement> function = () => FindFirstChildBase();
+            GetElement(()=> FindFirstChildBase(), waitUntilExists,ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function,true, ref element), timeout);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function,false, ref element), timeout);
             }
             return element?.FrameworkAutomationElement != null ? element : null;
+        }
+        public bool GetElement(Func<ISHAutomationElement> function, bool shouldExist, ref ISHAutomationElement element)
+        {
+            if (element == null)
+            {
+                element = function.Invoke();
+            }
+            return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
+        }
+        public bool GetElements(Func<List<ISHAutomationElement>> function, bool shouldExist, ref List<ISHAutomationElement> elements)
+        {
+            if (!elements.Any())
+            {
+                elements = function.Invoke();
+            }
+            return shouldExist ? elements.Any() : !elements.Any();
         }
         public ISHAutomationElement FindFirstChild(ConditionBase condition, bool waitUntilExists = true)
         {
@@ -539,23 +544,17 @@ namespace SHAutomation.Core.AutomationElements
         }
         public ISHAutomationElement FindFirstChild(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
-            SHAutomationElement element = null;
-            bool getElement(bool shouldExist)
-            {
-                if (element == null)
-                {
-                    element = FindFirstChildBase(condition);
-                }
-                return shouldExist ? element?.FrameworkAutomationElement != null : element == null;
-            }
-            getElement(waitUntilExists);
+            ISHAutomationElement element = null;
+            Func<ISHAutomationElement> function = () => FindFirstChildBase(condition);
+            GetElement(function,waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(true), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => getElement(false), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, false, ref element), timeout);
+
             }
             return element?.FrameworkAutomationElement != null ? element : null;
         }
