@@ -6,6 +6,7 @@ using SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SHAutomation.Core.AutomationElements
@@ -44,14 +45,14 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     propertyConditions = GetPropertyConditions(condition);
                 }
-
+                //var cts = new CancellationTokenSource();
                 Task<ISHAutomationElement>[] tasks = {
-                    Task.Run(() => GetXPathFromPropertyConditions(propertyConditions, xPathTimeout: timeout)),
+                    Task.Run(() => GetXPathFromPropertyConditions(propertyConditions,timeout)),
                     Task.Run(() => FindFirstDescendant(conditionFunc, timeout: timeout))
                 };
-
                 Task.WaitAny(tasks);
-                control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
+                //cts.Cancel();
+                control = tasks.FirstOrDefault(x => x.Status == TaskStatus.RanToCompletion && x.Result != null)?.Result;
                 if(control != null)
                 {
                     regenerateXPath = !control.FoundByXPath;
