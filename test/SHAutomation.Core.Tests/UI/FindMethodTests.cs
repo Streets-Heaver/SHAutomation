@@ -203,5 +203,73 @@ namespace SHAutomation.Core.Tests.UI
             Action act = () => window.Find("num9Button", window.Find("NumberPad"));
             act.Should().NotThrow<ElementNotFoundException>();
         }
+        [TestMethod]
+        public void CorrectElementReturned_FindFirstDescendantNameStartsWith_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindFirstDescendantNameStartsWith("Number");
+            pad.Name.Should().Be("Number pad");
+            pad = window.FindFirstDescendantNameStartsWith("umber pad",TimeSpan.FromSeconds(5));
+            pad.Should().BeNull();
+        }
+        [TestMethod]
+        public void CorrectElementReturned_FindFirstDescendantNameEndsWith_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindFirstDescendantNameEndsWith("pad");
+            pad.Name.Should().Be("Number pad");
+            pad = window.FindFirstDescendantNameEndsWith("Number", TimeSpan.FromSeconds(5));
+            pad.Should().BeNull();
+        }
+        [TestMethod]
+        public void CorrectElementReturned_FindFirstDescendantNameContains_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindFirstDescendantNameContains("pad");
+            pad.Name.Should().Be("Number pad");
+            pad = window.FindFirstDescendantNameContains("pad", TimeSpan.FromSeconds(5));
+            pad.Name.Should().Be("Number pad");
+            pad = window.FindFirstDescendantNameContains("ber pa", TimeSpan.FromSeconds(5));
+            pad.Name.Should().Be("Number pad");
+        }
+        [TestMethod]
+        public void CorrectElementReturned_FindAllDescendantNameStartsWith_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindAllDescendantsNameStartsWith("Standard");
+            pad.Count().Should().Be(4);
+        }
+        [TestMethod]
+        public void CorrectElementReturned_FindAllDescendantNameEndsWith_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindAllDescendantsNameEndsWith("controls");
+            pad.Count().Should().Be(2);
+        }
+        [TestMethod]
+        public void CorrectElementReturned_FindAllDescendantNameContains_BeTrue()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            var pad = window.FindAllDescendantsNameContains("Memory");
+            pad.Count().Should().Be(7);
+        }
     }
 }

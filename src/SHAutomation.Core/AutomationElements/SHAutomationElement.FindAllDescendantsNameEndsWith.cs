@@ -18,7 +18,7 @@ namespace SHAutomation.Core.AutomationElements
             bool getElements(bool shouldExist)
             {
                 if (!elements.Any())
-                    elements = FindAllDescendants(timeout: TimeSpan.Zero).Where(x => x.FrameworkAutomationElement != null && x.SupportsName && !string.IsNullOrEmpty(x.Name) && x.Name.EndsWith(name)).ToList();
+                    elements = FindAllDescendants(x => x.ByName(name,Definitions.PropertyConditionFlag.MatchSubstring),TimeSpan.Zero).Where( x => x.Name.EndsWith(name)).ToList();
                 return shouldExist ? elements.Any() : !elements.Any();
             }
             getElements(waitUntilExists);
