@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Threading;
-
+using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.Tools;
 using SHAutomation.Core.WindowsAPI;
 

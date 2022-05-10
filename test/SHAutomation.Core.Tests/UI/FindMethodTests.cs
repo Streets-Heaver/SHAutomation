@@ -38,12 +38,52 @@ namespace SHAutomation.Core.Tests.UI
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
 
-
+            window.XPathList.Clear();
+            window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
             var num3Button = window.Find("num3Button");
             window.XPathList.Should().BeEquivalentTo((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
 
         }
+        [TestMethod]
+        public void FoundElementXPathRequestCancelled_Find_BeEquivalentTo()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
 
+            window.XPathList.Clear();
+            window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num32Button']"));
+            Action act = () =>
+            {
+                var num3Button = window.Find("num3Button",TimeSpan.FromSeconds(20),null);
+                num3Button.FoundByXPath.Should().BeFalse();
+            };
+            var elapsed = PerformanceDiagnostics.Time(() =>
+            {
+                act.Invoke();
+            });
+            elapsed.Should().BeLessOrEqualTo(TimeSpan.FromSeconds(10));
+        }
+        [TestMethod]
+        public void FoundElementConditionRequestCancelled_Find_BeEquivalentTo()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+
+            window.XPathList.Clear();
+            window.XPathList.Add(("num34Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
+            Action act = () =>
+            {
+                var num3Button = window.Find("num34Button", TimeSpan.FromSeconds(20), null);
+                num3Button.FoundByXPath.Should().BeTrue();
+            };
+            var elapsed = PerformanceDiagnostics.Time(() =>
+            {
+                act.Invoke();
+            });
+            elapsed.Should().BeLessOrEqualTo(TimeSpan.FromSeconds(10));
+        }
         [TestMethod]
         public void ElementFoundUsingConditionAndCache_Find_NotBeNull()
         {
@@ -247,7 +287,7 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-            SHSpinWait.SpinUntil(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4,TimeSpan.FromSeconds(10));
+            Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4,TimeSpan.FromSeconds(10));
             var pad = window.FindAllDescendantsNameStartsWith("Standard");
             pad.Count().Should().Be(4);
         }

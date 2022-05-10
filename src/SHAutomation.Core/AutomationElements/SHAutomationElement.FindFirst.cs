@@ -19,11 +19,11 @@ namespace SHAutomation.Core.AutomationElements
             GetElement(function,waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);
+                Wait.UntilTrue(() => GetElement(function, true, ref element), timeout);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function, false, ref element), timeout);
+                Wait.UntilTrue(() => GetElement(function, false, ref element), timeout);
             }
             return element?.FrameworkAutomationElement != null ? element : null;
         }

@@ -20,7 +20,7 @@ namespace SHAutomation.Core.AutomationElements
             GetElements(function,true,ref elements);
             if (!elements.Any() && timeout.TotalSeconds != 0)
             {
-                SHSpinWait.SpinUntil(() => GetElements(function, true, ref elements), timeout);
+                Wait.UntilTrue(() => GetElements(function, true, ref elements), timeout);
             }
 
             if (elements != null && elements.Any())
@@ -51,11 +51,11 @@ namespace SHAutomation.Core.AutomationElements
             GetElements(function,waitUntilExists,ref elements);
             if (!elements.Any() && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElements(function,true, ref elements), timeout);
+                Wait.UntilTrue(() => GetElements(function,true, ref elements), timeout);
             }
             else if (elements.Any() && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElements(function,false, ref elements), timeout);
+                Wait.UntilTrue(() => GetElements(function,false, ref elements), timeout);
             }
             if (elements != null && elements.Any())
             {

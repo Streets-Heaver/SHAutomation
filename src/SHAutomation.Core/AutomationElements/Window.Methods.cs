@@ -6,6 +6,7 @@ using SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SHAutomation.Core.AutomationElements
@@ -44,15 +45,29 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     propertyConditions = GetPropertyConditions(condition);
                 }
-
-                Task<ISHAutomationElement>[] tasks = {
-                    Task.Run(() => GetXPathFromPropertyConditions(propertyConditions, xPathTimeout: timeout)),
-                    Task.Run(() => FindFirstDescendant(conditionFunc, timeout: timeout))
-                };
-
-                Task.WaitAny(tasks);
-                control = tasks.FirstOrDefault(x => x.Result != null)?.Result;
-                if(control != null)
+                condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
+               
+              
+                var xpath = GetXPathValues(propertyConditions);
+                if (xpath != null && xpath.Any())
+                {
+                    using (var cts = new CancellationTokenSource())
+                    {
+                        var token = cts.Token;
+                        Task<ISHAutomationElement>[] tasks = {
+                            Task.Run(() => GetXPathFromValues(xpath,timeout,ref token),token),
+                            Task.Run(() => FindFirstDescendant(condition, timeout,true, ref token),token)
+                        };
+                        Task.WaitAny(tasks);
+                        cts.Cancel();
+                        control = tasks.FirstOrDefault(x => x.Status == TaskStatus.RanToCompletion && x.Result != null)?.Result;
+                    }
+                }
+                else
+                {
+                    control = FindFirstDescendant(condition, timeout, true);
+                }
+                if (control != null)
                 {
                     regenerateXPath = !control.FoundByXPath;
                 }
@@ -90,11 +105,20 @@ namespace SHAutomation.Core.AutomationElements
 
             if (parent == null)
             {
-                control = GetXPathElementFromCondition(conditionFunc, timeout);
-                if (control == null && !xpathOnly)
+                if (xpathOnly)
                 {
-                    regenerateXPath = true;
-                    control = FindFirstDescendant(conditionFunc, timeout: timeout);
+                    control = GetXPathElementFromCondition(conditionFunc, timeout);
+                }
+                else
+                {
+                    try
+                    {
+                        return Find(conditionFunc, timeout) != null;
+                    }
+                    catch(ElementNotFoundException)
+                    {
+                        return false;
+                    }
                 }
 
             }
