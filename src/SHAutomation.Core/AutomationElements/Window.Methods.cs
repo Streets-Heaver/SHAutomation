@@ -46,18 +46,22 @@ namespace SHAutomation.Core.AutomationElements
                     propertyConditions = GetPropertyConditions(condition);
                 }
                 condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-                var cts = new CancellationTokenSource();
-                var token = cts.Token;
+               
+              
                 var xpath = GetXPathValues(propertyConditions);
                 if (xpath.Any())
                 {
-                    Task<ISHAutomationElement>[] tasks = {
-                        Task.Run(() => GetXPathFromValues(xpath,timeout,ref token),token),
-                        Task.Run(() => FindFirstDescendant(condition, timeout,true, ref token),token)
-                    };
-                    Task.WaitAny(tasks);
-                    cts.Cancel();
-                    control = tasks.FirstOrDefault(x => x.Status == TaskStatus.RanToCompletion && x.Result != null)?.Result;
+                    using (var cts = new CancellationTokenSource())
+                    {
+                        var token = cts.Token;
+                        Task<ISHAutomationElement>[] tasks = {
+                            Task.Run(() => GetXPathFromValues(xpath,timeout,ref token),token),
+                            Task.Run(() => FindFirstDescendant(condition, timeout,true, ref token),token)
+                        };
+                        Task.WaitAny(tasks);
+                        cts.Cancel();
+                        control = tasks.FirstOrDefault(x => x.Status == TaskStatus.RanToCompletion && x.Result != null)?.Result;
+                    }
                 }
                 else
                 {
