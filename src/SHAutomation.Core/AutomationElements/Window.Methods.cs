@@ -105,11 +105,20 @@ namespace SHAutomation.Core.AutomationElements
 
             if (parent == null)
             {
-                control = GetXPathElementFromCondition(conditionFunc, timeout);
-                if (control == null && !xpathOnly)
+                if (xpathOnly)
                 {
-                    regenerateXPath = true;
-                    control = FindFirstDescendant(conditionFunc, timeout: timeout);
+                    control = GetXPathElementFromCondition(conditionFunc, timeout);
+                }
+                else
+                {
+                    try
+                    {
+                        return Find(conditionFunc, timeout) != null;
+                    }
+                    catch(ElementNotFoundException)
+                    {
+                        return false;
+                    }
                 }
 
             }
