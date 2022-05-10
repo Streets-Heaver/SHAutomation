@@ -12,6 +12,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 [assembly: InternalsVisibleTo("SHAutomation.Core.Tests")]
 namespace SHAutomation.Core.AutomationElements
@@ -165,6 +166,35 @@ namespace SHAutomation.Core.AutomationElements
             else
                 return null;
         }
+        private ISHAutomationElement GetXPathFromValues(List<string> values,TimeSpan timeout,ref CancellationToken token)
+        {
+            return FindFirstByXPath(values, timeout, ref token);
+        }
+        public List<string> GetXPathValues(List<(PropertyCondition Value, bool Ignore)> propertyList)
+        {
+            if (propertyList.Any())
+            {
+                if (propertyList.Count == 1)
+                {
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
+                    return _xPathValues;
+                }
+                else
+                {
+                    List<string> propList = new List<string>();
+                    foreach ((PropertyCondition Value, bool Ignore) p in propertyList)
+                    {
+                        propList.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name.ToString()));
+
+                    }
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
+                    return _xPathValues;
+                }
+
+            }
+            return new List<string>();
+        }
+
         public void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc, bool regenerateXPath)
         {
             SaveXPathFromControl(control, GetPropertyConditions(conditionFunc), regenerateXPath);
@@ -330,9 +360,9 @@ namespace SHAutomation.Core.AutomationElements
             }
 
 
-            
+
             if (spinWaitTimeout != TimeSpan.Zero)
-                SHSpinWait.SpinUntil(() => GetElement(function,true,ref element), spinWaitTimeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), spinWaitTimeout);
             else
             {
                 GetElement(function, false, ref element);
@@ -355,9 +385,14 @@ namespace SHAutomation.Core.AutomationElements
 
         private ISHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout)
         {
+            var token = CancellationToken.None;
+            return FindFirstByXPath(xpath, spinWaitTimeout, ref token);
+        }
+        private ISHAutomationElement FindFirstByXPath(List<string> xpath, TimeSpan spinWaitTimeout, ref CancellationToken token)
+        {
             ISHAutomationElement validXpath = null;
 
-            SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout);
+            SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
 
 
             if (validXpath == null)
@@ -376,7 +411,6 @@ namespace SHAutomation.Core.AutomationElements
             }
             return null;
         }
-
         private bool FoundXPathInList(List<string> xpaths, out ISHAutomationElement xPathObject)
         {
             xPathObject = null;

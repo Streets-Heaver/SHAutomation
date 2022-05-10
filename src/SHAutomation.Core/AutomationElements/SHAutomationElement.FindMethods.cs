@@ -137,8 +137,8 @@ namespace SHAutomation.Core.AutomationElements
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstByXPath(xPath);
 
-            SHSpinWait.SpinUntil(() => GetElement(function,true,ref element), timeout);
-            if(element != null)
+            SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);
+            if (element != null)
             {
                 element.FoundByXPath = true;
             }
@@ -159,7 +159,7 @@ namespace SHAutomation.Core.AutomationElements
                 while (itemNodeIterator.MoveNext() && DateTime.Now.Subtract(startTime).TotalMinutes < 2)
                 {
                     var automationItem = (SHAutomationElement)itemNodeIterator.Current.UnderlyingObject;
-                    if(automationItem?.FrameworkAutomationElement != null)
+                    if (automationItem?.FrameworkAutomationElement != null)
                     {
                         automationItem.FoundByXPath = true;
                         itemList.Add(automationItem);
@@ -168,7 +168,7 @@ namespace SHAutomation.Core.AutomationElements
                 return itemList.ToArray();
             }
             catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
-                {
+            {
                 return Array.Empty<SHAutomationElement>();
             }
         }
@@ -511,14 +511,14 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstChildBase();
-            GetElement(()=> FindFirstChildBase(), waitUntilExists,ref element);
+            GetElement(() => FindFirstChildBase(), waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function,true, ref element), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function,false, ref element), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, false, ref element), timeout);
             }
             return element?.FrameworkAutomationElement != null ? element : null;
         }
@@ -546,7 +546,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstChildBase(condition);
-            GetElement(function,waitUntilExists, ref element);
+            GetElement(function, waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout);

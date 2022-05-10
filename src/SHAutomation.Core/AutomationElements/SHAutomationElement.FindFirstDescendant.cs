@@ -1,6 +1,7 @@
 ﻿using SHAutomation.Core.Conditions;
 using SHAutomation.Core.StaticClasses;
 using System;
+using System.Threading;
 
 namespace SHAutomation.Core.AutomationElements
 {
@@ -56,21 +57,25 @@ namespace SHAutomation.Core.AutomationElements
 
         public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists = true)
         {
+            var token = CancellationToken.None;
+            return FindFirstDescendant(condition, timeout, waitUntilExists, ref token);
+        }
+        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists,ref CancellationToken cancel)
+        {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstDescendantBase(condition);
-           
-            GetElement(function,true,ref element);
+
+            GetElement(function, true, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function,true,ref element), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), timeout,ref cancel);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                SHSpinWait.SpinUntil(() => GetElement(function,false,ref element), timeout);
+                SHSpinWait.SpinUntil(() => GetElement(function, false, ref element), timeout, ref cancel);
             }
 
             return element?.FrameworkAutomationElement != null ? element : null;
         }
-
     }
 }
