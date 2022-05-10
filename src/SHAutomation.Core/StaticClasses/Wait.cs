@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SHAutomation.Core.AutomationElements;
+using System;
 using System.Threading;
-using SHAutomation.Core.AutomationElements;
 using SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Input
+namespace SHAutomation.Core.StaticClasses
 {
     /// <summary>
     /// Class with various helper tools used in various places
@@ -56,6 +56,30 @@ namespace SHAutomation.Core.Input
             // Other sources: http://blogs.msdn.com/b/oldnewthing/archive/2014/02/13/10499047.aspx
             Thread.Sleep(20);
             return ret != IntPtr.Zero;
+        }
+        public static bool UntilTrue(Func<bool> condition, TimeSpan timeout)
+        {
+            var token = CancellationToken.None;
+            return UntilTrue(condition, timeout, ref token);
+        }
+        public static bool UntilTrue(Func<bool> condition, TimeSpan timeout, ref CancellationToken cancel)
+        {
+            if (timeout.TotalMilliseconds <= 0)
+                throw new InvalidOperationException("TIMEOUT HAS TO BE GREATER THAN 0");
+            DateTime date = DateTime.Now;
+            var waitDate = date.AddMilliseconds(timeout.TotalMilliseconds);
+            while (DateTime.Now < waitDate)
+            {
+                if (cancel.IsCancellationRequested)
+                {
+                    return false;
+                }
+                if (condition.Invoke())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

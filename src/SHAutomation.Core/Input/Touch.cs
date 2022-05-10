@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
+using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.Tools;
 using SHAutomation.Core.WindowsAPI;
 

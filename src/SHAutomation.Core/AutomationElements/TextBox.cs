@@ -2,6 +2,7 @@
 using System.Linq;
 using SHAutomation.Core.Exceptions;
 using SHAutomation.Core.Input;
+using SHAutomation.Core.StaticClasses;
 using SHAutomation.Core.WindowsAPI;
 
 namespace SHAutomation.Core.AutomationElements

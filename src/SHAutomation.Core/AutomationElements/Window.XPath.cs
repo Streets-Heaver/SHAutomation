@@ -362,7 +362,7 @@ namespace SHAutomation.Core.AutomationElements
 
 
             if (spinWaitTimeout != TimeSpan.Zero)
-                SHSpinWait.SpinUntil(() => GetElement(function, true, ref element), spinWaitTimeout);
+                Wait.UntilTrue(() => GetElement(function, true, ref element), spinWaitTimeout);
             else
             {
                 GetElement(function, false, ref element);
@@ -370,7 +370,7 @@ namespace SHAutomation.Core.AutomationElements
 
             if (element != null)
             {
-                SHSpinWait.SpinUntil(() => element?.FrameworkAutomationElement != null, TimeSpan.FromSeconds(5));
+                Wait.UntilTrue(() => element?.FrameworkAutomationElement != null, TimeSpan.FromSeconds(5));
             }
             else if (element == null)
                 _xPathValues = new List<string>();
@@ -392,7 +392,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement validXpath = null;
 
-            SHSpinWait.SpinUntil(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
+            Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
 
 
             if (validXpath == null)

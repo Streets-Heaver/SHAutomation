@@ -274,7 +274,7 @@ namespace SHAutomation.Core
         /// <returns>True a main window handle was found, false otherwise.</returns>
         public bool WaitWhileMainHandleIsMissing(TimeSpan? waitTimeout = null)
         {
-            return SHSpinWait.SpinUntil(() =>
+            return Wait.UntilTrue(() =>
             {
                 int processId = _process.Id;
                 _process.Dispose();
@@ -315,7 +315,7 @@ namespace SHAutomation.Core
                 return null;
             }
 
-            SHSpinWait.SpinUntil(() => automation.FromHandle(mainWindowHandle) != null, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(5));
+            Wait.UntilTrue(() => automation.FromHandle(mainWindowHandle) != null, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(5));
 
             var mainWindow = automation.FromHandle(mainWindowHandle)
                 .AsWindow(_loggingService, pathToConfigFile);

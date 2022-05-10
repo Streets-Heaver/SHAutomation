@@ -287,7 +287,7 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-            SHSpinWait.SpinUntil(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4,TimeSpan.FromSeconds(10));
+            Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4,TimeSpan.FromSeconds(10));
             var pad = window.FindAllDescendantsNameStartsWith("Standard");
             pad.Count().Should().Be(4);
         }
