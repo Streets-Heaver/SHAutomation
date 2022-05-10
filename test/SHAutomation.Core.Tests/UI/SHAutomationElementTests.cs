@@ -30,6 +30,7 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
+            window.Exists(x => x.ByAutomationId("num2Button"), TimeSpan.FromSeconds(5),TimeSpan.FromSeconds(5)).Should().BeTrue();
             var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']");
             item.AutomationId.Should().Be("num3Button");
             item.FoundByXPath.Should().BeTrue();

@@ -49,7 +49,7 @@ namespace SHAutomation.Core.AutomationElements
                
               
                 var xpath = GetXPathValues(propertyConditions);
-                if (xpath.Any())
+                if (xpath != null && xpath.Any())
                 {
                     using (var cts = new CancellationTokenSource())
                     {
