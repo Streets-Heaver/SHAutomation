@@ -160,7 +160,7 @@ namespace SHAutomation.Core.AutomationElements
             else
                 return null;
         }
-        private ISHAutomationElement GetXPathFromValues(List<string> values,TimeSpan timeout,ref CancellationToken token)
+        private ISHAutomationElement GetXPathFromValues(List<string> values, TimeSpan timeout, ref CancellationToken token)
         {
             return FindFirstByXPath(values, timeout, ref token);
         }
@@ -385,7 +385,10 @@ namespace SHAutomation.Core.AutomationElements
             ISHAutomationElement validXpath = null;
 
             Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
-
+            if (validXpath == null)
+            {
+                _xPathValues = new List<string>();
+            }
             if (validXpath?.FrameworkAutomationElement != null)
             {
                 return validXpath;
