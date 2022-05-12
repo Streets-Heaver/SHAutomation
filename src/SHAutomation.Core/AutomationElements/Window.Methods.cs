@@ -46,8 +46,8 @@ namespace SHAutomation.Core.AutomationElements
                     propertyConditions = GetPropertyConditions(condition);
                 }
                 condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-               
-              
+
+
                 var xpath = GetXPathValues(propertyConditions);
                 if (xpath != null && xpath.Any())
                 {
@@ -86,8 +86,14 @@ namespace SHAutomation.Core.AutomationElements
 
                 throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
             }
-            _loggingService.Info("Find found control");
-
+            if (control.FoundByXPath)
+            {
+                _loggingService.Info("Find found control via XPath");
+            }
+            else
+            {
+                _loggingService.Info("Find found control via Condition");
+            }
             SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
             return control;
         }
@@ -115,7 +121,7 @@ namespace SHAutomation.Core.AutomationElements
                     {
                         return Find(conditionFunc, timeout) != null;
                     }
-                    catch(ElementNotFoundException)
+                    catch (ElementNotFoundException)
                     {
                         return false;
                     }
