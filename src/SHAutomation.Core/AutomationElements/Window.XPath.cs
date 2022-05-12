@@ -131,11 +131,6 @@ namespace SHAutomation.Core.AutomationElements
             return GetPropertyConditions(condition);
         }
 
-        private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList)
-        {
-            return GetXPathFromPropertyConditions(propertyList, TimeSpan.FromSeconds(10));
-        }
-
         private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, TimeSpan xPathTimeout)
         {
             if (propertyList.Any())
@@ -158,7 +153,6 @@ namespace SHAutomation.Core.AutomationElements
                     return FindFirstByXPath(_xPathValues, xPathTimeout);
                 else
                 {
-                    _loggingService.Info("No matching cached xpath value found, falling back to tree traversal");
                     return null;
                 }
 
@@ -166,7 +160,7 @@ namespace SHAutomation.Core.AutomationElements
             else
                 return null;
         }
-        private ISHAutomationElement GetXPathFromValues(List<string> values,TimeSpan timeout,ref CancellationToken token)
+        private ISHAutomationElement GetXPathFromValues(List<string> values, TimeSpan timeout, ref CancellationToken token)
         {
             return FindFirstByXPath(values, timeout, ref token);
         }
@@ -350,8 +344,6 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstByXPath(xpath);
-            _loggingService.Info(string.Format("Attempting to find control using xpath:{0}", xpath));
-
             if (xpath.Contains("&quot;"))
             {
                 xpath = xpath.Replace('\'', '"');
@@ -393,18 +385,10 @@ namespace SHAutomation.Core.AutomationElements
             ISHAutomationElement validXpath = null;
 
             Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
-
-
             if (validXpath == null)
             {
                 _xPathValues = new List<string>();
-                var output = string.Format("Failed to find control by xpath {0}", string.Join(",", xpath));
-                _loggingService.Error(output);
-
             }
-            else
-                _loggingService.Info("Found control using cached xpath");
-
             if (validXpath?.FrameworkAutomationElement != null)
             {
                 return validXpath;
@@ -415,7 +399,6 @@ namespace SHAutomation.Core.AutomationElements
         {
             xPathObject = null;
             bool found = false;
-            _loggingService.Info(xpaths.Count + " potential xpath(s)");
             foreach (var xpath in xpaths)
             {
                 var tempXPathObject = FindFirstByXPath(xpath, TimeSpan.Zero);
