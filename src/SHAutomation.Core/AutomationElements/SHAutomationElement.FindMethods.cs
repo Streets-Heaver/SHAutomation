@@ -4,6 +4,7 @@ using SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.XPath;
 
 namespace SHAutomation.Core.AutomationElements
@@ -21,7 +22,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FrameworkAutomationElement.FindFirst(treeScope, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -37,7 +38,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FrameworkAutomationElement.FindAllWithOptions(treeScope, condition, traversalOptions, root);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
 
@@ -54,7 +55,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FrameworkAutomationElement.FindFirstWithOptions(treeScope, condition, traversalOptions, root);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -78,7 +79,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return currentElement;
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -103,7 +104,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return currentElement.FindAllChildrenBase(nestedConditions.Last());
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<ISHAutomationElement>();
 
@@ -127,7 +128,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return null;
             }
-            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
+            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -167,7 +168,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return itemList.ToArray();
             }
-            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException)
+            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
             }
@@ -182,7 +183,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FrameworkAutomationElement.FindIndexed(treeScope, index, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -198,7 +199,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Children, TrueCondition.Default);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -215,7 +216,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Children, ConditionFactory.ByAutomationId(automationId));
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -232,7 +233,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Children, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -250,7 +251,7 @@ namespace SHAutomation.Core.AutomationElements
                 var condition = conditionFunc(ConditionFactory);
                 return FindFirstChildBase(condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -266,7 +267,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindAllBase(TreeScope.Children, TrueCondition.Default);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
 
@@ -284,7 +285,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindAllBase(TreeScope.Children, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
 
@@ -303,7 +304,7 @@ namespace SHAutomation.Core.AutomationElements
                 var condition = conditionFunc(ConditionFactory);
                 return FindAllChildrenBase(condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<ISHAutomationElement>();
 
@@ -320,7 +321,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Descendants, TrueCondition.Default);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -337,7 +338,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Descendants, ConditionFactory.ByAutomationId(automationId));
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -354,7 +355,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindFirstBase(TreeScope.Descendants, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -372,7 +373,7 @@ namespace SHAutomation.Core.AutomationElements
                 var condition = conditionFunc(ConditionFactory);
                 return FindFirstDescendantBase(condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -388,7 +389,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindAllBase(TreeScope.Descendants, TrueCondition.Default);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
             }
@@ -405,7 +406,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindAllBase(TreeScope.Descendants, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
             }
@@ -423,7 +424,7 @@ namespace SHAutomation.Core.AutomationElements
                 var condition = conditionFunc(ConditionFactory);
                 return FindAllDescendantsBase(condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
 
@@ -442,7 +443,7 @@ namespace SHAutomation.Core.AutomationElements
                 var conditions = conditionFunc(ConditionFactory);
                 return FindFirstNested(conditions.ToArray());
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -460,7 +461,7 @@ namespace SHAutomation.Core.AutomationElements
                 var conditions = conditionFunc(ConditionFactory);
                 return FindAllNested(conditions.ToArray());
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
 
@@ -479,7 +480,7 @@ namespace SHAutomation.Core.AutomationElements
             {
                 return FindAt(TreeScope.Children, index, condition ?? TrueCondition.Default);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -498,7 +499,7 @@ namespace SHAutomation.Core.AutomationElements
                 var condition = conditionFunc(ConditionFactory);
                 return FindChildAt(index, condition);
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (Exception ex) when (ex is COMException || ex is InvalidOperationException)
             {
                 return null;
             }
