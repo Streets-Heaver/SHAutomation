@@ -22,7 +22,7 @@ namespace SHAutomation.Core.Tests.UI
             using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             using var automation = new UIA3Automation();
             var window = calc.GetMainWindow(automation);
-
+            window.XPathList.Clear();
             var num3Button = window.Find("num3Button");
 
             window.SaveXPathCache(TestContext.TestName);
