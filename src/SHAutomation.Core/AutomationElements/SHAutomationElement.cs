@@ -178,12 +178,12 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 else
                 {
-                    throw new InvalidOperationException("HoverOver bounding rectangle failed to load or is not supported (You may need an onscreen check)");
+                    throw new InvalidOperationException($"HoverOver bounding rectangle failed to load or is not supported for {ToString()} (You may need an onscreen check)");
                 }
             }
             else
             {
-                throw new ElementNotFoundException("HoverOver bounding rectangle is not supported");
+                throw new InvalidOperationException($"HoverOver bounding rectangle is not supported for {ToString()}");
             }
         }
 
