@@ -86,5 +86,26 @@ namespace SHAutomation.Core.Tests.UI
 
             ((string)nameValue != resultsName).Should().BeTrue();
         }
+        [TestMethod]
+        public void HoverOverMovesMouse_HoverOver_Be()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var btn = window.Find("num3Button");
+            btn.HoverOver();
+            Mouse.Position.Should().Be(btn.Centre());
+        }
+        [TestMethod]
+        public void HoverOverErrorMessageGivesElementDetails_HoverOver_Be()
+        {
+            using var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            using var automation = new UIA3Automation();
+            var window = calc.GetMainWindow(automation);
+            var btn = window.Find("PaneTitleTextBlock");
+            Action act = () => btn.HoverOver();
+            act.Should().Throw<InvalidOperationException>().WithMessage("HoverOver bounding rectangle is not supported for AutomationId:PaneTitleTextBlock, Name:, ControlType:text, FrameworkId:XAML");
+        }
+
     }
 }
