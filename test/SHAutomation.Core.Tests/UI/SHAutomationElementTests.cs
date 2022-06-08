@@ -94,7 +94,8 @@ namespace SHAutomation.Core.Tests.UI
             var window = calc.GetMainWindow(automation);
             var btn = window.Find("num3Button");
             btn.HoverOver();
-            Mouse.Position.Should().Be(btn.Centre());
+            Mouse.Position.X.Should().BeInRange(btn.CentreLeft().X, btn.CentreRight().X);
+            Mouse.Position.Y.Should().BeInRange(btn.CentreTop().Y, btn.CentreBottom().Y);
         }
         [TestMethod]
         public void HoverOverErrorMessageGivesElementDetails_HoverOver_Be()
