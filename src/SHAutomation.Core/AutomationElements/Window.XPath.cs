@@ -19,13 +19,13 @@ namespace SHAutomation.Core.AutomationElements
 {
     public partial class Window
     {
-        private List<string> _xPathValues = new List<string>();
+        private SynchronizedCollection<string> _xPathValues = new SynchronizedCollection<string>();
         private bool _hasXPathValue = false;
 
         public IFileSystem FileSystem { get; set; } = new FileSystem();
         public ICacheService CacheService { get; set; }
-        public List<(string identifier, string property, string xpath)> XPathList { get; private set; } = new List<(string identifier, string property, string xpath)>();
-        internal List<string> UsedXPaths = new List<string>();
+        public SynchronizedCollection<(string identifier, string property, string xpath)> XPathList { get; private set; } = new SynchronizedCollection<(string identifier, string property, string xpath)>();
+        internal SynchronizedCollection<string> UsedXPaths = new SynchronizedCollection<string>();
 
         private string _xpathGetContent;
 
@@ -44,17 +44,17 @@ namespace SHAutomation.Core.AutomationElements
             {
                 _loggingService.Warn("XPath Json found in cache");
 
-                XPathList = JsonConvert.DeserializeObject<List<(string identifier, string property, string xpath)>>(_xpathGetContent);
+                XPathList = JsonConvert.DeserializeObject<SynchronizedCollection<(string identifier, string property, string xpath)>>(_xpathGetContent);
                 if (XPathList == null)
                 {
-                    XPathList = new List<(string identifier, string property, string xpath)>();
+                    XPathList = new SynchronizedCollection<(string identifier, string property, string xpath)>();
                 }
             }
             else
             {
                 _loggingService.Warn("XPath Json not found in cache");
 
-                XPathList = new List<(string identifier, string property, string xpath)>();
+                XPathList = new SynchronizedCollection<(string identifier, string property, string xpath)>();
             }
 
         }
@@ -63,27 +63,31 @@ namespace SHAutomation.Core.AutomationElements
         {
             var cacheKey = CacheService.GenerateCacheKey(testName);
 
-            if (XPathList.Any())
+            lock (XPathList.SyncRoot)
             {
-                XPathList = XPathList.Distinct().Where(x => UsedXPaths.Contains(x.xpath)).ToList();
-
-                var output = JsonConvert.SerializeObject(XPathList);
-
-                //Only perform update when there are new xpaths to write
-                if (_xpathGetContent != output)
+                lock (UsedXPaths.SyncRoot)
                 {
-                    _loggingService.Info("Saving XPaths to cache");
+                    if (XPathList.Any())
+                    {
+                        var tempXPath = new List<(string identifier, string property, string xpath)>(XPathList.Distinct().Where(x => UsedXPaths.Contains(x.xpath)).ToList());
+
+                        var output = JsonConvert.SerializeObject(tempXPath);
+                        XPathList = new SynchronizedCollection<(string identifier, string property, string xpath)>(tempXPath);
+                        //Only perform update when there are new xpaths to write
+                        if (_xpathGetContent != output)
+                        {
+                            _loggingService.Info("Saving XPaths to cache");
 
 
-                    CacheService.SetCacheValue(cacheKey, output);
+                            CacheService.SetCacheValue(cacheKey, output);
 
+                        }
+                        else
+                            _loggingService.Info("No XPath changes detected so not saving");
+
+                    }
                 }
-                else
-                    _loggingService.Info("No XPath changes detected so not saving");
-
             }
-
-
         }
 
         public ISHAutomationElement GetXPathElementFromCondition(Func<ConditionFactory, ConditionBase> conditionFunc)
@@ -133,11 +137,15 @@ namespace SHAutomation.Core.AutomationElements
 
         private ISHAutomationElement GetXPathFromPropertyConditions(List<(PropertyCondition Value, bool Ignore)> propertyList, TimeSpan xPathTimeout)
         {
+            List<string> retrievedXPath = new List<string>();
+
             if (propertyList.Any())
             {
                 if (propertyList.Count == 1)
                 {
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out retrievedXPath);
+                    _xPathValues = new SynchronizedCollection<string>(retrievedXPath);
+
                 }
                 else
                 {
@@ -147,10 +155,12 @@ namespace SHAutomation.Core.AutomationElements
                         propList.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name.ToString()));
 
                     }
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out retrievedXPath);
+                    _xPathValues = new SynchronizedCollection<string>(retrievedXPath);
+
                 }
-                if (_xPathValues.Any())
-                    return FindFirstByXPath(_xPathValues, xPathTimeout);
+                if (retrievedXPath.Any())
+                    return FindFirstByXPath(retrievedXPath, xPathTimeout);
                 else
                 {
                     return null;
@@ -166,12 +176,14 @@ namespace SHAutomation.Core.AutomationElements
         }
         public List<string> GetXPathValues(List<(PropertyCondition Value, bool Ignore)> propertyList)
         {
+            List<string> retrievedXPath = new List<string>();
             if (propertyList.Any())
             {
                 if (propertyList.Count == 1)
                 {
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out _xPathValues);
-                    return _xPathValues;
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(propertyList.First().Value.Value.ToString()), StringExtensions.ConvertStringPropertyToValidXPath(propertyList.First().Value.Property.Name), out retrievedXPath);
+                    _xPathValues = new SynchronizedCollection<string>(retrievedXPath);
+                    return retrievedXPath;
                 }
                 else
                 {
@@ -181,12 +193,13 @@ namespace SHAutomation.Core.AutomationElements
                         propList.Add(StringExtensions.ConvertStringPropertyToValidXPath(p.Value.Property.Name.ToString()));
 
                     }
-                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out _xPathValues);
-                    return _xPathValues;
+                    GetXPathValueFromCache(StringExtensions.ConvertStringValueToValidXPath(string.Join("`", propertyList.Select(x => x.Value.Value.ToString()))), string.Join("`", propList), out retrievedXPath);
+                    _xPathValues = new SynchronizedCollection<string>(retrievedXPath);
+                    return retrievedXPath;
                 }
 
             }
-            return new List<string>();
+            return retrievedXPath;
         }
 
         public void SaveXPathFromControl(SHAutomationElement control, Func<ConditionFactory, ConditionBase> conditionFunc, bool regenerateXPath)
@@ -240,83 +253,85 @@ namespace SHAutomation.Core.AutomationElements
 
         private void GenerateXPathAndCache(string identifier, string property, SHAutomationElement element, bool regenerateXPath)
         {
-
-            try
+            lock (_xPathValues)
             {
+                try
+                {
 
-                if (!_xPathValues.Any() || regenerateXPath)
-                {
-                    string xpath = XPathHelper.GetXPathToElement(element, this);
-                    if (!string.IsNullOrEmpty(xpath))
-                        _xPathValues.Add(xpath);
-                    _hasXPathValue = false;
-                }
-                else
-                {
-                    _hasXPathValue = true;
-                }
-
-                if (_xPathValues.Any() && !_hasXPathValue)
-                {
-                    foreach (string str in _xPathValues)
+                    if (!_xPathValues.Any() || regenerateXPath)
                     {
-                        var items = str.Split('/').ToList();
-                        // "" and Window
-                        var lastItem = items.Last();
-                        items.RemoveRange(0, 1);
+                        string xpath = XPathHelper.GetXPathToElement(element, this);
+                        if (!string.IsNullOrEmpty(xpath))
+                            _xPathValues.Add(xpath);
+                        _hasXPathValue = false;
+                    }
+                    else
+                    {
+                        _hasXPathValue = true;
+                    }
 
-                        lastItem = lastItem.Split('[')[0];
-
-                        if (property.Contains("`"))
+                    if (_xPathValues.Any() && !_hasXPathValue)
+                    {
+                        foreach (string str in _xPathValues)
                         {
-                            var splitAnds = identifier.Split(new string[] { "`" }, StringSplitOptions.None);
-                            var splitProperties = property.Split(new string[] { "`" }, StringSplitOptions.None);
-                            var stringBuilder = new StringBuilder();
-                            stringBuilder.Append("[");
-                            for (int i = 0; i < splitAnds.Length - 1; i++)
+                            var items = str.Split('/').ToList();
+                            // "" and Window
+                            var lastItem = items.Last();
+                            items.RemoveRange(0, 1);
+
+                            lastItem = lastItem.Split('[')[0];
+
+                            if (property.Contains("`"))
                             {
-                                stringBuilder.Append("@" + splitProperties[i] + " = '" + splitAnds[i] + "' and ");
+                                var splitAnds = identifier.Split(new string[] { "`" }, StringSplitOptions.None);
+                                var splitProperties = property.Split(new string[] { "`" }, StringSplitOptions.None);
+                                var stringBuilder = new StringBuilder();
+                                stringBuilder.Append("[");
+                                for (int i = 0; i < splitAnds.Length - 1; i++)
+                                {
+                                    stringBuilder.Append("@" + splitProperties[i] + " = '" + splitAnds[i] + "' and ");
+                                }
+                                lastItem = lastItem + stringBuilder.ToString() + string.Format("@{0} = '{1}']", splitProperties.Last(), splitAnds.Last());
                             }
-                            lastItem = lastItem + stringBuilder.ToString() + string.Format("@{0} = '{1}']", splitProperties.Last(), splitAnds.Last());
-                        }
-                        else
-                        {
-                            lastItem = lastItem + string.Format("[@" + property + "='{0}']", identifier);
-                        }
+                            else
+                            {
+                                lastItem = lastItem + string.Format("[@" + property + "='{0}']", identifier);
+                            }
 
-                        if (items.Any())
-                        {
-                            items.RemoveAt(items.Count - 1);
-                        }
-                        items.Add(lastItem);
-                        string newStr = string.Join("/", items);
+                            if (items.Any())
+                            {
+                                items.RemoveAt(items.Count - 1);
+                            }
+                            items.Add(lastItem);
+                            string newStr = string.Join("/", items);
 
-                        //If cache already contains the value then remove and replace with up-to-date version
-                        if (XPathList.Any(x => x.identifier == identifier && x.xpath == ("/" + newStr)))
-                        {
-                            var removeItem = XPathList.FirstOrDefault(x => x.xpath == ("/" + newStr));
-                            XPathList.Remove(removeItem);
-                        }
+                            //If cache already contains the value then remove and replace with up-to-date version
+                            if (XPathList.Any(x => x.identifier == identifier && x.xpath == ("/" + newStr)))
+                            {
+                                var removeItem = XPathList.FirstOrDefault(x => x.xpath == ("/" + newStr));
+                                XPathList.Remove(removeItem);
+                            }
 
-                        XPathList.Add((identifier, property, xpath: "/" + newStr));
-                        UsedXPaths.Add("/" + newStr);
+                            XPathList.Add((identifier, property, xpath: "/" + newStr));
+                            UsedXPaths.Add("/" + newStr);
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                _loggingService.Error(string.Format("Issue creating Xpath: {0}", ex));
-
-                if (ex is ArgumentException)
+                catch (Exception ex)
                 {
-                    _loggingService.Error("Attempted to add duplicate key to dictionary");
+                    _loggingService.Error(string.Format("Issue creating Xpath: {0}", ex));
+
+                    if (ex is ArgumentException)
+                    {
+                        _loggingService.Error("Attempted to add duplicate key to dictionary");
+
+                    }
+
+                    throw;
 
                 }
 
-                throw;
-
             }
-
         }
 
         private bool GetXPathValueFromCache(string identifier, string property, out List<string> xPathValues)
@@ -325,18 +340,21 @@ namespace SHAutomation.Core.AutomationElements
 
             xPathValues = new List<string>();
 
-            if (XPathList.Any(x => x.identifier.ToUpper() == identifier.ToUpper() && x.property == property))
+            lock (XPathList.SyncRoot)
             {
-                xPathValues = XPathList.Where(x => x.identifier.ToUpper() == identifier.ToUpper()).Select(x => x.xpath).ToList();
-                _loggingService.Info("XPath found in Cache");
+                if (XPathList.Any(x => x.identifier.ToUpper() == identifier.ToUpper() && x.property == property))
+                {
+                    xPathValues = new List<string>(XPathList.Where(x => x.identifier.ToUpper() == identifier.ToUpper()).Select(x => x.xpath).ToList());
+                    _loggingService.Info("XPath found in Cache");
 
-                return true;
-            }
-            else
-            {
-                _loggingService.Info("XPath not found");
-                return false;
+                    return true;
+                }
+                else
+                {
+                    _loggingService.Info("XPath not found");
+                    return false;
 
+                }
             }
         }
 
@@ -365,7 +383,7 @@ namespace SHAutomation.Core.AutomationElements
                 Wait.UntilTrue(() => element?.FrameworkAutomationElement != null, TimeSpan.FromSeconds(5));
             }
             else if (element == null)
-                _xPathValues = new List<string>();
+                _xPathValues = new SynchronizedCollection<string>();
 
             if (element?.FrameworkAutomationElement != null)
             {
@@ -387,7 +405,7 @@ namespace SHAutomation.Core.AutomationElements
             Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
             if (validXpath == null)
             {
-                _xPathValues = new List<string>();
+                _xPathValues = new SynchronizedCollection<string>();
             }
             if (validXpath?.FrameworkAutomationElement != null)
             {
