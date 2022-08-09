@@ -16,7 +16,7 @@ namespace SHAutomation.Core.AutomationElements
         Window Popup { get; }
         string Title { get; }
         TitleBar TitleBar { get; }
-        List<(string identifier, string property, string xpath)> XPathList { get; }
+        SynchronizedCollection<(string identifier, string property, string xpath)> XPathList { get; }
 
         void Close();
         bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);

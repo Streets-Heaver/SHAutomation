@@ -49,6 +49,7 @@ namespace SHAutomation.Core.AutomationElements
 
 
                 var xpath = GetXPathValues(propertyConditions);
+
                 if (xpath != null && xpath.Any())
                 {
                     using (var cts = new CancellationTokenSource())
@@ -67,6 +68,7 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     control = FindFirstDescendant(condition, timeout, true);
                 }
+
                 if (control != null)
                 {
                     regenerateXPath = !control.FoundByXPath;
