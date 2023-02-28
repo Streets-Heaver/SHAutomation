@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Build">
-    <TargetFrameworks>net471;netstandard2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
@@ -38,9 +38,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
     <PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.1' And '$(TargetFramework)' != 'netcoreapp3.1'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows'">
     <Reference Include="Accessibility" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
