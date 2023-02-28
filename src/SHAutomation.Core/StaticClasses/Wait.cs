@@ -70,7 +70,7 @@ namespace SHAutomation.Core.StaticClasses
             var waitDate = date.AddMilliseconds(timeout.TotalMilliseconds);
             while (DateTime.Now < waitDate)
             {
-                if (cancel == null || cancel.IsCancellationRequested)
+                if (cancel.IsCancellationRequested)
                 {
                     return false;
                 }

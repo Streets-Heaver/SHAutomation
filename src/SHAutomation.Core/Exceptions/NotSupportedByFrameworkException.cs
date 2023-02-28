@@ -28,7 +28,6 @@ namespace SHAutomation.Core.Exceptions
         {
         }
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         protected NotSupportedByFrameworkException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

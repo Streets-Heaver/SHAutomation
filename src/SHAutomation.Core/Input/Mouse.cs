@@ -212,8 +212,7 @@ namespace SHAutomation.Core.Input
         /// <param name="mouseButton">The mouse button to press</param>
         public static void Down(MouseButton mouseButton)
         {
-            uint data;
-            var flags = GetFlagsAndDataForButton(mouseButton, true, out data);
+            var flags = GetFlagsAndDataForButton(mouseButton, true, out uint data);
             SendInput(0, 0, data, flags);
         }
 
@@ -223,8 +222,7 @@ namespace SHAutomation.Core.Input
         /// <param name="mouseButton">The mouse button to release</param>
         public static void Up(MouseButton mouseButton)
         {
-            uint data;
-            var flags = GetFlagsAndDataForButton(mouseButton, false, out data);
+            var flags = GetFlagsAndDataForButton(mouseButton, false, out uint data);
             SendInput(0, 0, data, flags);
         }
 
@@ -369,13 +367,9 @@ namespace SHAutomation.Core.Input
         /// <summary>
         /// Effectively sends the mouse input command
         /// </summary>
-        [PermissionSet(SecurityAction.Assert, Name = "FullTrust")]
         private static void SendInput(int x, int y, uint data, MouseEventFlags flags)
         {
-            // Demand the correct permissions
-            var permissions = new PermissionSet(PermissionState.Unrestricted);
-            permissions.Demand();
-
+            
             // Check if we are trying to do an absolute move
             if (flags.HasFlag(MouseEventFlags.MOUSEEVENTF_ABSOLUTE))
             {
@@ -397,13 +391,9 @@ namespace SHAutomation.Core.Input
 
             // Build the input object
             var input = INPUT.MouseInput(mouseInput);
-            // Send the command
-            if (User32.SendInput(1, new[] { input }, INPUT.Size) == 0)
-            {
-                // An error occured
-                var errorCode = Marshal.GetLastWin32Error();
-                //Logger.Default.Warn("Could not send mouse input. ErrorCode: {0}", errorCode);
-            }
+            // Send the command;
+            _ = User32.SendInput(1, new[] { input }, INPUT.Size);
+            
         }
 
         /// <summary>
