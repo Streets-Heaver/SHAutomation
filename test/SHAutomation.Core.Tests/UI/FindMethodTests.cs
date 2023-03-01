@@ -27,7 +27,7 @@ namespace SHAutomation.Core.Tests.UI
 
                 window.SaveXPathCache(TestContext.TestName);
                 window.GetXPathCache(TestContext.TestName);
-                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Custom/Group/Group[5]/Button[@AutomationId='num3Button']"));
             }
         }
 
@@ -77,7 +77,7 @@ namespace SHAutomation.Core.Tests.UI
                 var window = calc.GetMainWindow();
 
                 window.XPathList.Clear();
-                window.XPathList.Add(("num34Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
+                window.XPathList.Add(("num34Button", "AutomationId", @"/Custom/Group/Group[5]/Button[@AutomationId='num3Button']"));
                 Action act = () =>
                 {
                     var num3Button = window.Find("num34Button", TimeSpan.FromSeconds(20), null);
@@ -180,7 +180,7 @@ namespace SHAutomation.Core.Tests.UI
             {
                 var window = calc.GetMainWindow();
 
-                var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
+                var num3Button = window.FindAllByXPath("/Custom/Group/Group[5]/Button[@AutomationId='num3Button']");
                 num3Button.Should().HaveCount(1);
                 num3Button[0].FoundByXPath.Should().BeTrue();
             }
@@ -309,9 +309,9 @@ namespace SHAutomation.Core.Tests.UI
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
             {
                 var window = calc.GetMainWindow();
-                Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Length == 4, TimeSpan.FromSeconds(10));
+                Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Length == 3, TimeSpan.FromSeconds(10));
                 var pad = window.FindAllDescendantsNameStartsWith("Standard");
-                pad.Length.Should().Be(4);
+                pad.Length.Should().Be(3);
             }
         }
         [TestMethod]
@@ -334,7 +334,7 @@ namespace SHAutomation.Core.Tests.UI
 
                 var pad = window.FindAllDescendantsNameContains("Memory");
                 var test = pad[0].FindFirstChild();
-                pad.Length.Should().Be(7);
+                pad.Length.Should().Be(5);
             }
         }
     }
