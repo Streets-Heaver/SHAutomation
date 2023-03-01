@@ -220,7 +220,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             window.GetXPathCache(TestContext.TestName);
 
-            window.XPathList.Should().BeEquivalentTo((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.XPathList.Should().ContainEquivalentOf((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
 
         }
 

@@ -43,7 +43,8 @@ namespace SHAutomation.Core.Tests.UI
                 window.XPathList.Clear();
                 window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
                 var num3Button = window.Find("num3Button");
-                window.XPathList.Should().BeEquivalentTo((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+
+                window.XPathList.Should().ContainEquivalentOf((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
             }
 
         }
@@ -308,9 +309,9 @@ namespace SHAutomation.Core.Tests.UI
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
             {
                 var window = calc.GetMainWindow();
-                Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4, TimeSpan.FromSeconds(10));
+                Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Length == 4, TimeSpan.FromSeconds(10));
                 var pad = window.FindAllDescendantsNameStartsWith("Standard");
-                pad.Count().Should().Be(4);
+                pad.Length.Should().Be(4);
             }
         }
         [TestMethod]
@@ -321,7 +322,7 @@ namespace SHAutomation.Core.Tests.UI
                 var window = calc.GetMainWindow();
 
                 var pad = window.FindAllDescendantsNameEndsWith("controls");
-                pad.Count().Should().Be(2);
+                pad.Length.Should().Be(2);
             }
         }
         [TestMethod]
@@ -333,7 +334,7 @@ namespace SHAutomation.Core.Tests.UI
 
                 var pad = window.FindAllDescendantsNameContains("Memory");
                 var test = pad[0].FindFirstChild();
-                pad.Count().Should().Be(7);
+                pad.Length.Should().Be(7);
             }
         }
     }

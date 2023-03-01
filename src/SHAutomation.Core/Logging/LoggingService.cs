@@ -1,5 +1,6 @@
 ﻿using ElasticLogging;
 using ElasticLogging.Classes;
+using Nest;
 using SHAutomation.Core.Enums;
 using System;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace SHAutomation.Core.Logging
 {
     public class LoggingService : ILoggingService
     {
-        private readonly Logger _elasticLogging;
+        private readonly IElasticLogging _elasticLogging;
         private readonly bool _disabled;
 
         public LoggingService()
@@ -19,12 +20,12 @@ namespace SHAutomation.Core.Logging
             _disabled = true;
         }
 
-        public LoggingService(LoggingSettings loggingSettings, string name, bool logToFile)
+        public LoggingService(ConnectionSettings connectionSettings, LoggingSettings loggingSettings)
         {
-            _elasticLogging = new Logger(loggingSettings, name, logToFile);
+            _elasticLogging = new ElasticLogging.ElasticLogging(connectionSettings, loggingSettings);
         }
 
-        public LoggingService(Logger elasticLogging)
+        public LoggingService(ElasticLogging.ElasticLogging elasticLogging)
         {
             if (elasticLogging != null)
             {
@@ -70,7 +71,7 @@ namespace SHAutomation.Core.Logging
 
         }
 
-        
+
 
         public void Warn(string message)
         {
