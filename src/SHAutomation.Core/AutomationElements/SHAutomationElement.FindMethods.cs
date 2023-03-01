@@ -128,7 +128,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return null;
             }
-            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
+            catch (Exception ex) when (ex is COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
             {
                 return null;
             }
@@ -168,7 +168,7 @@ namespace SHAutomation.Core.AutomationElements
                 }
                 return itemList.ToArray();
             }
-            catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
+            catch (Exception ex) when (ex is COMException || ex is NullReferenceException || ex is XPathException || ex is InvalidOperationException)
             {
                 return Array.Empty<SHAutomationElement>();
             }

@@ -52,7 +52,7 @@ namespace SHAutomation.Core.Tools
             {
                 nativeAction();
             }
-            catch (System.Runtime.InteropServices.COMException ex)
+            catch (COMException ex)
             {
                 if (ConvertException(ex, out Exception newEx))
                 {
@@ -77,7 +77,7 @@ namespace SHAutomation.Core.Tools
                     throw Marshal.GetExceptionForHR(hr);
                 }
             }
-            catch (System.Runtime.InteropServices.COMException ex)
+            catch (COMException ex)
             {
                 if (ConvertException(ex, out Exception newEx))
                 {
@@ -97,7 +97,7 @@ namespace SHAutomation.Core.Tools
             {
                 return nativeAction();
             }
-            catch (System.Runtime.InteropServices.COMException ex)
+            catch (COMException ex)
             {
                 if (ConvertException(ex, out Exception newEx))
                 {
@@ -111,7 +111,7 @@ namespace SHAutomation.Core.Tools
         /// <summary>
         /// Tries to convert a com exception to a more usable exception.
         /// </summary>
-        public static bool ConvertException(System.Runtime.InteropServices.COMException ex, out Exception uiaException)
+        public static bool ConvertException(COMException ex, out Exception uiaException)
         {
             var handled = true;
             switch ((uint)ex.ErrorCode)

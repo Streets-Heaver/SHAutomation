@@ -336,7 +336,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Gets a clickable point of the element.
         /// </summary>
-        /// <exception cref="Exceptions.NoClickablePointException">Thrown when no clickable point was found</exception>
+        /// <exception cref="NoClickablePointException">Thrown when no clickable point was found</exception>
         public Point GetClickablePoint()
         {
             return FrameworkAutomationElement.GetClickablePoint();
