@@ -22,15 +22,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
                         return "PART_LineUpButton";
                     case FrameworkType.WinForms:
                     case FrameworkType.Win32:
-                        switch (AutomationType)
-                        {
-                            case AutomationType.UIA2:
-                                return "SmallDecrement";
-                            case AutomationType.UIA3:
-                                return "UpButton";
-                            default:
-                                throw new NotImplementedException();
-                        }
+                        return "UpButton";
                     default:
                         throw new NotImplementedException();
                 }
@@ -48,15 +40,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
                         return "PART_LineDownButton";
                     case FrameworkType.WinForms:
                     case FrameworkType.Win32:
-                        switch (AutomationType)
-                        {
-                            case AutomationType.UIA2:
-                                return "SmallIncrement";
-                            case AutomationType.UIA3:
-                                return "DownButton";
-                            default:
-                                throw new NotImplementedException();
-                        }
+                        return "DownButton";
                     default:
                         throw new NotImplementedException();
                 }
@@ -74,15 +58,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
                         return "PageUp";
                     case FrameworkType.WinForms:
                     case FrameworkType.Win32:
-                        switch (AutomationType)
-                        {
-                            case AutomationType.UIA2:
-                                return "LargeDecrement";
-                            case AutomationType.UIA3:
-                                return "DownPageButton";
-                            default:
-                                throw new NotImplementedException();
-                        }
+                        return "DownPageButton";
                     default:
                         throw new NotImplementedException();
                 }
@@ -100,15 +76,7 @@ namespace SHAutomation.Core.AutomationElements.Scrolling
                         return "PageDown";
                     case FrameworkType.WinForms:
                     case FrameworkType.Win32:
-                        switch (AutomationType)
-                        {
-                            case AutomationType.UIA2:
-                                return "LargeIncrement";
-                            case AutomationType.UIA3:
-                                return "UpPageButton";
-                            default:
-                                throw new NotImplementedException();
-                        }
+                        return "UpPageButton";
                     default:
                         throw new NotImplementedException();
                 }

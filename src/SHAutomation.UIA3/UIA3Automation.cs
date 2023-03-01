@@ -28,7 +28,6 @@ namespace SHAutomation.UIA3
         public override ITreeWalkerFactory TreeWalkerFactory { get; }
 
         /// <inheritdoc />
-        public override AutomationType AutomationType => AutomationType.UIA3;
 
         /// <inheritdoc />
         public override object NotSupportedValue => NativeAutomation.ReservedNotSupportedValue;

@@ -310,7 +310,7 @@ namespace SHAutomation.UIA3
         /// <param name="pathToConfigFile">Path to SHAutomtion.json</param>
         public Window GetMainWindow(string pathToConfigFile)
         {
-            return GetMainWindow( null, pathToConfigFile);
+            return GetMainWindow(null, pathToConfigFile);
         }
 
 
@@ -342,17 +342,14 @@ namespace SHAutomation.UIA3
         /// </summary>
         public Window[] GetAllTopLevelWindows()
         {
-            var desktop = _automation.GetDesktop();
-            var foundElements = desktop.FindAllChildren(cf => cf.ByControlType(ControlType.Window).And(cf.ByProcessId(ProcessId)));
-            return foundElements.Select(x => x.AsWindow()).ToArray();
+            return _automation.GetDesktop().FindAllChildren(cf => cf.ByControlType(ControlType.Window).And(cf.ByProcessId(ProcessId))).Select(x => x.AsWindow()).ToArray();
         }
 
         private static Process FindProcess(int processId)
         {
             try
             {
-                var process = Process.GetProcessById(processId);
-                return process;
+                return Process.GetProcessById(processId);
             }
             catch (Exception ex)
             {

@@ -246,13 +246,13 @@ namespace SHAutomation.UIA3
         public override PatternId[] GetSupportedPatterns()
         {
             Automation.NativeAutomation.PollForPotentialSupportedPatterns(NativeElement, out int[] rawIds, out string[] _);
-            return rawIds.Select(id => PatternId.Find(Automation.AutomationType, id)).ToArray();
+            return rawIds.Select(id => PatternId.Find(id)).ToArray();
         }
 
         public override PropertyId[] GetSupportedProperties()
         {
             Automation.NativeAutomation.PollForPotentialSupportedProperties(NativeElement, out int[] rawIds, out string[] _);
-            return rawIds.Select(id => PropertyId.Find(Automation.AutomationType, id)).ToArray();
+            return rawIds.Select(id => PropertyId.Find(id)).ToArray();
         }
 
        

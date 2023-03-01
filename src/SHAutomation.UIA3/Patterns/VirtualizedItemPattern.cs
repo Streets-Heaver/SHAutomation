@@ -10,7 +10,7 @@ namespace SHAutomation.UIA3.Patterns
 {
     public class VirtualizedItemPattern : PatternBase<UIA.IUIAutomationVirtualizedItemPattern>, IVirtualizedItemPattern
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_VirtualizedItemPatternId, "VirtualizedItem", AutomationObjectIds.IsVirtualizedItemPatternAvailableProperty);
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_VirtualizedItemPatternId, "VirtualizedItem", AutomationObjectIds.IsVirtualizedItemPatternAvailableProperty);
 
         public VirtualizedItemPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationVirtualizedItemPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

@@ -38,11 +38,6 @@ namespace SHAutomation.Core.AutomationElements
         public ConditionFactory ConditionFactory => FrameworkAutomationElement.Automation.ConditionFactory;
 
         /// <summary>
-        /// The current <see cref="AutomationType" /> for this element.
-        /// </summary>
-        public AutomationType AutomationType => FrameworkAutomationElement.Automation.AutomationType;
-
-        /// <summary>
         /// Standard UIA patterns of this element.
         /// </summary>
         public FrameworkAutomationElementBase.IFrameworkPatterns Patterns => FrameworkAutomationElement.Patterns;
@@ -236,21 +231,6 @@ namespace SHAutomation.Core.AutomationElements
         public Point BottomRight()
         {
             return new Point(Properties.BoundingRectangle.ValueOrDefault.Right, Properties.BoundingRectangle.ValueOrDefault.Bottom);
-        }
-
-        private void PerformMouseAction(bool moveMouse, Action action)
-        {
-            var clickablePoint = GetClickablePoint();
-            if (moveMouse)
-            {
-                Mouse.MoveTo(clickablePoint);
-            }
-            else
-            {
-                Mouse.Position = clickablePoint;
-            }
-            action();
-            Wait.UntilInputIsProcessed();
         }
 
         /// <summary>
@@ -912,7 +892,7 @@ namespace SHAutomation.Core.AutomationElements
         public bool WaitUntilPropertyEquals(PropertyId property, bool expected, TimeSpan timeout)
         {
             object value = null;
-            if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
+            if (property == PropertyId.Register(30022, "IsOffscreen"))
             {
                 return Wait.UntilTrue(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? == !expected, timeout);
             }
@@ -1044,7 +1024,7 @@ namespace SHAutomation.Core.AutomationElements
         public bool WaitUntilPropertyNotEquals(PropertyId property, bool current, TimeSpan timeout)
         {
             object value = null;
-            if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
+            if (property == PropertyId.Register(30022, "IsOffscreen"))
             {
                 return Wait.UntilTrue(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? != !current, timeout);
             }

@@ -76,7 +76,7 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                if (parent.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen")) != null)
+                if (parent.GetCurrentPropertyValue(PropertyId.Register(30022, "IsOffscreen")) != null)
                     control = parent.FindFirstDescendant(conditionFunc, timeout);
                 else
                     throw new ElementNotFoundException("Parent not found");
@@ -143,7 +143,7 @@ namespace SHAutomation.Core.AutomationElements
                 exists = false;
             else if (checkOnScreen)
             {
-                control.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"), false, offscreenTimeout);
+                control.WaitUntilPropertyEquals(PropertyId.Register(30022, "IsOffscreen"), false, offscreenTimeout);
 
                 exists = control.IsOnscreen;
             }

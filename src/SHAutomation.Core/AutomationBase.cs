@@ -70,11 +70,6 @@ namespace SHAutomation.Core
         public abstract ITreeWalkerFactory TreeWalkerFactory { get; }
 
         /// <summary>
-        /// The <see cref="AutomationType"/> of the automation implementation.
-        /// </summary>
-        public abstract AutomationType AutomationType { get; }
-
-        /// <summary>
         /// Object which represents the "Not Supported" value.
         /// </summary>
         public abstract object NotSupportedValue { get; }

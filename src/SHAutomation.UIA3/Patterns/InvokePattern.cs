@@ -15,12 +15,12 @@ namespace SHAutomation.UIA3.Patterns
         /// <summary>
         /// The <see cref="PatternId"/> for this pattern.
         /// </summary>
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_InvokePatternId, "Invoke", AutomationObjectIds.IsInvokePatternAvailableProperty);
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_InvokePatternId, "Invoke", AutomationObjectIds.IsInvokePatternAvailableProperty);
 
         /// <summary>
         /// The <see cref="EventId"/> for the invoked event.
         /// </summary>
-        public static readonly EventId InvokedEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_Invoke_InvokedEventId, "Invoked");
+        public static readonly EventId InvokedEvent = EventId.Register( UIA.UIA_EventIds.UIA_Invoke_InvokedEventId, "Invoked");
 
         /// <summary>
         /// Creates an UIA3 <see cref="IInvokePattern"/>.

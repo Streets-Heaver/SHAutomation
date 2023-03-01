@@ -11,7 +11,7 @@ namespace SHAutomation.UIA3.Patterns
 {
     public class Text2Pattern : TextPattern, IText2Pattern
     {
-        public new static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_TextPattern2Id, "Text2", AutomationObjectIds.IsTextPattern2AvailableProperty);
+        public new static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_TextPattern2Id, "Text2", AutomationObjectIds.IsTextPattern2AvailableProperty);
 
         public Text2Pattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationTextPattern2 nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

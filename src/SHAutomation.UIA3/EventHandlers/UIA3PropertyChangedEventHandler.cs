@@ -20,7 +20,7 @@ namespace SHAutomation.UIA3.EventHandlers
         {
             var frameworkElement = new UIA3FrameworkAutomationElement((UIA3Automation)Automation, sender);
             var senderElement = new SHAutomationElement(frameworkElement);
-            var property = PropertyId.Find(Automation.AutomationType, propertyId);
+            var property = PropertyId.Find(propertyId);
             HandlePropertyChangedEvent(senderElement, property, newValue);
         }
     }

@@ -16,7 +16,6 @@ namespace SHAutomation.Core.AutomationElements
         double ActualWidth { get; }
         AutomationBase Automation { get; }
         string AutomationId { get; }
-        AutomationType AutomationType { get; }
         Rectangle BoundingRectangle { get; }
         string ClassName { get; }
         Point? ClickablePoint { get; }

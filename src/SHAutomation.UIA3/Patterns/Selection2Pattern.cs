@@ -8,11 +8,11 @@ namespace SHAutomation.UIA3.Patterns
 {
     public class Selection2Pattern : Selection2PatternBase<UIA.IUIAutomationSelectionPattern2>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_SelectionPattern2Id, "Selection2", AutomationObjectIds.IsSelectionPattern2AvailableProperty);
-        public static readonly PropertyId CurrentSelectedItemProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_Selection2CurrentSelectedItemPropertyId, "CurrentSelectedItem");
-        public static readonly PropertyId FirstSelectedItemProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_Selection2FirstSelectedItemPropertyId, "FirstSelectedItem");
-        public static readonly PropertyId ItemCountProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_Selection2ItemCountPropertyId, "ItemCount");
-        public static readonly PropertyId LastSelectedItemProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_Selection2LastSelectedItemPropertyId, "LastSelectedItem");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_SelectionPattern2Id, "Selection2", AutomationObjectIds.IsSelectionPattern2AvailableProperty);
+        public static readonly PropertyId CurrentSelectedItemProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_Selection2CurrentSelectedItemPropertyId, "CurrentSelectedItem");
+        public static readonly PropertyId FirstSelectedItemProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_Selection2FirstSelectedItemPropertyId, "FirstSelectedItem");
+        public static readonly PropertyId ItemCountProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_Selection2ItemCountPropertyId, "ItemCount");
+        public static readonly PropertyId LastSelectedItemProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_Selection2LastSelectedItemPropertyId, "LastSelectedItem");
 
         private readonly SelectionPattern _selectionPattern;
 

@@ -69,7 +69,7 @@ namespace SHAutomation.Core.Tests.UI
             {
                 var window = calc.GetMainWindow();
                 var pad = window.Find(x => x.ByAutomationId("NumberPad"));
-                var offscreenValue = pad.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"));
+                var offscreenValue = pad.GetCurrentPropertyValue(PropertyId.Register(30022, "IsOffscreen"));
 
                 ((bool)offscreenValue == false).Should().BeTrue();
             }
@@ -86,8 +86,8 @@ namespace SHAutomation.Core.Tests.UI
                 var resultsName = results.Name;
                 window.Find(x => x.ByAutomationId("clearEntryButton")).Click();
 
-                results.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30005, "Name"), "Display is 0", TimeSpan.FromMilliseconds(500));
-                var nameValue = results.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30005, "Name"));
+                results.WaitUntilPropertyEquals(PropertyId.Register(30005, "Name"), "Display is 0", TimeSpan.FromMilliseconds(500));
+                var nameValue = results.GetCurrentPropertyValue(PropertyId.Register(30005, "Name"));
 
                 ((string)nameValue != resultsName).Should().BeTrue();
             }

@@ -40,12 +40,7 @@ namespace SHAutomation.Core.AutomationElements
             set
             {
                 EditableItem.Text = value;
-                // UIA2/WinForms does not set the selected item until it is expanded
-                if (AutomationType == AutomationType.UIA2 && FrameworkType == FrameworkType.WinForms)
-                {
-                    Expand();
-                    Collapse();
-                }
+               
             }
         }
 
