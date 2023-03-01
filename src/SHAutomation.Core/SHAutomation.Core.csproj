@@ -1,59 +1,64 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup Label="Build">
-    <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Label="Build">
+		<TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-  </PropertyGroup>
+	<PropertyGroup>
+		<IncludeSource>True</IncludeSource>
+		<IncludeSymbols>True</IncludeSymbols>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
-    <DocumentationFile />
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
+		<DocumentationFile />
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
 
-  <PropertyGroup Label="Signing" Condition="'$(EnableSigning)'=='true'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../SHAutomation.snk</AssemblyOriginatorKeyFile>
-    <PublicSign Condition="'$(OS)'!='Windows_NT'">true</PublicSign>
-    <PackageId>SHAutomation.Core.Signed</PackageId>
-    <OutputPath>bin\$(Configuration)\Signed</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\Signed</IntermediateOutputPath>
-  </PropertyGroup>
+	<PropertyGroup Label="Signing" Condition="'$(EnableSigning)'=='true'">
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>../../SHAutomation.snk</AssemblyOriginatorKeyFile>
+		<PublicSign Condition="'$(OS)'!='Windows_NT'">true</PublicSign>
+		<PackageId>SHAutomation.Core.Signed</PackageId>
+		<OutputPath>bin\$(Configuration)\Signed</OutputPath>
+		<IntermediateOutputPath>obj\$(Configuration)\Signed</IntermediateOutputPath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ElasticLogging" Version="1.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="StackExchange.Redis" Version="2.6.96" />
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.1" />
-    <PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
-    <PackageReference Include="System.Management" Version="6.0.0" />
-    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ElasticLogging" Version="1.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="StackExchange.Redis" Version="2.6.96" />
+		<PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.1" />
+		<PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
+		<PackageReference Include="System.Management" Version="6.0.0" />
+		<PackageReference Include="System.Security.Permissions" Version="6.0.0" />
+		<PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows'">
-    <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Management" />
-    <Reference Include="Accessibility" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net471'">
-    <Reference Include="System.IO.Compression" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows'">
+		<Reference Include="PresentationFramework" />
+		<Reference Include="PresentationCore" />
+		<Reference Include="WindowsBase" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Management" />
+		<Reference Include="Accessibility" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="System.ServiceModel" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net471'">
+		<Reference Include="System.IO.Compression" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.ServiceModel" />
+	</ItemGroup>
 
 </Project>
