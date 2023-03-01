@@ -20,9 +20,8 @@ namespace SHAutomation.Core.Tests.UI
         public void NewXPathIsSaved_Find_BeEquivalentTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 window.XPathList.Clear();
                 var num3Button = window.Find("num3Button");
 
@@ -38,9 +37,8 @@ namespace SHAutomation.Core.Tests.UI
         public void FoundElementXPathStoredInCache_Find_BeEquivalentTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 window.XPathList.Clear();
                 window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
@@ -53,9 +51,8 @@ namespace SHAutomation.Core.Tests.UI
         public void FoundElementXPathRequestCancelled_Find_BeEquivalentTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 window.XPathList.Clear();
                 window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num32Button']"));
@@ -75,9 +72,8 @@ namespace SHAutomation.Core.Tests.UI
         public void FoundElementConditionRequestCancelled_Find_BeEquivalentTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 window.XPathList.Clear();
                 window.XPathList.Add(("num34Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
@@ -97,9 +93,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFoundUsingConditionAndCache_Find_NotBeNull()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 window.GetXPathCache(TestContext.TestName);
 
@@ -115,9 +110,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFoundUsingAutomationId_Find_NotBeNull()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.Find("num3Button");
                 num3Button.Should().NotBeNull();
@@ -130,9 +124,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFoundUsingCondition_Find_NotBeNull()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.Find(x => x.ByAutomationId("num3Button"));
                 num3Button.Should().NotBeNull();
@@ -143,9 +136,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFoundUsingParent_Find_NotBeNull()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
                 var num3Button = window.Find(x => x.ByAutomationId("num3Button"), parent: numberPad);
                 num3Button.Should().NotBeNull();
@@ -155,9 +147,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementNotFoundWaitsForTimeout_Find_BeGreaterOrEqualTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), TimeSpan.FromSeconds(5));
                 var elapsed = PerformanceDiagnostics.Time(() =>
                 {
@@ -170,9 +161,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementNotFoundUsingParentWaitsForTimeout_Find_BeGreaterOrEqualTo()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var numberPad = window.Find(x => x.ByAutomationId("NumberPad"));
                 Action act = () => window.Find(x => x.ByAutomationId("nonExistentId"), TimeSpan.FromSeconds(5), parent: numberPad);
                 var elapsed = PerformanceDiagnostics.Time(() =>
@@ -186,9 +176,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFound_FindAllByXPath_HaveCount()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='num3Button']");
                 num3Button.Should().HaveCount(1);
@@ -200,9 +189,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementNotFound_FindAllByXPath_HaveCount()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.FindAllByXPath("/Group/Group[5]/Button[@AutomationId='randomthing']", TimeSpan.FromSeconds(2));
                 num3Button.Should().BeEmpty();
@@ -214,9 +202,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ElementFound_FindFirstDescendant_NotBeNull()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.FindFirstDescendant("num3Button");
                 num3Button.FoundByXPath.Should().BeFalse();
@@ -229,9 +216,8 @@ namespace SHAutomation.Core.Tests.UI
         public void FindsSingleElement_FindAllDescendants_BeOne()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var num3Button = window.FindAllDescendants(x => x.ByAutomationId("num3Button"));
                 num3Button.Length.Should().Be(1);
@@ -243,9 +229,8 @@ namespace SHAutomation.Core.Tests.UI
         public void FindsMultipleElements_FindAllDescendants_BeGreaterThanOne()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var buttons = window.FindAllDescendants(x => x.ByControlType(Definitions.ControlType.Button));
                 buttons.Length.Should().BeGreaterThan(1);
@@ -258,9 +243,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ExceptionThrownWhenParentNoLongerExists_Find_ThrowElementNotFoundException()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var automationElement = new Mock<ISHAutomationElement>();
                 Action act = () => window.Find("EquationsIconX", automationElement.Object);
                 act.Should().Throw<ElementNotFoundException>().WithMessage("Parent not found");
@@ -271,9 +255,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ExceptionNotThrownWhenParentExists_Find_NotThrowElementNotFoundException()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 Action act = () => window.Find("num9Button", window.Find("NumberPad"));
                 act.Should().NotThrow<ElementNotFoundException>();
             }
@@ -282,9 +265,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindFirstDescendantNameStartsWith_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var pad = window.FindFirstDescendantNameStartsWith("Number");
                 pad.Name.Should().Be("Number pad");
@@ -296,9 +278,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindFirstDescendantNameEndsWith_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var pad = window.FindFirstDescendantNameEndsWith("pad");
                 pad.Name.Should().Be("Number pad");
@@ -310,9 +291,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindFirstDescendantNameContains_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var pad = window.FindFirstDescendantNameContains("pad");
                 pad.Name.Should().Be("Number pad");
@@ -326,9 +306,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindAllDescendantNameStartsWith_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 Wait.UntilTrue(() => window.FindAllDescendantsNameStartsWith("Standard").Count() == 4, TimeSpan.FromSeconds(10));
                 var pad = window.FindAllDescendantsNameStartsWith("Standard");
                 pad.Count().Should().Be(4);
@@ -338,9 +317,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindAllDescendantNameEndsWith_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var pad = window.FindAllDescendantsNameEndsWith("controls");
                 pad.Count().Should().Be(2);
@@ -350,9 +328,8 @@ namespace SHAutomation.Core.Tests.UI
         public void CorrectElementReturned_FindAllDescendantNameContains_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var pad = window.FindAllDescendantsNameContains("Memory");
                 var test = pad[0].FindFirstChild();

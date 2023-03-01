@@ -76,7 +76,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Flag to indicate, if the window is the application's main window.
         /// Is used so that it does not need to be looked up again in some cases (e.g. Context Menu).
         /// </summary>
-        internal bool IsMainWindow { get; set; }
+        public bool IsMainWindow { get; set; }
 
         /// <summary>
         /// Gets a list of all modal child windows.

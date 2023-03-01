@@ -18,9 +18,8 @@ namespace SHAutomation.Core.Tests.UI
         public void StringRepresentationReturnedCorrectly_ToString_ShouldBeCorrectString()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 window.Find("num3Button").ToString().Should().Be("AutomationId:num3Button, Name:Three, ControlType:button, FrameworkId:XAML");
             }
@@ -30,9 +29,8 @@ namespace SHAutomation.Core.Tests.UI
         public void TimeOutNotOverloadedFindFirstByXPath_FindFirstByXPath_Be()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 window.Exists(x => x.ByAutomationId("num2Button"), TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5)).Should().BeTrue();
                 var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']");
                 item.AutomationId.Should().Be("num3Button");
@@ -43,9 +41,8 @@ namespace SHAutomation.Core.Tests.UI
         public void TimeOutWithOverloadedFindFirstByXPath_FindFirstByXPath_Be()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
 
                 var item = window.FindFirstByXPath("//*[@AutomationId='num3Button']", TimeSpan.FromSeconds(10));
                 item.AutomationId.Should().Be("num3Button");
@@ -56,9 +53,8 @@ namespace SHAutomation.Core.Tests.UI
         public void TimeOutWaitsFullAmountFindFirstByXPath_FindFirstByXPath_Be()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 DateTime previousTime = DateTime.Now;
                 window.FindFirstByXPath("//*[@AutomationId='randomThing']", TimeSpan.FromSeconds(10)).Should().BeNull();
                 DateTime.Now.Subtract(previousTime).Should().BeGreaterOrEqualTo(TimeSpan.FromSeconds(9));
@@ -70,9 +66,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ReturnsExpectedValue_GetCurrentPropertyValue_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var pad = window.Find(x => x.ByAutomationId("NumberPad"));
                 var offscreenValue = pad.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"));
 
@@ -84,9 +79,8 @@ namespace SHAutomation.Core.Tests.UI
         public void ReturnsUpdatedValue_GetCurrentPropertyValue_BeTrue()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 window.Find(x => x.ByAutomationId("num3Button")).Click();
                 var results = window.Find(x => x.ByAutomationId("CalculatorResults"));
                 var resultsName = results.Name;
@@ -102,9 +96,8 @@ namespace SHAutomation.Core.Tests.UI
         public void HoverOverMovesMouse_HoverOver_Be()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var btn = window.Find("num3Button");
                 btn.HoverOver();
                 Mouse.Position.X.Should().BeInRange(btn.CentreLeft().X, btn.CentreRight().X);
@@ -115,9 +108,8 @@ namespace SHAutomation.Core.Tests.UI
         public void HoverOverErrorMessageGivesElementDetails_HoverOver_Be()
         {
             using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
-            using (var automation = new UIA3Automation())
             {
-                var window = calc.GetMainWindow(automation);
+                var window = calc.GetMainWindow();
                 var btn = window.Find("PaneTitleTextBlock");
                 Action act = () => btn.HoverOver();
                 act.Should().Throw<InvalidOperationException>().WithMessage("HoverOver bounding rectangle is not supported for AutomationId:PaneTitleTextBlock, Name:, ControlType:text, FrameworkId:XAML");
