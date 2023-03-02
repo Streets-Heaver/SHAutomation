@@ -31,13 +31,13 @@
 	<ItemGroup>
 		<PackageReference Include="ElasticLogging" Version="1.0.0" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="StackExchange.Redis" Version="2.6.96" />
-		<PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
+		<PackageReference Include="System.IO.Abstractions" Version="19.1.18" />
 		<PackageReference Include="System.Management" Version="6.0.0" />
 	</ItemGroup>
 

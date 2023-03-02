@@ -27,13 +27,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="ElasticLogging" Version="1.0.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="StackExchange.Redis" Version="2.6.96" />
 		<PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.1" />
-		<PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
+		<PackageReference Include="System.IO.Abstractions" Version="19.1.18" />
 		<PackageReference Include="System.Management" Version="6.0.0" />
 		<PackageReference Include="System.Security.Permissions" Version="6.0.0" />
 		<PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
