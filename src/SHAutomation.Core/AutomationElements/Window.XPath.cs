@@ -251,6 +251,7 @@ namespace SHAutomation.Core.AutomationElements
             }
         }
 
+
         private void GenerateXPathAndCache(string identifier, string property, SHAutomationElement element, bool regenerateXPath)
         {
             lock (_xPathValues)
@@ -260,9 +261,13 @@ namespace SHAutomation.Core.AutomationElements
 
                     if (!_xPathValues.Any() || regenerateXPath)
                     {
-                        string xpath = XPathHelper.GetXPathToElement(element, this);
-                        if (!string.IsNullOrEmpty(xpath))
-                            _xPathValues.Add(xpath);
+                        var xpathBuilder = new StringBuilder();
+                        var xpathToElement = XPathHelper.GetXPathToElement(element, this);
+                        if (!string.IsNullOrEmpty(xpathToElement))
+                        {
+                            xpathBuilder.Append(xpathToElement);
+                            _xPathValues.Add(xpathBuilder.ToString());
+                        }
                         _hasXPathValue = false;
                     }
                     else
@@ -272,9 +277,9 @@ namespace SHAutomation.Core.AutomationElements
 
                     if (_xPathValues.Any() && !_hasXPathValue)
                     {
-                        foreach (string str in _xPathValues)
+                        foreach (var xpathValue in _xPathValues)
                         {
-                            var items = str.Split('/').ToList();
+                            var items = xpathValue.Split('/').ToList();
                             // "" and Window
                             var lastItem = items.Last();
                             items.RemoveRange(0, 1);
@@ -300,20 +305,20 @@ namespace SHAutomation.Core.AutomationElements
 
                             if (items.Any())
                             {
-                                items.RemoveAt(items.Count - 1);
+                                items[items.Count - 1] = lastItem;
                             }
-                            items.Add(lastItem);
-                            string newStr = string.Join("/", items);
+                            var newStr = string.Join("/", items);
 
                             //If cache already contains the value then remove and replace with up-to-date version
-                            if (XPathList.Any(x => x.identifier == identifier && x.xpath == ("/" + newStr)))
+                            var existingXPath = XPathList.SingleOrDefault(x => x.identifier == identifier && x.xpath == ("/" + newStr));
+                            if (existingXPath.Equals(default(ValueTuple<string, string, string>)))
                             {
-                                var removeItem = XPathList.FirstOrDefault(x => x.xpath == ("/" + newStr));
-                                XPathList.Remove(removeItem);
+                                XPathList.Remove(existingXPath);
                             }
 
                             XPathList.Add((identifier, property, xpath: "/" + newStr));
                             UsedXPaths.Add("/" + newStr);
+
                         }
                     }
                 }
