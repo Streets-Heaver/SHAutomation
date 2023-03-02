@@ -3,7 +3,6 @@ using System;
 using System.Threading;
 using SHAutomation.Core.WindowsAPI;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace SHAutomation.Core.StaticClasses
 {

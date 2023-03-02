@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.Tools;
 
 namespace SHAutomation.Core.AutomationElements
 {

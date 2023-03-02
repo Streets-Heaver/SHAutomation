@@ -1,5 +1,4 @@
-﻿using SHAutomation.Core.Enums;
-using System;
+﻿using System;
 
 namespace SHAutomation.Core.Logging
 {

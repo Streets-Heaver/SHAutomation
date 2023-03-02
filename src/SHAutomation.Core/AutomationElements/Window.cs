@@ -7,7 +7,6 @@ using SHAutomation.Core.Definitions;
 using SHAutomation.Core.Exceptions;
 using SHAutomation.Core.Logging;
 using SHAutomation.Core.WindowsAPI;
-using SHAutomation.Core.AutomationElements;
 
 namespace SHAutomation.Core.AutomationElements
 {

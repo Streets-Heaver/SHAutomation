@@ -1,5 +1,4 @@
 ﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Enums;
 using SHAutomation.Core.Exceptions;
 using SHAutomation.Core.Identifiers;
 using SHAutomation.Core.StaticClasses;

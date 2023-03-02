@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Input;
 using SHAutomation.Core.Patterns;
 using SHAutomation.Core.StaticClasses;
 

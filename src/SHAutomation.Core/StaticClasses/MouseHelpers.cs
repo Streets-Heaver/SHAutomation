@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using SHAutomation.Core.Input;
-using System.Threading;
 using System.Drawing;
 using SHAutomation.Core.Tools;
 using SHAutomation.Core.Enums;

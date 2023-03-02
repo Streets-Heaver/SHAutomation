@@ -2,10 +2,8 @@
 using SHAutomation.Core.Caching;
 using SHAutomation.Core.Conditions;
 using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Enums;
 using SHAutomation.Core.ExtensionMethods;
 using SHAutomation.Core.StaticClasses;
-using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;

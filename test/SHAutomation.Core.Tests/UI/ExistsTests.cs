@@ -1,14 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Input;
 using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.WindowsAPI;
 using SHAutomation.UIA3;
 using System;
-using System.Linq;
 
 namespace SHAutomation.Core.Tests.UI
 {

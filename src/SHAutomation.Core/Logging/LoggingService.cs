@@ -1,12 +1,7 @@
 ﻿using ElasticLogging;
 using ElasticLogging.Classes;
 using Nest;
-using SHAutomation.Core.Enums;
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Xml;
 
 namespace SHAutomation.Core.Logging
 {

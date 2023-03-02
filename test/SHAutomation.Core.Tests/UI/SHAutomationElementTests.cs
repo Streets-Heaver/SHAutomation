@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SHAutomation.Core.Identifiers;
 using SHAutomation.Core.Input;
-using SHAutomation.Core.WindowsAPI;
 using SHAutomation.UIA3;
 using System;
 

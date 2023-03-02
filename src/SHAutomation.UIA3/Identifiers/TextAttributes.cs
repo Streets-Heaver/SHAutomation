@@ -1,5 +1,4 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
+﻿using SHAutomation.Core.Identifiers;
 using SHAutomation.UIA3.Converters;
 using UIA = Interop.UIAutomationClient;
 

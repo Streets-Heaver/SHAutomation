@@ -7,7 +7,6 @@ using SHAutomation.Core.Definitions;
 using SHAutomation.Core.EventHandlers;
 using SHAutomation.Core.Exceptions;
 using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Input;
 using SHAutomation.Core.WindowsAPI;
 using SHAutomation.Core.StaticClasses;
 using System.Globalization;
