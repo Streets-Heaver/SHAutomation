@@ -27,7 +27,7 @@ namespace SHAutomation.Core.Tests.UI
 
                 window.SaveXPathCache(TestContext.TestName);
                 window.GetXPathCache(TestContext.TestName);
-                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Custom/Group/Group[5]/Button[@AutomationId='num3Button']"));
+                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Custom[1]/Group[1]/Group[@AutomationId='num3Button']"));
             }
         }
 

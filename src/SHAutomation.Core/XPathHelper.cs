@@ -1,4 +1,5 @@
 ﻿using SHAutomation.Core.AutomationElements;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace SHAutomation.Core
@@ -6,14 +7,12 @@ namespace SHAutomation.Core
 
     public static class XPathHelper
     {
-        private static SHAutomationElement _callingRoot;
         /// <summary>
         /// Gets the XPath to the element until the desktop or the given root element.
         /// Warning: This is quite a heavy operation
         /// </summary>
         public static string GetXPathToElement(SHAutomationElement element, SHAutomationElement rootElement = null)
         {
-            _callingRoot = rootElement;
             var treeWalker = element.Automation.TreeWalkerFactory.GetControlViewWalker();
             return GetXPathToElement(element, treeWalker, rootElement);
         }
@@ -22,37 +21,49 @@ namespace SHAutomation.Core
         {
             try
             {
-                var parent = treeWalker.GetParent(element);
-                if (parent == null || (rootElement != null && parent.Equals(_callingRoot.Parent)))
+                var allElements = new List<SHAutomationElement>();
+                var parent = element;
+                while (parent != null && (rootElement == null || !parent.Equals(rootElement)))
                 {
-                    _callingRoot = null;
-                    return string.Empty;
-                }
-                // Get the index
-                var allChildren = parent.FindAllChildren(cf => cf.ByControlType(element.Properties.ControlType));
-                var currentItemText = $"{element.Properties.ControlType.Value}";
-                if (allChildren.Length > 1)
-                {
-                    // There is more than one matching child, find out the index
-                    var indexInParent = 1; // Index starts with 1
-                    foreach (var child in allChildren)
+                    var parentElement = treeWalker.GetParent(parent);
+                    if (parentElement == null || (rootElement != null && parentElement.Equals(rootElement)))
                     {
-                        if (child.Equals(element))
-                        {
-                            break;
-                        }
-                        indexInParent++;
+                        break;
                     }
-                    currentItemText += $"[{indexInParent}]";
+                    allElements.Add(parentElement);
+                    parent = parentElement;
                 }
-                return $"{GetXPathToElement(parent, treeWalker, rootElement)}/{currentItemText}";
+                allElements.Reverse();
+
+                var xpath = "";
+                foreach (var item in allElements)
+                {
+                    var controlType = item.Properties.ControlType.Value;
+                    var indexInParent = 1;
+                    if (item.Parent != null)
+                    {
+                        var siblings = item.Parent.FindAllChildren(cf => cf.ByControlType(controlType));
+                        if (siblings.Length > 1)
+                        {
+                            for (int i = 0; i < siblings.Length; i++)
+                            {
+                                if (siblings[i].Equals(item))
+                                {
+                                    indexInParent = i + 1;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    xpath += $"/{controlType}[{indexInParent}]";
+                }
+                return xpath;
             }
-            catch(COMException)
+            catch (COMException)
             {
                 return null;
             }
         }
-
 
     }
 }
