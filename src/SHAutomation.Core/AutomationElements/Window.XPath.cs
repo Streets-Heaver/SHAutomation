@@ -402,7 +402,7 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement validXpath = null;
 
-            Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, ref token);
+            Wait.UntilTrue(() => FoundXPathInList(xpath, out validXpath), spinWaitTimeout, token);
             if (validXpath == null)
             {
                 _xPathValues = new SynchronizedCollection<string>();
