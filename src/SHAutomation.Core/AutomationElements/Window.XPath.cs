@@ -336,24 +336,23 @@ namespace SHAutomation.Core.AutomationElements
 
         private bool GetXPathValueFromCache(string identifier, string property, out List<string> xPathValues)
         {
-            _loggingService.Info("Getting XPath From Cache :" + identifier);
+            _loggingService.Info($"Getting XPath From Cache: {identifier}");
 
             xPathValues = new List<string>();
 
             lock (XPathList.SyncRoot)
             {
-                if (XPathList.Any(x => x.identifier.ToUpper() == identifier.ToUpper() && x.property == property))
+                var xPathItems = XPathList.Where(x => x.identifier.Equals(identifier, StringComparison.OrdinalIgnoreCase) && x.property == property);
+                if (xPathItems.Any())
                 {
-                    xPathValues = new List<string>(XPathList.Where(x => x.identifier.ToUpper() == identifier.ToUpper()).Select(x => x.xpath).ToList());
+                    xPathValues = xPathItems.Select(x => x.xpath).ToList();
                     _loggingService.Info("XPath found in Cache");
-
                     return true;
                 }
                 else
                 {
                     _loggingService.Info("XPath not found");
                     return false;
-
                 }
             }
         }
