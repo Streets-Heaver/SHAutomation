@@ -20,7 +20,7 @@ namespace SHAutomation.Core.AutomationElements
 
         void Close();
         bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);
-        bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);
+        bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan? offscreenTimeout = null, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false);
         ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, ISHAutomationElement parent = null);
         ISHAutomationElement Find(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, ISHAutomationElement parent = null);
         ISHAutomationElement Find(string automationID, ISHAutomationElement parent = null);

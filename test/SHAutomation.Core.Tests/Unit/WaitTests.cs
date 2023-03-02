@@ -6,11 +6,11 @@ using System;
 namespace SHAutomation.Core.Tests.Unit
 {
     [TestClass]
-    public class SpinWaitTests
+    public class WaitTests
     {
 
         [TestMethod]
-        public void CheckZeroTimeOutIsInvalid_SpinWait_ThrowInvalidOperationException()
+        public void CheckZeroTimeOutIsInvalid_Wait_ThrowInvalidOperationException()
         {
 
             Action act = () => Wait.UntilTrue(() => true, TimeSpan.Zero);
@@ -21,7 +21,7 @@ namespace SHAutomation.Core.Tests.Unit
         }
 
         [TestMethod]
-        public void CheckNegativeTimeOutIsInvalid_SpinWait_ThrowInvalidOperationException()
+        public void CheckNegativeTimeOutIsInvalid_Wait_ThrowInvalidOperationException()
         {
             Action act = () => Wait.UntilTrue(() => true, TimeSpan.FromMilliseconds(-10));
 
@@ -30,7 +30,7 @@ namespace SHAutomation.Core.Tests.Unit
         }
 
         [TestMethod]
-        public void CheckNonZeroTimeoutIsValid_SpinWait_NotThrowInvalidOperationException()
+        public void CheckNonZeroTimeoutIsValid_Wait_NotThrowInvalidOperationException()
         {
 
             Action act = () => Wait.UntilTrue(() => true, TimeSpan.FromMilliseconds(10));
@@ -41,7 +41,7 @@ namespace SHAutomation.Core.Tests.Unit
         }
 
         [TestMethod]
-        public void TimesOutAfterTimeoutElapses_SpinWait_BeGreaterOrEqualTo()
+        public void TimesOutAfterTimeoutElapses_Wait_BeGreaterOrEqualTo()
         {
 
             var elapsed = PerformanceDiagnostics.Time(() =>
@@ -57,7 +57,7 @@ namespace SHAutomation.Core.Tests.Unit
         }
 
         [TestMethod]
-        public void ReturnsFalseWhenTimedOut_SpinWait_BeFalse()
+        public void ReturnsFalseWhenTimedOut_Wait_BeFalse()
         {
             Wait.UntilTrue(() => true == false, TimeSpan.FromMilliseconds(50)).Should().BeFalse();
         }
