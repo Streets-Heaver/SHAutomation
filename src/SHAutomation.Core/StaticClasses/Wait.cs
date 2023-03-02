@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using SHAutomation.Core.WindowsAPI;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SHAutomation.Core.StaticClasses
 {
@@ -74,12 +75,19 @@ namespace SHAutomation.Core.StaticClasses
 
             while (stopwatch.Elapsed < timeout)
             {
-                cancel.ThrowIfCancellationRequested();
-
-
-                if (condition())
+                try
                 {
-                    return true;
+                    cancel.ThrowIfCancellationRequested();
+
+
+                    if (condition())
+                    {
+                        return true;
+                    }
+                }
+                catch(OperationCanceledException)
+                {
+                    return false;
                 }
 
             }

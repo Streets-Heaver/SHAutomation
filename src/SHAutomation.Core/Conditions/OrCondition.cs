@@ -22,11 +22,9 @@ namespace SHAutomation.Core.Conditions
 
         public override string ToString()
         {
-#if NET35
-            var conditions = string.Join(" OR ", Conditions.Select(c => c.ToString()).ToArray());
-#else
+
             var conditions = string.Join(" OR ", Conditions.Select(c => c.ToString()));
-#endif
+
             return $"({conditions})";
         }
     }
