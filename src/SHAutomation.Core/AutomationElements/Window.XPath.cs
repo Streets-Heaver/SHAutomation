@@ -360,35 +360,35 @@ namespace SHAutomation.Core.AutomationElements
         public new ISHAutomationElement FindFirstByXPath(string xpath, TimeSpan spinWaitTimeout)
         {
             ISHAutomationElement element = null;
-            Func<ISHAutomationElement> function = () => FindFirstByXPath(xpath);
             if (xpath.Contains("&quot;"))
             {
-                xpath = xpath.Replace('\'', '"');
                 xpath = xpath.Replace("&quot;", "'");
-                xpath = xpath.Replace(@"\", "");
             }
-
-
 
             if (spinWaitTimeout != TimeSpan.Zero)
-                Wait.UntilTrue(() => GetElement(function, true, ref element), spinWaitTimeout);
+            {
+                Wait.UntilTrue(() =>
+                {
+                    element = FindFirstByXPath(xpath);
+                    return element?.FrameworkAutomationElement != null;
+                }, spinWaitTimeout);
+            }
             else
             {
-                GetElement(function, false, ref element);
+                element = FindFirstByXPath(xpath);
             }
 
-            if (element != null)
+            if (element == null)
+            {
+                _xPathValues = new SynchronizedCollection<string>();
+            }
+            else
             {
                 Wait.UntilTrue(() => element?.FrameworkAutomationElement != null, TimeSpan.FromSeconds(5));
-            }
-            else if (element == null)
-                _xPathValues = new SynchronizedCollection<string>();
-
-            if (element?.FrameworkAutomationElement != null)
-            {
                 element.FoundByXPath = true;
                 return (SHAutomationElement)element;
             }
+
             return null;
         }
 
