@@ -108,27 +108,25 @@ namespace SHAutomation.Core.AutomationElements
 
         public List<(PropertyCondition Value, bool Ignore)> GetPropertyConditions(ConditionBase condition)
         {
-            List<(PropertyCondition Value, bool Ignore)> propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
-            if (condition is AndCondition)
+            var propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
+            if (condition is AndCondition andCondition)
             {
-                var andCondition = condition as AndCondition;
-                if (andCondition.Conditions.OfType<PropertyCondition>().Count() != andCondition.Conditions.Count)
+                if (andCondition.Conditions.All(c => c is PropertyCondition))
                 {
-                    return new List<(PropertyCondition Value, bool Ignore)>();
-                }
-                foreach (var prop in andCondition.Conditions)
-                {
-                    var propCond = prop as PropertyCondition;
-                    propertyConditions.Add((propCond, propCond.PropertyConditionFlags == PropertyConditionFlag.IgnoreCase));
+                    foreach (var prop in andCondition.Conditions)
+                    {
+                        var propCond = (PropertyCondition)prop;
+                        propertyConditions.Add((propCond, propCond.PropertyConditionFlags == PropertyConditionFlag.IgnoreCase));
+                    }
                 }
             }
-            else if (condition is PropertyCondition)
+            else if (condition is PropertyCondition prop)
             {
-                var prop = condition as PropertyCondition;
                 propertyConditions.Add((prop, prop.PropertyConditionFlags == PropertyConditionFlag.IgnoreCase));
             }
-            return propertyConditions.Any() ? propertyConditions : new List<(PropertyCondition Value, bool Ignore)>();
+            return propertyConditions;
         }
+
         private List<(PropertyCondition Value, bool Ignore)> GetPropertyConditions(Func<ConditionFactory, ConditionBase> conditionFunc)
         {
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));

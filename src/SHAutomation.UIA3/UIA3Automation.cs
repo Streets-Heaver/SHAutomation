@@ -223,14 +223,14 @@ namespace SHAutomation.UIA3
 
             cacheRequestTest.AutomationElementMode = UIA.AutomationElementMode.AutomationElementMode_Full;
 
-            UIA3FrameworkAutomationElement temp = (element.FrameworkAutomationElement as UIA3FrameworkAutomationElement);
+            UIA3FrameworkAutomationElement temp = element.FrameworkAutomationElement as UIA3FrameworkAutomationElement;
 
             UIA.IUIAutomationElement elementAncestor =
                 treeWalker.NormalizeElementBuildCache(temp.NativeElement, cacheRequestTest);
 
             if (elementAncestor != null)
             {
-              SHAutomationElement ancestor = WrapNativeElement(elementAncestor as UIA.IUIAutomationElement);
+              SHAutomationElement ancestor = WrapNativeElement(elementAncestor);
                 return ancestor;
             }
             else
