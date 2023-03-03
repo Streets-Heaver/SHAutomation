@@ -91,6 +91,37 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
                 ((string)nameValue != resultsName).Should().BeTrue();
             }
         }
+
+        [TestMethod]
+        public void ElementIsClickedSuccessfully_Click_ShouldBeTrue()
+        {
+            using (var calc = Application.LaunchStoreApp("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"))
+            {
+                var window = calc.GetMainWindow();
+                window.Find(x => x.ByAutomationId("num1Button")).Click();
+                window.Find(x => x.ByAutomationId("num2Button")).Click();
+                window.Find(x => x.ByAutomationId("num3Button")).Click();
+                window.Find(x => x.ByAutomationId("num4Button")).Click();
+                window.Find(x => x.ByAutomationId("num5Button")).Click();
+                window.Find(x => x.ByAutomationId("num6Button")).Click();
+                window.Find(x => x.ByAutomationId("num7Button")).Click();
+                window.Find(x => x.ByAutomationId("num8Button")).Click();
+                window.Find(x => x.ByAutomationId("num9Button")).Click();
+                window.Find(x => x.ByAutomationId("num1Button")).Click();
+                window.Find(x => x.ByAutomationId("num2Button")).Click();
+                window.Find(x => x.ByAutomationId("num3Button")).Click();
+                window.Find(x => x.ByAutomationId("num4Button")).Click();
+                window.Find(x => x.ByAutomationId("num5Button")).Click();
+                window.Find(x => x.ByAutomationId("num6Button")).Click();
+                window.Find(x => x.ByAutomationId("num7Button")).Click();
+                window.Find(x => x.ByAutomationId("num8Button")).Click();
+                window.Find(x => x.ByAutomationId("num9Button")).Click();
+
+                window.Find("CalculatorResults").Name.Should().Be("Display is 1,234,567,891,234,567");
+
+            }
+        }
+
         [TestMethod]
         public void HoverOverMovesMouse_HoverOver_Be()
         {
