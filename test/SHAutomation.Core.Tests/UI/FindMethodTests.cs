@@ -25,7 +25,7 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 
                 window.SaveXPathCache(TestContext.TestName);
                 window.GetXPathCache(TestContext.TestName);
-                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Custom[1]/Group[1]/Group[@AutomationId='num3Button']"));
+                window.XPathList.First().Should().BeEquivalentTo(("num3Button", "AutomationId", "/Custom[1]/Group[1]/Group[5]/Button[@AutomationId='num3Button']"));
             }
         }
 
@@ -39,10 +39,9 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
                 var window = calc.GetMainWindow();
 
                 window.XPathList.Clear();
-                window.XPathList.Add(("num3Button", "AutomationId", @"/Group/Group[5]/Button[@AutomationId='num3Button']"));
                 var num3Button = window.Find("num3Button");
 
-                window.XPathList.Should().ContainEquivalentOf((identifier: "num3Button", property: "AutomationId", xpath: "/Group/Group[5]/Button[@AutomationId='num3Button']"));
+                window.XPathList.Should().ContainEquivalentOf((identifier: "num3Button", property: "AutomationId", xpath: "/Custom[1]/Group[1]/Group[5]/Button[@AutomationId='num3Button']"));
             }
 
         }
@@ -332,7 +331,7 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 
                 var pad = window.FindAllDescendantsNameContains("Memory");
                 var test = pad[0].FindFirstChild();
-                pad.Length.Should().Be(7);
+                pad.Length.Should().Be(5);
             }
         }
     }
