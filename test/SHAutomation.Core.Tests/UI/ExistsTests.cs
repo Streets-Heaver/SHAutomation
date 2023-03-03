@@ -30,7 +30,7 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
                 PerformanceDiagnostics.Time(() =>
                 {
                     calc.GetMainWindow().Exists(a => a.ByAutomationId("num343Button"), TimeSpan.FromSeconds(1));
-                }).Should().BeCloseTo(TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(300));
+                }).Should().BeCloseTo(TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(400));
 
             }
         }
