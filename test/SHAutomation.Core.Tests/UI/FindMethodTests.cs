@@ -329,9 +329,8 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
             {
                 var window = calc.GetMainWindow();
 
-                var pad = window.FindAllDescendantsNameContains("Memory");
-                var test = pad[0].FindFirstChild();
-                pad.Length.Should().Be(7);
+                var pad = window.FindAllDescendantsNameContains("Clear");
+                pad.Length.Should().Be(3);
             }
         }
     }
