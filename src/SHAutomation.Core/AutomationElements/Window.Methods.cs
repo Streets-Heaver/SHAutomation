@@ -53,15 +53,31 @@ namespace StreetsHeaver.SHAutomation.Core.AutomationElements
                 {
                     using (var cts = new CancellationTokenSource())
                     {
+
                         Task<ISHAutomationElement> getXPathTask = null;
                         Task<ISHAutomationElement> findTask = null;
 
-                        var token = cts.Token;
-                        getXPathTask = Task.Run(() => GetXPathFromValues(xpath, timeout, ref token), token);
-                        findTask = Task.Run(() => FindFirstDescendant(condition, timeout, true, ref token), token);
-                        Task.WaitAny(getXPathTask, findTask);
-                        cts.Cancel();
-                        control = getXPathTask.Result ?? findTask.Result;
+                        try
+                        {
+                            var token = cts.Token;
+                            getXPathTask = Task.Run(() => GetXPathFromValues(xpath, timeout, ref token), token);
+                            findTask = Task.Run(() => FindFirstDescendant(condition, timeout, true, ref token), token);
+                            Task.WaitAny(getXPathTask, findTask);
+                            cts.Cancel();
+                            control = getXPathTask.Result ?? findTask.Result;
+                        }
+                        catch (AggregateException ex)
+                        {
+                            if (ex.InnerException is TaskCanceledException)
+                            {
+                                if (getXPathTask.Status == TaskStatus.RanToCompletion)
+                                    control = getXPathTask.Result;
+                                else
+                                    control = findTask.Result;
+                            }
+
+                        }
+
 
                     }
                 }
