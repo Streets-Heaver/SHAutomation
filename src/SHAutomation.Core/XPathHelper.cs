@@ -10,7 +10,7 @@ namespace StreetsHeaver.SHAutomation.Core
 
     public static class XPathHelper
     {
-        private static readonly ConcurrentDictionary<Tuple<SHAutomationElement, SHAutomationElement>, string> _xpathCache = new ConcurrentDictionary<Tuple<SHAutomationElement, SHAutomationElement>, string>();
+        private static readonly ConcurrentDictionary<Tuple<string, string>, string> _xpathCache = new ConcurrentDictionary<Tuple<string, string>, string>();
         private static SHAutomationElement _callingRoot;
         /// <summary>
         /// Gets the XPath to the element until the desktop or the given root element.
@@ -25,7 +25,7 @@ namespace StreetsHeaver.SHAutomation.Core
 
         private static string GetXPathToElement(SHAutomationElement element, ITreeWalker treeWalker, SHAutomationElement rootElement = null)
         {
-            var cacheKey = Tuple.Create(element, rootElement);
+            var cacheKey = Tuple.Create(element.AutomationId, rootElement.AutomationId);
             if (_xpathCache.TryGetValue(cacheKey, out string xpath))
             {
                 return xpath;
