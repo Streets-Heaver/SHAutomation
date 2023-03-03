@@ -2,9 +2,6 @@
 using System.Xml;
 using System.Xml.XPath;
 using StreetsHeaver.SHAutomation.Core.AutomationElements;
-#if NET35
-using StreetsHeaver.SHAutomation.Core.Tools;
-#endif
 
 namespace StreetsHeaver.SHAutomation.Core
 {
@@ -299,11 +296,8 @@ namespace StreetsHeaver.SHAutomation.Core
 
         private int GetAttributeIndexFromName(string attributeName)
         {
-#if NET35
-            if (EnumExtensions.TryParse(attributeName, out ElementAttributes parsedValue))
-#else
+
             if (Enum.TryParse(attributeName, out ElementAttributes parsedValue))
-#endif
             {
                 return (int)parsedValue;
             }

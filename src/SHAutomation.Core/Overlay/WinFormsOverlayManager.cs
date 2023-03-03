@@ -23,12 +23,8 @@ namespace StreetsHeaver.SHAutomation.Core.Overlay
         {
             if (!rectangle.IsEmpty)
             {
-#if NET35
-                new Thread(() =>
-                {
-                    CreateAndShowForms(rectangle, color, durationInMs);
-                }).Start();
-#elif NET40
+
+#if NET40
                 System.Threading.Tasks.Task.Factory.StartNew(() => {
                     CreateAndShowForms(rectangle, color, durationInMs);
                 });
@@ -43,7 +39,7 @@ namespace StreetsHeaver.SHAutomation.Core.Overlay
             CreateAndShowForms(rectangle, color, durationInMs, displayText);
         }
 
-        private void CreateAndShowForms(Rectangle rectangle, Color color, int durationInMs,string displayText = null)
+        private void CreateAndShowForms(Rectangle rectangle, Color color, int durationInMs, string displayText = null)
         {
             var leftBorder = new Rectangle(rectangle.X - Margin, rectangle.Y - Margin, Size, rectangle.Height + 2 * Margin);
             var topBorder = new Rectangle(rectangle.X - Margin, rectangle.Y - Margin, rectangle.Width + 2 * Margin, Size);
