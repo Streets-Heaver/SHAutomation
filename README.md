@@ -22,7 +22,7 @@ Install-Package SHAutomation
 #### Basic Usage
 To interact with an application start by launching it and then getting the main window. From there you can find elements and interact with the application UI.
 ```csharp
-using SHAutomation.UIA3;
+using StreetsHeaver.SHAutomation.UIA3;
 
 using var application = Application.Launch("Application.exe");
 {
@@ -33,7 +33,7 @@ using var application = Application.Launch("Application.exe");
 
 To interact with an element you would call ```Click``` after finding the element
 ```csharp
-using SHAutomation.UIA3;
+using StreetsHeaver.SHAutomation.UIA3;
 
 using var application = Application.Launch("Application.exe");
 {
