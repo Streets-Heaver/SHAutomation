@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Wrapper for com interaction.

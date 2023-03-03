@@ -1,12 +1,12 @@
-﻿using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.WindowsAPI;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Provides methods to capture the screen, <see cref="AutomationElement"/>s or rectangles on them.

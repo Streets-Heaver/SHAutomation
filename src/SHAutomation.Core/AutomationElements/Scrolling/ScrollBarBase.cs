@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements.Scrolling
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.Scrolling
 {
     /// <summary>
     /// Base class for a scroll bar element.

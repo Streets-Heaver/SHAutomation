@@ -1,14 +1,14 @@
 ﻿using StackExchange.Redis;
 using System;
 using System.Text.RegularExpressions;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
-using SHAutomation.Core.Classes;
-using SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.Classes;
+using StreetsHeaver.SHAutomation.Core.Logging;
 
-namespace SHAutomation.Core.Caching
+namespace StreetsHeaver.SHAutomation.Core.Caching
 {
     public class CacheService : ICacheService
     {

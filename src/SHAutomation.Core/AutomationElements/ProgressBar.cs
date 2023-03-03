@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a progressbar element.

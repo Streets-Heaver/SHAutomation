@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.Patterns
+namespace StreetsHeaver.SHAutomation.Core.Patterns
 {
     public interface ISelection2Pattern : ISelectionPattern
     {

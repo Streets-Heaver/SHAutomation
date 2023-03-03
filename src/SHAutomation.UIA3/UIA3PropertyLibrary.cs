@@ -1,9 +1,9 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Patterns;
-using SHAutomation.UIA3.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.UIA3.Patterns;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public class UIA3PropertyLibrary : IPropertyLibrary
     {

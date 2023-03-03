@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.AutomationElements.Infrastructure
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure
 {
     public interface ISHAutomationElementPatternAvailabilityPropertyIds
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.WindowsAPI
+namespace StreetsHeaver.SHAutomation.Core.WindowsAPI
 {
     public static class Delegates
     {

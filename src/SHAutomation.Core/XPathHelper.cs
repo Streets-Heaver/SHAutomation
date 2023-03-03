@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
 
     public static class XPathHelper

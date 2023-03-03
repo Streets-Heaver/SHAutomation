@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     public abstract partial class IdentifierBase
     {

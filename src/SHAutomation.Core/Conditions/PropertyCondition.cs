@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.Conditions
+namespace StreetsHeaver.SHAutomation.Core.Conditions
 {
     public class PropertyCondition : ConditionBase
     {

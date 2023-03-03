@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     public interface IFrameworkAutomationElementBase
     {

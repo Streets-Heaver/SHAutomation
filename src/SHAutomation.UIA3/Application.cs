@@ -2,13 +2,13 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Logging;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     /// <summary>
     /// Wrapper for an application which should be automated.

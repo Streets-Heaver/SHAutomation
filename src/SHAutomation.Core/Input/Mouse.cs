@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.Tools;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Input
+namespace StreetsHeaver.SHAutomation.Core.Input
 {
     /// <summary>
     /// Mouse class to simulate mouse input

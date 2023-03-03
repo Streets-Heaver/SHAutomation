@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Drawing;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Converters;
-using SHAutomation.UIA3.EventHandlers;
-using SHAutomation.UIA3.Extensions;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
+using StreetsHeaver.SHAutomation.UIA3.EventHandlers;
+using StreetsHeaver.SHAutomation.UIA3.Extensions;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     /// <summary>
     /// Automation implementation for UIA3.

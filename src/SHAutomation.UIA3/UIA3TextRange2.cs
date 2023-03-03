@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Tools;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Tools;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public class UIA3TextRange2 : UIA3TextRange, ITextRange2
     {

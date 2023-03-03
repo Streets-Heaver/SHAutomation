@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using SHAutomation.Core.Caching;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.ExtensionMethods;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Caching;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.ExtensionMethods;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -12,8 +12,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
-[assembly: InternalsVisibleTo("SHAutomation.Core.Tests")]
-namespace SHAutomation.Core.AutomationElements
+[assembly: InternalsVisibleTo("StreetsHeaver.SHAutomation.Core.Tests")]
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class Window
     {

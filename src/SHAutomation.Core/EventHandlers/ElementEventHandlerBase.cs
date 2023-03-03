@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.EventHandlers
+﻿namespace StreetsHeaver.SHAutomation.Core.EventHandlers
 {
     /// <summary>
     /// Base class for event handlers that are tied to elements.

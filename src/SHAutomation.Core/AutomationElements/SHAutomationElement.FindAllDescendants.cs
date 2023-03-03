@@ -1,10 +1,10 @@
-﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.StaticClasses;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {

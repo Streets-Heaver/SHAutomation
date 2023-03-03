@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Definitions
+namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values for the VisualEffects attribute.

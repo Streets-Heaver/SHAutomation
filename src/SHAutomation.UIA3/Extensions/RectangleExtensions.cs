@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Extensions
+namespace StreetsHeaver.SHAutomation.UIA3.Extensions
 {
     public static class RectangleExtensions
     {

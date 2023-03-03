@@ -4,6 +4,10 @@
     <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>StreetsHeaver.$(MSBuildProjectName)</AssemblyName>
+
+    <RootNamespace>StreetsHeaver.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

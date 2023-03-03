@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     public interface IPropertyLibrary
     {

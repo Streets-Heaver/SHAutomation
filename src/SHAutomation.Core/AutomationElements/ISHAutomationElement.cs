@@ -1,14 +1,14 @@
-﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Enums;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Enums;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public interface ISHAutomationElement
     {

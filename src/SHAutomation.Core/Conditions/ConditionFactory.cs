@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Definitions;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
 
-namespace SHAutomation.Core.Conditions
+namespace StreetsHeaver.SHAutomation.Core.Conditions
 {
     /// <summary>
     /// Helper class with some commonly used conditions.

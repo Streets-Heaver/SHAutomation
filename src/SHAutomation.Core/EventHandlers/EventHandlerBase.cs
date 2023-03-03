@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.EventHandlers
+namespace StreetsHeaver.SHAutomation.Core.EventHandlers
 {
     /// <summary>
     /// Base class for all event handlers.

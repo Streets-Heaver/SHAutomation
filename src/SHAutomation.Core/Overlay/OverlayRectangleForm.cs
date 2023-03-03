@@ -1,8 +1,8 @@
 ﻿#if NETFRAMEWORK || NETCOREAPP
 using System.Windows.Forms;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Overlay
+namespace StreetsHeaver.SHAutomation.Core.Overlay
 {
     public class OverlayRectangleForm : Form
     {

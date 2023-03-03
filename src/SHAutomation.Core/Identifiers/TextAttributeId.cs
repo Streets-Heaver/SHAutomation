@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     /// <summary>
     /// A wrapper around text attribute ids

@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using System;
 
-namespace SHAutomation.Core.EventHandlers
+namespace StreetsHeaver.SHAutomation.Core.EventHandlers
 {
     public abstract class ActiveTextPositionChangedEventHandlerBase : ElementEventHandlerBase
     {

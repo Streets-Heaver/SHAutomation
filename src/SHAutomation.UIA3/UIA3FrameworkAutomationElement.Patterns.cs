@@ -1,9 +1,9 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Patterns;
-using SHAutomation.UIA3.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.UIA3.Patterns;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public partial class UIA3FrameworkAutomationElement
     {

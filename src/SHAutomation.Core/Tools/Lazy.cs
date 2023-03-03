@@ -1,7 +1,7 @@
 ﻿#if NET35
 using System;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Provides support for lazy initialization.

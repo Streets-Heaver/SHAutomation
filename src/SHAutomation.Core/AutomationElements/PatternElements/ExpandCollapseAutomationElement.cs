@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements.PatternElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.PatternElements
 {
     /// <summary>
     /// An element that supports the <see cref="IExpandCollapsePattern"/>.

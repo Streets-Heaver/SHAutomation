@@ -1,11 +1,11 @@
 ﻿using System;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.EventHandlers
+namespace StreetsHeaver.SHAutomation.UIA3.EventHandlers
 {
     /// <summary>
     /// UIA3 implementation of a text edit text changed event handler.

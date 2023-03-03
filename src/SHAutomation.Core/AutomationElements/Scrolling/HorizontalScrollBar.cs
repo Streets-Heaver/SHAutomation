@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.AutomationElements.Scrolling
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.Scrolling
 {
     /// <summary>
     /// A horizontal scrollbar element.

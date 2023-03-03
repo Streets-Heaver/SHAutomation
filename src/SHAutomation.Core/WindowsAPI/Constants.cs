@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable
-namespace SHAutomation.Core.WindowsAPI
+namespace StreetsHeaver.SHAutomation.Core.WindowsAPI
 {
     public static class CommonHresultValues
     {

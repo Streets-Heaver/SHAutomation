@@ -1,9 +1,9 @@
 ﻿using System;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Converters
+namespace StreetsHeaver.SHAutomation.UIA3.Converters
 {
     public static class SHAutomationElementConverter
     {

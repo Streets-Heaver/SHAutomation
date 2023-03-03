@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace SHAutomation.Core.Exceptions
+namespace StreetsHeaver.SHAutomation.Core.Exceptions
 {
     [Serializable]
     public class ProxyAssemblyNotLoadedException : SHAutomationException

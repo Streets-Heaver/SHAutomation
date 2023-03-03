@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a combobox element.

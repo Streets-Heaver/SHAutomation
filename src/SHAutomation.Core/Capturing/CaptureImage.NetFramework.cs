@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     public partial class CaptureImage
     {

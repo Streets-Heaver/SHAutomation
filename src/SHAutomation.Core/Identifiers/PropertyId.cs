@@ -1,7 +1,7 @@
 ﻿using System;
-using SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Conditions;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     /// <summary>
     /// A wrapper around the property ids

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 using System.Windows.Forms;
 
-namespace SHAutomation.Core.Overlay
+namespace StreetsHeaver.SHAutomation.Core.Overlay
 {
     public class WinFormsOverlayManager : IOverlayManager
     {

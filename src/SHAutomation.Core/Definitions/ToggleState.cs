@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.Definitions
+namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values that specify the toggle state of a Microsoft UI Automation element that implements the <see cref="ITogglePattern"/>.

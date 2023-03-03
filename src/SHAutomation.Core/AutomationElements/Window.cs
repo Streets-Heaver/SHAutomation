@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using SHAutomation.Core.Caching;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Logging;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.Caching;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a window element.

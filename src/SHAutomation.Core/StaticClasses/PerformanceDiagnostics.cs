@@ -1,9 +1,9 @@
-﻿using SHAutomation.Core.Logging;
+﻿using StreetsHeaver.SHAutomation.Core.Logging;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace SHAutomation.Core.StaticClasses
+namespace StreetsHeaver.SHAutomation.Core.StaticClasses
 {
     public static class PerformanceDiagnostics
     {

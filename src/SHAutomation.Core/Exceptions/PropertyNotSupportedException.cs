@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.Exceptions
+namespace StreetsHeaver.SHAutomation.Core.Exceptions
 {
     [Serializable]
     public class PropertyNotSupportedException : NotSupportedException

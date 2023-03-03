@@ -1,7 +1,7 @@
 ﻿using System;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.Patterns.Infrastructure
+namespace StreetsHeaver.SHAutomation.Core.Patterns.Infrastructure
 {
     /// <summary>
     /// Base class for a pattern implementation.

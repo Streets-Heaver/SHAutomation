@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a radiobutton element.

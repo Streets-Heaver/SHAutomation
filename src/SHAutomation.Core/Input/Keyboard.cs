@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Input
+namespace StreetsHeaver.SHAutomation.Core.Input
 {
     /// <summary>
     /// Keyboard class to simulate key input.

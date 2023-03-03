@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Contains extension methods for <see cref="AutomationElement"/>s.

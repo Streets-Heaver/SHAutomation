@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core.Identifiers;
-using SHAutomation.UIA3.Converters;
+﻿using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Identifiers
+namespace StreetsHeaver.SHAutomation.UIA3.Identifiers
 {
     public static class AutomationObjectIds
     {

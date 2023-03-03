@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     /// <summary>
     /// Base class for wrappers around various identifiers

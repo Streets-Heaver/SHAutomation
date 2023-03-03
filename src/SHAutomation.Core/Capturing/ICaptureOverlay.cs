@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Interface for overlays that can be applied to captured images.

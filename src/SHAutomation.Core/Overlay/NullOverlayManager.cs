@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Threading;
 
-namespace SHAutomation.Core.Overlay
+namespace StreetsHeaver.SHAutomation.Core.Overlay
 {
     /// <summary>
     /// An overlay manager that does nothing.

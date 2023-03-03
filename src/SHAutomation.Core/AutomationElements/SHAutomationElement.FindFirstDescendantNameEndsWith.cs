@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {

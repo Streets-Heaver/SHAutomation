@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.UIA3;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.UIA3;
 using System;
 using System.Linq;
 
-namespace SHAutomation.Core.Tests.UI
+namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 {
     [TestClass]
 

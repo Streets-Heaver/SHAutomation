@@ -1,9 +1,9 @@
-﻿using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 using System;
 
-namespace SHAutomation.Core.AutomationElements.Infrastructure
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure
 {
     /// <summary>
     /// Interface for methods to subscribe to events on an <see cref="AutomationElement"/>.

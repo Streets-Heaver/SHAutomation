@@ -18,6 +18,8 @@
 		<InteropHintPath Condition="'$(EnableSigning)'=='true'">$(InteropHintPath)\Signed</InteropHintPath>
 		<RepositoryUrl>https://github.com/Streets-Heaver/SHAutomation</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<AssemblyName>StreetsHeaver.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>StreetsHeaver.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">

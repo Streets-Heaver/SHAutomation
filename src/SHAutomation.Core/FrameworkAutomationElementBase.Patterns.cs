@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     public abstract partial class FrameworkAutomationElementBase : FrameworkAutomationElementBase.IFrameworkPatterns
     {

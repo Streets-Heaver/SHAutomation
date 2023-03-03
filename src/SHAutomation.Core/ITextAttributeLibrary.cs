@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Interface for a text attribute library.

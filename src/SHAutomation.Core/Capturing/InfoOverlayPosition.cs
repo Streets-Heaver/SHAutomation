@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Capturing
+﻿namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Defines the position of the info overlay.

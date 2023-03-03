@@ -1,10 +1,10 @@
-﻿using SHAutomation.Core.Caching;
-using SHAutomation.Core.Conditions;
+﻿using StreetsHeaver.SHAutomation.Core.Caching;
+using StreetsHeaver.SHAutomation.Core.Conditions;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public interface IWindow : ISHAutomationElement
     {

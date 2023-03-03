@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// An overlay to draw the current mouse cursor.

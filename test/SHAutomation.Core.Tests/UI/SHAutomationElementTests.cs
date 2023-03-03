@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Input;
-using SHAutomation.UIA3;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Input;
+using StreetsHeaver.SHAutomation.UIA3;
 using System;
 
-namespace SHAutomation.Core.Tests.UI
+namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 {
     [TestClass]
 

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     public static class SystemInfo
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Xml;
 using System.Xml.XPath;
-using SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
 #if NET35
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.Tools;
 #endif
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Custom implementation of a <see cref="XPathNavigator" /> which allows

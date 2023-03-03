@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     /// <summary>
     /// Base class for identifiers which are convertible

@@ -2,7 +2,7 @@
 using System;
 using System.Threading;
 
-namespace SHAutomation.Core.StaticClasses
+namespace StreetsHeaver.SHAutomation.Core.StaticClasses
 {
     public static class RedisManager
     {

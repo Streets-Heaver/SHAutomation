@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Overlay with various information about the system.

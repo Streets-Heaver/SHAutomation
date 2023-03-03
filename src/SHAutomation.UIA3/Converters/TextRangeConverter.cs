@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core;
+﻿using StreetsHeaver.SHAutomation.Core;
 using System;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Converters
+namespace StreetsHeaver.SHAutomation.UIA3.Converters
 {
     public static class TextRangeConverter
     {

@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.EventHandlers;
+﻿using StreetsHeaver.SHAutomation.Core.EventHandlers;
 
-namespace SHAutomation.Core.AutomationElements.Infrastructure
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure
 {
     /// <summary>
     /// Interface for methods to unsubscribe to events on an <see cref="AutomationElement"/>.

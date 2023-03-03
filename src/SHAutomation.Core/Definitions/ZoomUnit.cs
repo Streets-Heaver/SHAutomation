@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.Definitions
+namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains possible values for the <see cref="ITransform2Pattern.ZoomByUnit"/> method, which zooms the viewport of a control by the specified unit.

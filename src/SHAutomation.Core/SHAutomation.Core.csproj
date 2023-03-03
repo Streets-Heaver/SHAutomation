@@ -9,6 +9,8 @@
 	<PropertyGroup>
 		<IncludeSource>True</IncludeSource>
 		<IncludeSymbols>True</IncludeSymbols>
+		<AssemblyName>StreetsHeaver.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>StreetsHeaver.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">

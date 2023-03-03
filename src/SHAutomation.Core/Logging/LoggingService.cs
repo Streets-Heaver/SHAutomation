@@ -3,7 +3,7 @@ using ElasticLogging.Classes;
 using Nest;
 using System;
 
-namespace SHAutomation.Core.Logging
+namespace StreetsHeaver.SHAutomation.Core.Logging
 {
     public class LoggingService : ILoggingService
     {

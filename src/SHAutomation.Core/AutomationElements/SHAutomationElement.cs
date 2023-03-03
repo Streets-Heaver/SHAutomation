@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.WindowsAPI;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System.Globalization;
-using SHAutomation.Core.Enums;
+using StreetsHeaver.SHAutomation.Core.Enums;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement : IEquatable<SHAutomationElement>, ISHAutomationElementEventSubscriber, ISHAutomationElement
     {

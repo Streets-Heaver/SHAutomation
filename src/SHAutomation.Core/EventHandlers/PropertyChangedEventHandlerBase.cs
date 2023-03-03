@@ -1,8 +1,8 @@
 ﻿using System;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core.EventHandlers
+namespace StreetsHeaver.SHAutomation.Core.EventHandlers
 {
     /// <summary>
     /// Base event handler for property changed event handlers.

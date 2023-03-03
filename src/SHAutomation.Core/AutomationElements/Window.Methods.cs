@@ -1,14 +1,14 @@
-﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.StaticClasses;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class Window
     {

@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core
+﻿namespace StreetsHeaver.SHAutomation.Core
 {
     public enum FrameworkType
     {

@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class AnnotationPatternPropertyIds : IAnnotationPatternPropertyIds
     {

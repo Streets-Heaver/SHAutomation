@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 
-namespace SHAutomation.Core.Tests.Unit
+namespace StreetsHeaver.SHAutomation.Core.Tests.Unit
 {
     [TestClass]
     public class WaitTests

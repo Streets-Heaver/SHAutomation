@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Conditions;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Converters
+namespace StreetsHeaver.SHAutomation.UIA3.Converters
 {
     public static class ConditionConverter
     {
