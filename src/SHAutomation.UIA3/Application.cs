@@ -351,7 +351,7 @@ namespace StreetsHeaver.SHAutomation.UIA3
             {
                 return Process.GetProcessById(processId);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 throw new Exception("Could not find process with id: " + processId, ex);
             }

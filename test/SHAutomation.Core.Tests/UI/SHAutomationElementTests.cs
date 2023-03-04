@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using StreetsHeaver.SHAutomation.Core.Identifiers;
 using StreetsHeaver.SHAutomation.Core.Input;
 using StreetsHeaver.SHAutomation.UIA3;
@@ -118,6 +119,20 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
                 window.Find(x => x.ByAutomationId("num9Button")).Click();
 
                 window.Find("CalculatorResults").Name.Should().Be("Display is 1,234,567,891,234,567");
+
+            }
+        }
+
+        [TestMethod]
+        public void ActionsTest()
+        {
+            using (var calc = Application.Launch("calc"))
+            {
+                var window = calc.GetMainWindow();
+                window.Find(x => x.ByName("6")).Click();
+
+
+                window.Find(x => x.ByName("Result")).AsTextBox().Text.Should().Be("6");
 
             }
         }
