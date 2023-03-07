@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns.Infrastructure;
+﻿using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns.Infrastructure;
 
-namespace SHAutomation.Core.Patterns
+namespace StreetsHeaver.SHAutomation.Core.Patterns
 {
     /// <summary>
     /// Interface for an invoke pattern.

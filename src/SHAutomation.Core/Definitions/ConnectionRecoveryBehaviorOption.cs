@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Definitions
+﻿namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains possible values for the ConnectionRecoveryBehavior property,

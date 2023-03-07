@@ -1,11 +1,11 @@
 ﻿using System;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.EventHandlers
+namespace StreetsHeaver.SHAutomation.UIA3.EventHandlers
 {
     public class UIA3AutomationEventHandler : AutomationEventHandlerBase, UIA.IUIAutomationEventHandler
     {
@@ -17,7 +17,7 @@ namespace SHAutomation.UIA3.EventHandlers
         {
             var frameworkElement = new UIA3FrameworkAutomationElement((UIA3Automation)Automation, sender);
             var senderElement = new SHAutomationElement(frameworkElement);
-            var @event = EventId.Find(AutomationType.UIA3, eventId);
+            var @event = EventId.Find( eventId);
             HandleAutomationEvent(senderElement, @event);
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Text;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     public static class AccessibilityTextResolver
     {

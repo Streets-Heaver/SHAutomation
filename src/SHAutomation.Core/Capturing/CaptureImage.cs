@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Object which is returned when the screen or parts of the screen are captured with <see cref="Capture"/>.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace SHAutomation.Core.Overlay
+namespace StreetsHeaver.SHAutomation.Core.Overlay
 {
     public interface IOverlayManager : IDisposable
     {

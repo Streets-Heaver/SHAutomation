@@ -1,59 +1,67 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Label="Build">
-    <TargetFrameworks>net471;netstandard2.1;netcoreapp3.1</TargetFrameworks>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
+	<PropertyGroup Label="Build">
+		<TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+	</PropertyGroup>
 
-  <PropertyGroup Label="Package">
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageOutputPath>..\..\artifacts</PackageOutputPath>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-  </PropertyGroup>
+	<PropertyGroup Label="Package">
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageOutputPath>..\..\artifacts</PackageOutputPath>
+		<IncludeSource>True</IncludeSource>
+		<IncludeSymbols>True</IncludeSymbols>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <InteropHintPath>..\libs\Interop</InteropHintPath>
-    <InteropHintPath Condition="'$(EnableSigning)'=='true'">$(InteropHintPath)\Signed</InteropHintPath>
-    <RepositoryUrl>https://github.com/Streets-Heaver/SHAutomation</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<InteropHintPath>..\libs\Interop</InteropHintPath>
+		<InteropHintPath Condition="'$(EnableSigning)'=='true'">$(InteropHintPath)\Signed</InteropHintPath>
+		<RepositoryUrl>https://github.com/Streets-Heaver/SHAutomation</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyName>StreetsHeaver.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>StreetsHeaver.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ElasticLogging" Version="0.0.4" />
-    <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
-    <PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ElasticLogging" Version="1.0.0" />
+		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23080.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="StackExchange.Redis" Version="2.6.96" />
+		<PackageReference Include="System.IO.Abstractions" Version="19.1.18" />
+		<PackageReference Include="System.Management" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.1' And '$(TargetFramework)' != 'netcoreapp3.1'">
-    <Reference Include="Accessibility" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SHAutomation.Core\SHAutomation.Core.csproj" PrivateAssets="all" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows'">
+		<Reference Include="Accessibility" />
+		<Reference Include="WindowsBase" />
+	</ItemGroup>
 
-  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
-    <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
-    </ItemGroup>
-  </Target>
+	<ItemGroup>
+		<ProjectReference Include="..\SHAutomation.Core\SHAutomation.Core.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+	<Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+		</ItemGroup>
+	</Target>
 
 
 </Project>

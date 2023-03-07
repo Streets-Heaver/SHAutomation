@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace SHAutomation.Core.WindowsAPI
+namespace StreetsHeaver.SHAutomation.Core.WindowsAPI
 {
     public static class Oleacc
     {

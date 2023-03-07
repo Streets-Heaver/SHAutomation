@@ -2,10 +2,10 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using SHAutomation.Core.Tools;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Various utility methods used for capturing.

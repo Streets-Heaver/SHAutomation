@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.UIA3.Converters
+namespace StreetsHeaver.SHAutomation.UIA3.Converters
 {
     public static class ValueConverter
     {

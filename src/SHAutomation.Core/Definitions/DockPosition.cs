@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.Definitions
+namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values that specify the dock position of an object, represented by a <see cref="IDockPattern"/>, within a docking container.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     public static class stringFormatter
     {

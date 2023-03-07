@@ -1,8 +1,8 @@
 ﻿using System;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
 
-namespace SHAutomation.Core.EventHandlers
+namespace StreetsHeaver.SHAutomation.Core.EventHandlers
 {
     /// <summary>
     /// ase event handler for text edit text changed event handlers.

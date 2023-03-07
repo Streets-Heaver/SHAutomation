@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Input;
-using SHAutomation.Core.WindowsAPI;
-using SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System.Globalization;
-using SHAutomation.Core.Enums;
+using StreetsHeaver.SHAutomation.Core.Enums;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement : IEquatable<SHAutomationElement>, ISHAutomationElementEventSubscriber, ISHAutomationElement
     {
@@ -36,11 +35,6 @@ namespace SHAutomation.Core.AutomationElements
         /// Shortcut to the condition factory for the current automation.
         /// </summary>
         public ConditionFactory ConditionFactory => FrameworkAutomationElement.Automation.ConditionFactory;
-
-        /// <summary>
-        /// The current <see cref="AutomationType" /> for this element.
-        /// </summary>
-        public AutomationType AutomationType => FrameworkAutomationElement.Automation.AutomationType;
 
         /// <summary>
         /// Standard UIA patterns of this element.
@@ -238,21 +232,6 @@ namespace SHAutomation.Core.AutomationElements
             return new Point(Properties.BoundingRectangle.ValueOrDefault.Right, Properties.BoundingRectangle.ValueOrDefault.Bottom);
         }
 
-        private void PerformMouseAction(bool moveMouse, Action action)
-        {
-            var clickablePoint = GetClickablePoint();
-            if (moveMouse)
-            {
-                Mouse.MoveTo(clickablePoint);
-            }
-            else
-            {
-                Mouse.Position = clickablePoint;
-            }
-            action();
-            Wait.UntilInputIsProcessed();
-        }
-
         /// <summary>
         /// Sets the focus to a control. If the control is a window, brings it to the foreground.
         /// </summary>
@@ -336,7 +315,7 @@ namespace SHAutomation.Core.AutomationElements
         /// <summary>
         /// Gets a clickable point of the element.
         /// </summary>
-        /// <exception cref="Exceptions.NoClickablePointException">Thrown when no clickable point was found</exception>
+        /// <exception cref="NoClickablePointException">Thrown when no clickable point was found</exception>
         public Point GetClickablePoint()
         {
             return FrameworkAutomationElement.GetClickablePoint();
@@ -912,7 +891,7 @@ namespace SHAutomation.Core.AutomationElements
         public bool WaitUntilPropertyEquals(PropertyId property, bool expected, TimeSpan timeout)
         {
             object value = null;
-            if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
+            if (property == PropertyId.Register(30022, "IsOffscreen"))
             {
                 return Wait.UntilTrue(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? == !expected, timeout);
             }
@@ -1044,7 +1023,7 @@ namespace SHAutomation.Core.AutomationElements
         public bool WaitUntilPropertyNotEquals(PropertyId property, bool current, TimeSpan timeout)
         {
             object value = null;
-            if (property == PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"))
+            if (property == PropertyId.Register(30022, "IsOffscreen"))
             {
                 return Wait.UntilTrue(() => FrameworkAutomationElement.TryGetPropertyValue(property, out value) && value as bool? != !current, timeout);
             }

@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using SHAutomation.Core.Caching;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Logging;
-using SHAutomation.Core.WindowsAPI;
-using SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Caching;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a window element.
@@ -76,7 +75,7 @@ namespace SHAutomation.Core.AutomationElements
         /// Flag to indicate, if the window is the application's main window.
         /// Is used so that it does not need to be looked up again in some cases (e.g. Context Menu).
         /// </summary>
-        internal bool IsMainWindow { get; set; }
+        public bool IsMainWindow { get; set; }
 
         /// <summary>
         /// Gets a list of all modal child windows.

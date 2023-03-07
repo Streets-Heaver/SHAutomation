@@ -1,18 +1,18 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class TransformPattern : TransformPatternBase<UIA.IUIAutomationTransformPattern>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_TransformPatternId, "Transform", AutomationObjectIds.IsTransformPatternAvailableProperty);
-        public static readonly PropertyId CanMoveProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_TransformCanMovePropertyId, "CanMove");
-        public static readonly PropertyId CanResizeProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_TransformCanResizePropertyId, "CanResize");
-        public static readonly PropertyId CanRotateProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_TransformCanRotatePropertyId, "CanRotate");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_TransformPatternId, "Transform", AutomationObjectIds.IsTransformPatternAvailableProperty);
+        public static readonly PropertyId CanMoveProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_TransformCanMovePropertyId, "CanMove");
+        public static readonly PropertyId CanResizeProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_TransformCanResizePropertyId, "CanResize");
+        public static readonly PropertyId CanRotateProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_TransformCanRotatePropertyId, "CanRotate");
 
         public TransformPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationTransformPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

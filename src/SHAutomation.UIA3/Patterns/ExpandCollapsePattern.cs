@@ -1,16 +1,16 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class ExpandCollapsePattern : ExpandCollapsePatternBase<UIA.IUIAutomationExpandCollapsePattern>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_ExpandCollapsePatternId, "ExpandCollapse", AutomationObjectIds.IsExpandCollapsePatternAvailableProperty);
-        public static readonly PropertyId ExpandCollapseStateProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_ExpandCollapseExpandCollapseStatePropertyId, "ExpandCollapseState");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_ExpandCollapsePatternId, "ExpandCollapse", AutomationObjectIds.IsExpandCollapsePatternAvailableProperty);
+        public static readonly PropertyId ExpandCollapseStateProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_ExpandCollapseExpandCollapseStatePropertyId, "ExpandCollapseState");
 
         public ExpandCollapsePattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationExpandCollapsePattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

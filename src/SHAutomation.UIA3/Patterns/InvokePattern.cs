@@ -1,11 +1,11 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     /// <summary>
     /// Class for an UIA3 <see cref="IInvokePattern"/>.
@@ -15,12 +15,12 @@ namespace SHAutomation.UIA3.Patterns
         /// <summary>
         /// The <see cref="PatternId"/> for this pattern.
         /// </summary>
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_InvokePatternId, "Invoke", AutomationObjectIds.IsInvokePatternAvailableProperty);
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_InvokePatternId, "Invoke", AutomationObjectIds.IsInvokePatternAvailableProperty);
 
         /// <summary>
         /// The <see cref="EventId"/> for the invoked event.
         /// </summary>
-        public static readonly EventId InvokedEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_Invoke_InvokedEventId, "Invoked");
+        public static readonly EventId InvokedEvent = EventId.Register( UIA.UIA_EventIds.UIA_Invoke_InvokedEventId, "Invoked");
 
         /// <summary>
         /// Creates an UIA3 <see cref="IInvokePattern"/>.

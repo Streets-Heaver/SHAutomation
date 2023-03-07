@@ -1,11 +1,16 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using System.Collections.Concurrent;
+using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Linq;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
 
     public static class XPathHelper
     {
+        private static readonly ConcurrentDictionary<Tuple<string, string>, string> _xpathCache = new ConcurrentDictionary<Tuple<string, string>, string>();
         private static SHAutomationElement _callingRoot;
         /// <summary>
         /// Gets the XPath to the element until the desktop or the given root element.
@@ -20,6 +25,12 @@ namespace SHAutomation.Core
 
         private static string GetXPathToElement(SHAutomationElement element, ITreeWalker treeWalker, SHAutomationElement rootElement = null)
         {
+            var cacheKey = Tuple.Create(element.AutomationId, rootElement.AutomationId);
+            if (_xpathCache.TryGetValue(cacheKey, out string xpath))
+            {
+                return xpath;
+            }
+
             try
             {
                 var parent = treeWalker.GetParent(element);
@@ -28,31 +39,21 @@ namespace SHAutomation.Core
                     _callingRoot = null;
                     return string.Empty;
                 }
+
                 // Get the index
                 var allChildren = parent.FindAllChildren(cf => cf.ByControlType(element.Properties.ControlType));
-                var currentItemText = $"{element.Properties.ControlType.Value}";
-                if (allChildren.Length > 1)
-                {
-                    // There is more than one matching child, find out the index
-                    var indexInParent = 1; // Index starts with 1
-                    foreach (var child in allChildren)
-                    {
-                        if (child.Equals(element))
-                        {
-                            break;
-                        }
-                        indexInParent++;
-                    }
-                    currentItemText += $"[{indexInParent}]";
-                }
-                return $"{GetXPathToElement(parent, treeWalker, rootElement)}/{currentItemText}";
+                var indexInParent = allChildren.ToList().IndexOf(element) + 1; // Index starts with 1
+                var currentItemText = $"{element.Properties.ControlType.Value}[{indexInParent}]";
+
+                xpath = $"{GetXPathToElement(parent, treeWalker, rootElement)}/{currentItemText}";
+                _xpathCache.TryAdd(cacheKey, xpath);
+                return xpath;
             }
-            catch(COMException)
+            catch (COMException)
             {
                 return null;
             }
         }
-
 
     }
 }

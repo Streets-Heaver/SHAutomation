@@ -1,9 +1,10 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using System;
 using System.Threading;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
+using System.Diagnostics;
 
-namespace SHAutomation.Core.StaticClasses
+namespace StreetsHeaver.SHAutomation.Core.StaticClasses
 {
     /// <summary>
     /// Class with various helper tools used in various places
@@ -60,25 +61,36 @@ namespace SHAutomation.Core.StaticClasses
         public static bool UntilTrue(Func<bool> condition, TimeSpan timeout)
         {
             var token = CancellationToken.None;
-            return UntilTrue(condition, timeout, ref token);
+            return UntilTrue(condition, timeout, token);
         }
-        public static bool UntilTrue(Func<bool> condition, TimeSpan timeout, ref CancellationToken cancel)
+        public static bool UntilTrue(Func<bool> condition, TimeSpan timeout, CancellationToken cancel)
         {
-            if (timeout.TotalMilliseconds <= 0)
-                throw new InvalidOperationException("TIMEOUT HAS TO BE GREATER THAN 0");
-            DateTime date = DateTime.Now;
-            var waitDate = date.AddMilliseconds(timeout.TotalMilliseconds);
-            while (DateTime.Now < waitDate)
+            if (timeout <= TimeSpan.Zero)
             {
-                if (cancel == null || cancel.IsCancellationRequested)
+                throw new InvalidOperationException("Timeout must be greater than zero.");
+            }
+
+            var stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.Elapsed < timeout)
+            {
+                try
+                {
+                    cancel.ThrowIfCancellationRequested();
+
+
+                    if (condition())
+                    {
+                        return true;
+                    }
+                }
+                catch(OperationCanceledException)
                 {
                     return false;
                 }
-                if (condition.Invoke())
-                {
-                    return true;
-                }
+
             }
+
             return false;
         }
     }

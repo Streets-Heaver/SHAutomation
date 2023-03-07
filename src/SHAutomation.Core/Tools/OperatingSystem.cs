@@ -2,7 +2,7 @@
 using System.Globalization;
 using Microsoft.Win32;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Static class that can be used to get information about the current operating system.

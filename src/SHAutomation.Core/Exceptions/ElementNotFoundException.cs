@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Exceptions
+namespace StreetsHeaver.SHAutomation.Core.Exceptions
 {
     [Serializable]
     public class ElementNotFoundException : Exception

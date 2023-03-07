@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Overlay;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Overlay;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Base class for the native automation object.
@@ -68,11 +68,6 @@ namespace SHAutomation.Core
         /// Provides a factory to create <see cref="ITreeWalker"/>s.
         /// </summary>
         public abstract ITreeWalkerFactory TreeWalkerFactory { get; }
-
-        /// <summary>
-        /// The <see cref="AutomationType"/> of the automation implementation.
-        /// </summary>
-        public abstract AutomationType AutomationType { get; }
 
         /// <summary>
         /// Object which represents the "Not Supported" value.

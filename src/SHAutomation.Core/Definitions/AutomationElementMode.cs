@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Definitions
+﻿namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values that specify the type of reference to use when returning UI Automation elements. 

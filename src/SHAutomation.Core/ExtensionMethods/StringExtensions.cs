@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SHAutomation.Core.ExtensionMethods
+namespace StreetsHeaver.SHAutomation.Core.ExtensionMethods
 {
     public static class StringExtensions
     {

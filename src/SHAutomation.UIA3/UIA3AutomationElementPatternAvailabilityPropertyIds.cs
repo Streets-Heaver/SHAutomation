@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core.AutomationElements.Infrastructure;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements.Infrastructure;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public class UIA3AutomationElementPatternAvailabilityPropertyIds : ISHAutomationElementPatternAvailabilityPropertyIds
     {

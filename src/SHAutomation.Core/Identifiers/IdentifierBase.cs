@@ -1,45 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace SHAutomation.Core.Identifiers
+namespace StreetsHeaver.SHAutomation.Core.Identifiers
 {
     /// <summary>
     /// Base class for wrappers around various identifiers
     /// </summary>
-    public abstract class IdentifierBase : IEquatable<IdentifierBase>
+    public abstract partial class IdentifierBase : IEquatable<IdentifierBase>
     {
-        /// <summary>
-        /// Class which capsules all identifiers which can be used for an automation library
-        /// </summary>
-        private class IdentifiersHolder
-        {
-            /// <summary>
-            /// Dictionary which holds all known properties
-            /// </summary>
-            public readonly Dictionary<int, PropertyId> PropertyDict = new Dictionary<int, PropertyId>();
-
-            /// <summary>
-            /// Dictionary which holds all known events
-            /// </summary>
-            public readonly Dictionary<int, EventId> EventDict = new Dictionary<int, EventId>();
-
-            /// <summary>
-            /// Dictionary which holds all known patterns
-            /// </summary>
-            public readonly Dictionary<int, PatternId> PatternDict = new Dictionary<int, PatternId>();
-
-            /// <summary>
-            /// Dictionary which holds all known text attributes
-            /// </summary>
-            public readonly Dictionary<int, TextAttributeId> TextAttributeDict = new Dictionary<int, TextAttributeId>();
-        }
-
-        /// <summary>
-        /// Dictionary which holds all identifiers for each automation library
-        /// </summary>
-        private static readonly Dictionary<AutomationType, IdentifiersHolder> IdentifiersDict = new Dictionary<AutomationType, IdentifiersHolder>();
-
+        private static IdentifiersHolder _idHolder = new IdentifiersHolder();
         /// <summary>
         /// The native id of the identifier
         /// </summary>
@@ -76,52 +45,44 @@ namespace SHAutomation.Core.Identifiers
             return $"{Name} [#{Id}]";
         }
 
-        protected static PropertyId RegisterProperty(AutomationType automationType, int id, string name)
+        protected static PropertyId RegisterProperty(int id, string name)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return Register(id, idsHolder.PropertyDict, () => new PropertyId(id, name));
+            return Register(id, _idHolder.PropertyDict, () => new PropertyId(id, name));
         }
 
-        protected static EventId RegisterEvent(AutomationType automationType, int id, string name)
+        protected static EventId RegisterEvent(int id, string name)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return Register(id, idsHolder.EventDict, () => new EventId(id, name));
+            return Register(id, _idHolder.EventDict, () => new EventId(id, name));
         }
 
-        protected static PatternId RegisterPattern(AutomationType automationType, int id, string name, PropertyId availabilityProperty)
+        protected static PatternId RegisterPattern(int id, string name, PropertyId availabilityProperty)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return Register(id, idsHolder.PatternDict, () => new PatternId(id, name, availabilityProperty));
+            return Register(id, _idHolder.PatternDict, () => new PatternId(id, name, availabilityProperty));
         }
 
-        protected static TextAttributeId RegisterTextAttribute(AutomationType automationType, int id, string name)
+        protected static TextAttributeId RegisterTextAttribute(int id, string name)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return Register(id, idsHolder.TextAttributeDict, () => new TextAttributeId(id, name));
+            return Register(id, _idHolder.TextAttributeDict, () => new TextAttributeId(id, name));
         }
 
-        protected static PropertyId FindProperty(AutomationType automationType, int id)
+        protected static PropertyId FindProperty(int id)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return idsHolder.PropertyDict.ContainsKey(id) ? idsHolder.PropertyDict[id] : new PropertyId(id, string.Format("Property#{0}", id));
+            return _idHolder.PropertyDict.ContainsKey(id) ? _idHolder.PropertyDict[id] : new PropertyId(id, string.Format("Property#{0}", id));
         }
 
-        protected static EventId FindEvent(AutomationType automationType, int id)
+        protected static EventId FindEvent(int id)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return idsHolder.EventDict.ContainsKey(id) ? idsHolder.EventDict[id] : new EventId(id, string.Format("Event#{0}", id));
+            return _idHolder.EventDict.ContainsKey(id) ? _idHolder.EventDict[id] : new EventId(id, string.Format("Event#{0}", id));
         }
 
-        protected static PatternId FindPattern(AutomationType automationType, int id)
+        protected static PatternId FindPattern(int id)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return idsHolder.PatternDict.ContainsKey(id) ? idsHolder.PatternDict[id] : new PatternId(id, string.Format("Pattern#{0}", id), null);
+            return _idHolder.PatternDict.ContainsKey(id) ? _idHolder.PatternDict[id] : new PatternId(id, string.Format("Pattern#{0}", id), null);
         }
 
-        protected static TextAttributeId FindTextAttribute(AutomationType automationType, int id)
+        protected static TextAttributeId FindTextAttribute(int id)
         {
-            var idsHolder = GetIdHolder(automationType);
-            return idsHolder.TextAttributeDict.ContainsKey(id) ? idsHolder.TextAttributeDict[id] : new TextAttributeId(id, string.Format("TextAttribute#{0}", id));
+            return _idHolder.TextAttributeDict.ContainsKey(id) ? _idHolder.TextAttributeDict[id] : new TextAttributeId(id, string.Format("TextAttribute#{0}", id));
         }
 
         /// <summary>
@@ -138,26 +99,8 @@ namespace SHAutomation.Core.Identifiers
             return newIdObject;
         }
 
-        /// <summary>
-        /// Get the ids-holder or create a new one
-        /// </summary>
-        private static IdentifiersHolder GetIdHolder(AutomationType automationType)
-        {
-            // ReSharper disable InconsistentlySynchronizedField This is on purpose to speed this thing up
-            if (!IdentifiersDict.ContainsKey(automationType))
-            {
-                // Lock to have thread safety
-                lock (((IDictionary)IdentifiersDict).SyncRoot)
-                {
-                    // Double check in case someone already added it while aquiring the lock
-                    if (!IdentifiersDict.ContainsKey(automationType))
-                    {
-                        IdentifiersDict.Add(automationType, new IdentifiersHolder());
-                    }
-                }
-            }
-            return IdentifiersDict[automationType];
-            // ReSharper restore InconsistentlySynchronizedField
-        }
+
+
+
     }
 }

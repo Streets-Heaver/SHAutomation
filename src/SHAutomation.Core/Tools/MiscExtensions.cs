@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Provides various extension methods.

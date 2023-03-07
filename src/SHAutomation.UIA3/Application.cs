@@ -2,19 +2,22 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Logging;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     /// <summary>
     /// Wrapper for an application which should be automated.
     /// </summary>
     public class Application : IDisposable
     {
+
+        private readonly UIA3Automation _automation;
+
         /// <summary>
         /// Implementation of logging service
         /// </summary>
@@ -56,6 +59,7 @@ namespace SHAutomation.Core
         public int ExitCode => _process.ExitCode;
 
 
+
         /// <summary>
         /// Creates an application object with the given process id.
         /// </summary>
@@ -95,6 +99,7 @@ namespace SHAutomation.Core
         {
             _process = process ?? throw new ArgumentNullException(nameof(process));
             _loggingService = loggingService;
+            _automation = new UIA3Automation();
 
         }
 
@@ -155,6 +160,9 @@ namespace SHAutomation.Core
 
         public void Dispose()
         {
+            if (_automation != null)
+                _automation.Dispose();
+
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -281,7 +289,7 @@ namespace SHAutomation.Core
                 _process = FindProcess(processId);
                 return _process.MainWindowHandle != IntPtr.Zero;
 
-            }, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(2));
+            }, waitTimeout ?? TimeSpan.FromMinutes(2));
 
         }
 
@@ -290,9 +298,9 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="automation">The automation object to use.</param>
         /// <param name="waitTimeout">An optional timeout. If null is passed, the timeout is infinite.</param>
-        public Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout = null)
+        public Window GetMainWindow(TimeSpan? waitTimeout = null)
         {
-            return GetMainWindow(automation, waitTimeout, null);
+            return GetMainWindow(waitTimeout, null);
         }
 
         /// <summary>
@@ -300,13 +308,13 @@ namespace SHAutomation.Core
         /// </summary>
         /// <param name="automation">The automation object to use.</param>
         /// <param name="pathToConfigFile">Path to SHAutomtion.json</param>
-        public Window GetMainWindow(AutomationBase automation, string pathToConfigFile)
+        public Window GetMainWindow(string pathToConfigFile)
         {
-            return GetMainWindow(automation, null, pathToConfigFile);
+            return GetMainWindow(null, pathToConfigFile);
         }
 
 
-        private Window GetMainWindow(AutomationBase automation, TimeSpan? waitTimeout, string pathToConfigFile)
+        private Window GetMainWindow(TimeSpan? waitTimeout, string pathToConfigFile)
         {
             WaitWhileMainHandleIsMissing(waitTimeout);
             var mainWindowHandle = MainWindowHandle;
@@ -315,9 +323,9 @@ namespace SHAutomation.Core
                 return null;
             }
 
-            Wait.UntilTrue(() => automation.FromHandle(mainWindowHandle) != null, waitTimeout.HasValue ? waitTimeout.Value : TimeSpan.FromMinutes(5));
+            Wait.UntilTrue(() => _automation.FromHandle(mainWindowHandle) != null, waitTimeout ?? TimeSpan.FromMinutes(5));
 
-            var mainWindow = automation.FromHandle(mainWindowHandle)
+            var mainWindow = _automation.FromHandle(mainWindowHandle)
                 .AsWindow(_loggingService, pathToConfigFile);
 
             if (mainWindow != null)
@@ -332,21 +340,18 @@ namespace SHAutomation.Core
         /// <summary>
         /// Gets all top level windows from the application.
         /// </summary>
-        public Window[] GetAllTopLevelWindows(AutomationBase automation)
+        public Window[] GetAllTopLevelWindows()
         {
-            var desktop = automation.GetDesktop();
-            var foundElements = desktop.FindAllChildren(cf => cf.ByControlType(ControlType.Window).And(cf.ByProcessId(ProcessId)));
-            return foundElements.Select(x => x.AsWindow()).ToArray();
+            return _automation.GetDesktop().FindAllChildren(cf => cf.ByControlType(ControlType.Window).And(cf.ByProcessId(ProcessId))).Select(x => x.AsWindow()).ToArray();
         }
 
         private static Process FindProcess(int processId)
         {
             try
             {
-                var process = Process.GetProcessById(processId);
-                return process;
+                return Process.GetProcessById(processId);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 throw new Exception("Could not find process with id: " + processId, ex);
             }

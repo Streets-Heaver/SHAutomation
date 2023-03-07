@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Interface for a class that implements a tree walker.

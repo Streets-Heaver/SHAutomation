@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Conditions;
-using SHAutomation.UIA3.Converters;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     /// <summary>
     /// Factory to create tree walkers for UIA3.

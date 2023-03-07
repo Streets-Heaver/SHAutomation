@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Conditions;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Interface for a class to create <see cref="ITreeWalker"/> instances.

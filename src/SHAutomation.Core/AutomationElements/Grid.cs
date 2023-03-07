@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHAutomation.Core.AutomationElements.PatternElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.PatternElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Element for grids and tables.

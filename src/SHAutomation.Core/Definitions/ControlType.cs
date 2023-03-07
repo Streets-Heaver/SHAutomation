@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Definitions
+﻿namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Types of controls in Microsoft UI Automation.

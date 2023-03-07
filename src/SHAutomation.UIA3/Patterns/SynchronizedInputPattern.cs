@@ -1,19 +1,19 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class SynchronizedInputPattern : SynchronizedInputPatternBase<UIA.IUIAutomationSynchronizedInputPattern>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_SynchronizedInputPatternId, "SynchronizedInput", AutomationObjectIds.IsSynchronizedInputPatternAvailableProperty);
-        public static readonly EventId DiscardedEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_InputDiscardedEventId, "Discarded");
-        public static readonly EventId ReachedOtherElementEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_InputReachedOtherElementEventId, "ReachedOtherElement");
-        public static readonly EventId ReachedTargetEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_InputReachedTargetEventId, "ReachedTarget");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_SynchronizedInputPatternId, "SynchronizedInput", AutomationObjectIds.IsSynchronizedInputPatternAvailableProperty);
+        public static readonly EventId DiscardedEvent = EventId.Register( UIA.UIA_EventIds.UIA_InputDiscardedEventId, "Discarded");
+        public static readonly EventId ReachedOtherElementEvent = EventId.Register( UIA.UIA_EventIds.UIA_InputReachedOtherElementEventId, "ReachedOtherElement");
+        public static readonly EventId ReachedTargetEvent = EventId.Register( UIA.UIA_EventIds.UIA_InputReachedTargetEventId, "ReachedTarget");
 
         public SynchronizedInputPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationSynchronizedInputPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

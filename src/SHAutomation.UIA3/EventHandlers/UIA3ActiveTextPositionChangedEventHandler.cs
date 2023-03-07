@@ -1,10 +1,10 @@
 ﻿using System;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.EventHandlers
+namespace StreetsHeaver.SHAutomation.UIA3.EventHandlers
 {
     public class UIA3ActiveTextPositionChangedEventHandler : ActiveTextPositionChangedEventHandlerBase, UIA.IUIAutomationActiveTextPositionChangedEventHandler
     {

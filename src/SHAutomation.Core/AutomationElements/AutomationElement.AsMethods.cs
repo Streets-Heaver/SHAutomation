@@ -1,8 +1,8 @@
 ﻿using System;
-using SHAutomation.Core.AutomationElements.Scrolling;
-using SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.AutomationElements.Scrolling;
+using StreetsHeaver.SHAutomation.Core.Logging;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public static partial class SHAutomationElementExtensions
     {

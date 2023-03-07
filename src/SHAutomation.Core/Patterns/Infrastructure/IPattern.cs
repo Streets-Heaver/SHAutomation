@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Patterns.Infrastructure
+﻿namespace StreetsHeaver.SHAutomation.Core.Patterns.Infrastructure
 {
     /// <summary>
     /// Interface for an automation pattern.

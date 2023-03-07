@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.Tools
+namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Helper class which tries to load all items for an item container

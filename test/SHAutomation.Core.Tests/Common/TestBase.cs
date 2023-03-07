@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SHAutomation.Core.Tests.Common
+namespace StreetsHeaver.SHAutomation.Core.Tests.Common
 {
     public class TestBase
     {

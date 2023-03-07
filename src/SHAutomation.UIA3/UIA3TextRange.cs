@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Converters;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public class UIA3TextRange : ITextRange
     {

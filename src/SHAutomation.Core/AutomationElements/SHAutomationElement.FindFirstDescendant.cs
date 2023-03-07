@@ -1,9 +1,9 @@
-﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.StaticClasses;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 using System.Threading;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class SHAutomationElement
     {
@@ -15,8 +15,8 @@ namespace SHAutomation.Core.AutomationElements
         {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstDescendantBase();
-           
-            GetElement(function,waitUntilExists,ref element);
+
+            GetElement(function, waitUntilExists, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
                 Wait.UntilTrue(() => GetElement(function, true, ref element), timeout);
@@ -50,7 +50,7 @@ namespace SHAutomation.Core.AutomationElements
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             return FindFirstDescendant(condition, timeout: timeout, waitUntilExists: waitUntilExists);
         }
-        public ISHAutomationElement FindFirstDescendant(ConditionBase condition,  bool waitUntilExists = true)
+        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, bool waitUntilExists = true)
         {
             return FindFirstDescendant(condition, TimeSpan.FromSeconds(20), waitUntilExists);
         }
@@ -60,7 +60,7 @@ namespace SHAutomation.Core.AutomationElements
             var token = CancellationToken.None;
             return FindFirstDescendant(condition, timeout, waitUntilExists, ref token);
         }
-        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists,ref CancellationToken cancel)
+        public ISHAutomationElement FindFirstDescendant(ConditionBase condition, TimeSpan timeout, bool waitUntilExists, ref CancellationToken cancel)
         {
             ISHAutomationElement element = null;
             Func<ISHAutomationElement> function = () => FindFirstDescendantBase(condition);
@@ -68,11 +68,11 @@ namespace SHAutomation.Core.AutomationElements
             GetElement(function, true, ref element);
             if (element == null && waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                Wait.UntilTrue(() => GetElement(function, true, ref element), timeout,ref cancel);
+                Wait.UntilTrue(() => GetElement(function, true, ref element), timeout, cancel);
             }
             else if (element != null && !waitUntilExists && timeout.TotalMilliseconds > 0)
             {
-                Wait.UntilTrue(() => GetElement(function, false, ref element), timeout, ref cancel);
+                Wait.UntilTrue(() => GetElement(function, false, ref element), timeout, cancel);
             }
 
             return element?.FrameworkAutomationElement != null ? element : null;

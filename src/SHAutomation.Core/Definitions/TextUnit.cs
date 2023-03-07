@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Definitions
+﻿namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values that specify units of text for the purposes of navigation.

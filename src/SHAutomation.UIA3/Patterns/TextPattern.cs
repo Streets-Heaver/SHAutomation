@@ -1,22 +1,22 @@
 ﻿using System.Drawing;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Converters;
-using SHAutomation.UIA3.Extensions;
-using SHAutomation.UIA3.Identifiers;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
+using StreetsHeaver.SHAutomation.UIA3.Extensions;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class TextPattern : TextPatternBase<UIA.IUIAutomationTextPattern>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_TextPatternId, "Text", AutomationObjectIds.IsTextPatternAvailableProperty);
-        public static readonly EventId TextChangedEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_Text_TextChangedEventId, "TextChanged");
-        public static readonly EventId TextSelectionChangedEvent = EventId.Register(AutomationType.UIA3, UIA.UIA_EventIds.UIA_Text_TextSelectionChangedEventId, "TextSelectionChanged");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_TextPatternId, "Text", AutomationObjectIds.IsTextPatternAvailableProperty);
+        public static readonly EventId TextChangedEvent = EventId.Register( UIA.UIA_EventIds.UIA_Text_TextChangedEventId, "TextChanged");
+        public static readonly EventId TextSelectionChangedEvent = EventId.Register( UIA.UIA_EventIds.UIA_Text_TextSelectionChangedEventId, "TextSelectionChanged");
 
         public TextPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationTextPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

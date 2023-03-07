@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
-namespace SHAutomation.Core.Exceptions
+namespace StreetsHeaver.SHAutomation.Core.Exceptions
 {
     [Serializable]
     public class ElementNotAvailableException : SHAutomationException
@@ -26,7 +25,6 @@ namespace SHAutomation.Core.Exceptions
         {
         }
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         protected ElementNotAvailableException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable
-namespace SHAutomation.Core.WindowsAPI
+namespace StreetsHeaver.SHAutomation.Core.WindowsAPI
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct POINT

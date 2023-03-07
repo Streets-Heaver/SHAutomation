@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Enums
+﻿namespace StreetsHeaver.SHAutomation.Core.Enums
 {
     public enum MouseAction
     {

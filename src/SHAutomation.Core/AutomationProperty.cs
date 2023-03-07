@@ -1,7 +1,7 @@
 ﻿using System;
-using SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.Core
+namespace StreetsHeaver.SHAutomation.Core
 {
     /// <summary>
     /// Inferface for property objects.

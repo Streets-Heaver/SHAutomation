@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SHAutomation.Core.Classes
+namespace StreetsHeaver.SHAutomation.Core.Classes
 {
     public class ConfigFile
     {

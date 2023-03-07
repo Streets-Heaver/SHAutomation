@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Tools
+﻿namespace StreetsHeaver.SHAutomation.Core.Tools
 {
     /// <summary>
     /// Static class which provides localized texts of some control texts.

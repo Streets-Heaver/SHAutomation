@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Patterns.Infrastructure;
+﻿using StreetsHeaver.SHAutomation.Core.Patterns.Infrastructure;
 
-namespace SHAutomation.Core.Patterns
+namespace StreetsHeaver.SHAutomation.Core.Patterns
 {
     public interface IVirtualizedItemPattern : IPattern
     {

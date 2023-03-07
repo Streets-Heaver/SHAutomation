@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Definitions
+﻿namespace StreetsHeaver.SHAutomation.Core.Definitions
 {
     /// <summary>
     /// Contains values that specify the state of a UI element that can be expanded and collapsed.

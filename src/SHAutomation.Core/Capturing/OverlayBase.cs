@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SHAutomation.Core.Capturing
+namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Base class for overlays.

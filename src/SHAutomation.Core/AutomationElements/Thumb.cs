@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.Input;
-using SHAutomation.Core.Tools;
+﻿using StreetsHeaver.SHAutomation.Core.Input;
+using StreetsHeaver.SHAutomation.Core.Tools;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a thumb element.

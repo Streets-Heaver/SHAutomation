@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Caching
+﻿namespace StreetsHeaver.SHAutomation.Core.Caching
 {
     public interface ICacheService
     {

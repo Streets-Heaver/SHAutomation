@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Tests.Common;
+﻿using StreetsHeaver.SHAutomation.Core.Tests.Common;
 
-namespace SHAutomation.Core.Tests.UI
+namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 {
     public class UITestBase : TestBase
     {

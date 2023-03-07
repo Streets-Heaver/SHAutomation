@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Conditions
+﻿namespace StreetsHeaver.SHAutomation.Core.Conditions
 {
     public class NotCondition : ConditionBase
     {

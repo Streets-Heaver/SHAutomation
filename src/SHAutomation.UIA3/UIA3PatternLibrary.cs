@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public class UIA3PatternLibrary : IPatternLibrary
     {

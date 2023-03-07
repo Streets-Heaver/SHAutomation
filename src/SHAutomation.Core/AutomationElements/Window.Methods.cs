@@ -1,15 +1,14 @@
-﻿using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Enums;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.StaticClasses;
+﻿using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     public partial class Window
     {
@@ -36,17 +35,17 @@ namespace SHAutomation.Core.AutomationElements
             var condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
             var conditionString = condition.ToString();
 
-            _loggingService.Info(string.Format("Find called {0}", conditionString));
+            _loggingService.Info($"Find called {conditionString}");
+
             bool canUseXpath = !(conditionString.Contains("OR") || conditionString.Contains("NOT"));
             List<(PropertyCondition Value, bool Ignore)> propertyConditions = new List<(PropertyCondition Value, bool Ignore)>();
+
             if (parent == null)
             {
                 if (canUseXpath)
                 {
                     propertyConditions = GetPropertyConditions(condition);
                 }
-                condition = conditionFunc(new ConditionFactory(Automation.PropertyLibrary));
-
 
                 var xpath = GetXPathValues(propertyConditions);
 
@@ -54,14 +53,32 @@ namespace SHAutomation.Core.AutomationElements
                 {
                     using (var cts = new CancellationTokenSource())
                     {
-                        var token = cts.Token;
-                        Task<ISHAutomationElement>[] tasks = {
-                            Task.Run(() => GetXPathFromValues(xpath,timeout,ref token),token),
-                            Task.Run(() => FindFirstDescendant(condition, timeout,true, ref token),token)
-                        };
-                        Task.WaitAny(tasks);
-                        cts.Cancel();
-                        control = tasks.FirstOrDefault(x => x.Status == TaskStatus.RanToCompletion && x.Result != null)?.Result;
+
+                        Task<ISHAutomationElement> getXPathTask = null;
+                        Task<ISHAutomationElement> findTask = null;
+
+                        try
+                        {
+                            var token = cts.Token;
+                            getXPathTask = Task.Run(() => GetXPathFromValues(xpath, timeout, ref token), token);
+                            findTask = Task.Run(() => FindFirstDescendant(condition, timeout, true, ref token), token);
+                            Task.WaitAny(getXPathTask, findTask);
+                            cts.Cancel();
+                            control = getXPathTask.Result ?? findTask.Result;
+                        }
+                        catch (AggregateException ex)
+                        {
+                            if (ex.InnerException is TaskCanceledException)
+                            {
+                                if (getXPathTask.Status == TaskStatus.RanToCompletion)
+                                    control = getXPathTask.Result;
+                                else
+                                    control = findTask.Result;
+                            }
+
+                        }
+
+
                     }
                 }
                 else
@@ -76,26 +93,24 @@ namespace SHAutomation.Core.AutomationElements
             }
             else
             {
-                if (parent.GetCurrentPropertyValue(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen")) != null)
+                if (parent.GetCurrentPropertyValue(PropertyId.Register(30022, "IsOffscreen")) != null)
+                {
                     control = parent.FindFirstDescendant(conditionFunc, timeout);
+                }
                 else
+                {
                     throw new ElementNotFoundException("Parent not found");
+                }
             }
 
             if (control == null)
             {
-                _loggingService.Error(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
+                var errorMessage = $"Failed to find control by: {condition}";
+                _loggingService.Error(errorMessage);
+                throw new ElementNotFoundException(errorMessage);
+            }
 
-                throw new ElementNotFoundException(string.Format("Failed to find control by: {0}", conditionFunc(new ConditionFactory(Automation.PropertyLibrary)).ToString()));
-            }
-            if (control.FoundByXPath)
-            {
-                _loggingService.Info("Find found control via XPath");
-            }
-            else
-            {
-                _loggingService.Info("Find found control via Condition");
-            }
+            _loggingService.Info(control.FoundByXPath ? "Find found control via XPath" : "Find found control via Condition");
             SaveXPathFromControl((SHAutomationElement)control, propertyConditions, regenerateXPath);
             return control;
         }
@@ -105,53 +120,60 @@ namespace SHAutomation.Core.AutomationElements
             return Exists(conditionFunc, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500), checkOnScreen, parent, xpathOnly);
         }
 
-        public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan offscreenTimeout, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false)
+        public bool Exists(Func<ConditionFactory, ConditionBase> conditionFunc, TimeSpan timeout, TimeSpan? offscreenTimeout = null, bool checkOnScreen = true, ISHAutomationElement parent = null, bool xpathOnly = false)
         {
-            bool exists = true;
+            bool exists = false;
             bool regenerateXPath = false;
             ISHAutomationElement control = null;
 
-            if (parent == null)
+            return Wait.UntilTrue(() =>
             {
-                if (xpathOnly)
+
+                if (parent == null)
                 {
-                    control = GetXPathElementFromCondition(conditionFunc, timeout);
+                    if (xpathOnly)
+                    {
+                        control = GetXPathElementFromCondition(conditionFunc, timeout);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            return Find(conditionFunc, timeout) != null;
+                        }
+                        catch (ElementNotFoundException)
+                        {
+                            return false;
+                        }
+                    }
+
                 }
                 else
                 {
-                    try
+                    if (xpathOnly)
                     {
-                        return Find(conditionFunc, timeout) != null;
+                        throw new InvalidOperationException("Cannot search with xpath using parent");
                     }
-                    catch (ElementNotFoundException)
-                    {
-                        return false;
-                    }
+                    control = parent.FindFirstDescendant(conditionFunc, timeout: timeout);
                 }
 
-            }
-            else
-            {
-                if (xpathOnly)
+                if (control == null)
+                    exists = false;
+                else if (checkOnScreen)
                 {
-                    throw new InvalidOperationException("Cannot search with xpath using parent");
+                    if (offscreenTimeout.HasValue)
+                        control.WaitUntilPropertyEquals(PropertyId.Register(30022, "IsOffscreen"), false, offscreenTimeout.Value);
+                    else
+                        control.WaitUntilPropertyEquals(PropertyId.Register(30022, "IsOffscreen"), false);
+
+                    exists = control.IsOnscreen;
                 }
-                control = parent.FindFirstDescendant(conditionFunc, timeout: timeout);
-            }
 
-            if (control == null)
-                exists = false;
-            else if (checkOnScreen)
-            {
-                control.WaitUntilPropertyEquals(PropertyId.Register(AutomationType.UIA3, 30022, "IsOffscreen"), false, offscreenTimeout);
+                if (parent == null)
+                    SaveXPathFromControl((SHAutomationElement)control, conditionFunc, regenerateXPath);
 
-                exists = control.IsOnscreen;
-            }
-
-            if (parent == null)
-                SaveXPathFromControl((SHAutomationElement)control, conditionFunc, regenerateXPath);
-
-            return exists;
+                return exists;
+            }, timeout);
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using SHAutomation.Core.Exceptions;
-using SHAutomation.Core.Input;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.Exceptions;
+using StreetsHeaver.SHAutomation.Core.Input;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a textbox element.

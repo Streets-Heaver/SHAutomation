@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SHAutomation.Core.Conditions
+namespace StreetsHeaver.SHAutomation.Core.Conditions
 {
     public class ConditionList : List<ConditionBase>
     {

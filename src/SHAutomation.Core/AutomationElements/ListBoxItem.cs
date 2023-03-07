@@ -1,7 +1,7 @@
-﻿using SHAutomation.Core.AutomationElements.PatternElements;
-using SHAutomation.Core.Patterns;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements.PatternElements;
+using StreetsHeaver.SHAutomation.Core.Patterns;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a list box item element.

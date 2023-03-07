@@ -1,8 +1,8 @@
-﻿using SHAutomation.Core.AutomationElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements;
 using System;
 using System.Drawing;
 
-namespace SHAutomation.Core.StaticClasses
+namespace StreetsHeaver.SHAutomation.Core.StaticClasses
 {
     public static class ElementHighlighter
     {

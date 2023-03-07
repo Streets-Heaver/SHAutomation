@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Conditions;
-using SHAutomation.Core.Definitions;
-using SHAutomation.Core.EventHandlers;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Tools;
-using SHAutomation.UIA3.Converters;
-using SHAutomation.UIA3.EventHandlers;
+using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Conditions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.EventHandlers;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
+using StreetsHeaver.SHAutomation.UIA3.EventHandlers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     public partial class UIA3FrameworkAutomationElement : FrameworkAutomationElementBase
     {
@@ -246,13 +246,13 @@ namespace SHAutomation.UIA3
         public override PatternId[] GetSupportedPatterns()
         {
             Automation.NativeAutomation.PollForPotentialSupportedPatterns(NativeElement, out int[] rawIds, out string[] _);
-            return rawIds.Select(id => PatternId.Find(Automation.AutomationType, id)).ToArray();
+            return rawIds.Select(id => PatternId.Find(id)).ToArray();
         }
 
         public override PropertyId[] GetSupportedProperties()
         {
             Automation.NativeAutomation.PollForPotentialSupportedProperties(NativeElement, out int[] rawIds, out string[] _);
-            return rawIds.Select(id => PropertyId.Find(Automation.AutomationType, id)).ToArray();
+            return rawIds.Select(id => PropertyId.Find(id)).ToArray();
         }
 
        

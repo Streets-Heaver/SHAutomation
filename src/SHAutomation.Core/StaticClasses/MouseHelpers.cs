@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SHAutomation.Core.Input;
-using System.Threading;
+using StreetsHeaver.SHAutomation.Core.Input;
 using System.Drawing;
-using SHAutomation.Core.Tools;
-using SHAutomation.Core.Enums;
-using SHAutomation.Core.WindowsAPI;
+using StreetsHeaver.SHAutomation.Core.Tools;
+using StreetsHeaver.SHAutomation.Core.Enums;
+using StreetsHeaver.SHAutomation.Core.WindowsAPI;
 
-namespace SHAutomation.Core.StaticClasses
+namespace StreetsHeaver.SHAutomation.Core.StaticClasses
 {
     public static class MouseHelpers
     {

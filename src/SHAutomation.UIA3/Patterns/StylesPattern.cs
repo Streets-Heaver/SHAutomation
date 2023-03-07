@@ -1,22 +1,22 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.Identifiers;
-using SHAutomation.Core.Patterns;
-using SHAutomation.UIA3.Converters;
-using SHAutomation.UIA3.Identifiers;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.Identifiers;
+using StreetsHeaver.SHAutomation.Core.Patterns;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
+using StreetsHeaver.SHAutomation.UIA3.Identifiers;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Patterns
+namespace StreetsHeaver.SHAutomation.UIA3.Patterns
 {
     public class StylesPattern : StylesPatternBase<UIA.IUIAutomationStylesPattern>
     {
-        public static readonly PatternId Pattern = PatternId.Register(AutomationType.UIA3, UIA.UIA_PatternIds.UIA_StylesPatternId, "Styles", AutomationObjectIds.IsStylesPatternAvailableProperty);
-        public static readonly PropertyId ExtendedPropertiesProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesExtendedPropertiesPropertyId, "ExtendedProperties");
-        public static readonly PropertyId FillColorProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesFillColorPropertyId, "FillColor");
-        public static readonly PropertyId FillPatternColorProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesFillPatternColorPropertyId, "FillPatternColor");
-        public static readonly PropertyId FillPatternStyleProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesFillPatternStylePropertyId, "FillPatternStyle");
-        public static readonly PropertyId ShapeProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesShapePropertyId, "Shape");
-        public static readonly PropertyId StyleIdProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesStyleIdPropertyId, "StyleId").SetConverter((a, o) => StyleTypeConverter.ToStyleType(o));
-        public static readonly PropertyId StyleNameProperty = PropertyId.Register(AutomationType.UIA3, UIA.UIA_PropertyIds.UIA_StylesStyleNamePropertyId, "StyleName");
+        public static readonly PatternId Pattern = PatternId.Register( UIA.UIA_PatternIds.UIA_StylesPatternId, "Styles", AutomationObjectIds.IsStylesPatternAvailableProperty);
+        public static readonly PropertyId ExtendedPropertiesProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesExtendedPropertiesPropertyId, "ExtendedProperties");
+        public static readonly PropertyId FillColorProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesFillColorPropertyId, "FillColor");
+        public static readonly PropertyId FillPatternColorProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesFillPatternColorPropertyId, "FillPatternColor");
+        public static readonly PropertyId FillPatternStyleProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesFillPatternStylePropertyId, "FillPatternStyle");
+        public static readonly PropertyId ShapeProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesShapePropertyId, "Shape");
+        public static readonly PropertyId StyleIdProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesStyleIdPropertyId, "StyleId").SetConverter((a, o) => StyleTypeConverter.ToStyleType(o));
+        public static readonly PropertyId StyleNameProperty = PropertyId.Register( UIA.UIA_PropertyIds.UIA_StylesStyleNamePropertyId, "StyleName");
 
         public StylesPattern(FrameworkAutomationElementBase frameworkAutomationElement, UIA.IUIAutomationStylesPattern nativePattern) : base(frameworkAutomationElement, nativePattern)
         {

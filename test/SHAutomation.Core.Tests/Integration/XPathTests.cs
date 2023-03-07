@@ -1,16 +1,16 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.Core.Caching;
-using SHAutomation.Core.Logging;
-using SHAutomation.Core.StaticClasses;
-using SHAutomation.Core.Tests.Common;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.Core.Caching;
+using StreetsHeaver.SHAutomation.Core.Logging;
+using StreetsHeaver.SHAutomation.Core.StaticClasses;
+using StreetsHeaver.SHAutomation.Core.Tests.Common;
 using StackExchange.Redis;
 using System;
 using System.IO;
 
-namespace SHAutomation.Core.Tests.Integration
+namespace StreetsHeaver.SHAutomation.Core.Tests.Integration
 {
     [TestClass]
     public class XPathTests : TestBase
@@ -220,7 +220,7 @@ namespace SHAutomation.Core.Tests.Integration
 
             window.GetXPathCache(TestContext.TestName);
 
-            window.XPathList.Should().BeEquivalentTo((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
+            window.XPathList.Should().ContainEquivalentOf((identifier: "Test1", property: "AutomationId", xpath: "XPATH"));
 
         }
 

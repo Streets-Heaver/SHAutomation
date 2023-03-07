@@ -1,7 +1,6 @@
-﻿using SHAutomation.Core.Enums;
-using System;
+﻿using System;
 
-namespace SHAutomation.Core.Logging
+namespace StreetsHeaver.SHAutomation.Core.Logging
 {
     public interface ILoggingService : IDisposable
     {

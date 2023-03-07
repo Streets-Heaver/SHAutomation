@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.AutomationElements.PatternElements;
+﻿using StreetsHeaver.SHAutomation.Core.AutomationElements.PatternElements;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a checkbox element.

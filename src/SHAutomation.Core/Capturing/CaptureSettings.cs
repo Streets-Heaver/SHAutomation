@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Capturing
+﻿namespace StreetsHeaver.SHAutomation.Core.Capturing
 {
     /// <summary>
     /// Class with various settings for capturing images.

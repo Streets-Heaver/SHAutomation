@@ -1,6 +1,6 @@
-﻿using SHAutomation.Core.Definitions;
+﻿using StreetsHeaver.SHAutomation.Core.Definitions;
 
-namespace SHAutomation.Core.AutomationElements
+namespace StreetsHeaver.SHAutomation.Core.AutomationElements
 {
     /// <summary>
     /// Class to interact with a titlebar element.

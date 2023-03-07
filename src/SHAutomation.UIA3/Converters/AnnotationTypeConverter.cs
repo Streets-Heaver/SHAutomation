@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using SHAutomation.Core.Definitions;
+using StreetsHeaver.SHAutomation.Core.Definitions;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3.Converters
+namespace StreetsHeaver.SHAutomation.UIA3.Converters
 {
     /// <summary>
     /// Converter with converts between <see cref="UIA.UIA_AnnotationTypes"/> and SHAutomations <see cref="AnnotationType"/>.

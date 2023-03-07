@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace SHAutomation.Core.WindowsAPI
+namespace StreetsHeaver.SHAutomation.Core.WindowsAPI
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static class Gdi32

@@ -1,4 +1,4 @@
-﻿namespace SHAutomation.Core.Input
+﻿namespace StreetsHeaver.SHAutomation.Core.Input
 {
     public enum MouseButton
     {

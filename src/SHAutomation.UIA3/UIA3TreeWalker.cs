@@ -1,10 +1,10 @@
-﻿using SHAutomation.Core;
-using SHAutomation.Core.AutomationElements;
-using SHAutomation.UIA3.Converters;
+﻿using StreetsHeaver.SHAutomation.Core;
+using StreetsHeaver.SHAutomation.Core.AutomationElements;
+using StreetsHeaver.SHAutomation.UIA3.Converters;
 using System;
 using UIA = Interop.UIAutomationClient;
 
-namespace SHAutomation.UIA3
+namespace StreetsHeaver.SHAutomation.UIA3
 {
     /// <summary>
     /// Class for a UIA3 tree walker.
