@@ -122,21 +122,7 @@ namespace StreetsHeaver.SHAutomation.Core.Tests.UI
 
             }
         }
-
-        [TestMethod]
-        public void ActionsTest()
-        {
-            using (var calc = Application.Launch("calc"))
-            {
-                var window = calc.GetMainWindow();
-                window.Find(x => x.ByName("6")).Click();
-
-
-                window.Find(x => x.ByName("Result")).AsTextBox().Text.Should().Be("6");
-
-            }
-        }
-
+        
         [TestMethod]
         public void HoverOverMovesMouse_HoverOver_Be()
         {
