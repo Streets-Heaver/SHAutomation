@@ -7,7 +7,7 @@ namespace StreetsHeaver.SHAutomation.Core.Logging
 {
     public class LoggingService : ILoggingService
     {
-        private readonly IElasticLogging _elasticLogging;
+        private readonly Logger _elasticLogging;
         private readonly bool _disabled;
 
         public LoggingService()
@@ -15,12 +15,12 @@ namespace StreetsHeaver.SHAutomation.Core.Logging
             _disabled = true;
         }
 
-        public LoggingService(ConnectionSettings connectionSettings, LoggingSettings loggingSettings)
+        public LoggingService(LoggingSettings loggingSettings, string name, bool logToFile)
         {
-            _elasticLogging = new ElasticLogging.ElasticLogging(connectionSettings, loggingSettings);
+            _elasticLogging = new Logger(loggingSettings, name, logToFile);
         }
 
-        public LoggingService(ElasticLogging.ElasticLogging elasticLogging)
+        public LoggingService(Logger elasticLogging)
         {
             if (elasticLogging != null)
             {

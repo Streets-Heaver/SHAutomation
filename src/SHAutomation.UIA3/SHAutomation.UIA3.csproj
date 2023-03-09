@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ElasticLogging" Version="1.0.0" />
+		<PackageReference Include="ElasticLogging" Version="0.0.4" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23080.2">
 			<PrivateAssets>all</PrivateAssets>
