@@ -306,10 +306,11 @@ namespace StreetsHeaver.SHAutomation.Core.AutomationElements
                             var newStr = string.Join("/", items);
 
                             //If cache already contains the value then remove and replace with up-to-date version
-                            var existingXPath = XPathList.SingleOrDefault(x => x.identifier == identifier && x.xpath == ("/" + newStr));
-                            if (existingXPath.Equals(default(ValueTuple<string, string, string>)))
+                            var existingXPath = XPathList.FirstOrDefault(x => x.identifier == identifier && x.xpath == ("/" + newStr));
+                            if (!existingXPath.Equals(default))
                             {
-                                XPathList.Remove(existingXPath);
+                                var existing = XPathList.Where(x => x.identifier == identifier && x.xpath == ("/" + newStr));
+                                XPathList = new SynchronizedCollection<(string identifier, string property, string xpath)>(XPathList.Except(existing).ToList());
                             }
 
                             XPathList.Add((identifier, property, xpath: "/" + newStr));
